@@ -13,3 +13,4 @@ main.pdf
 *.fls
 *.lol
 *.synctex(busy)
+*.ins
