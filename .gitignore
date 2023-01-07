@@ -1,5 +1,5 @@
 #https://github.com/github/gitignore/blob/main/TeX.gitignore
-main.pdf
+*.pdf
 *.aux
 *.log
 *.out
@@ -14,3 +14,6 @@ main.pdf
 *.lol
 *.synctex(busy)
 *.ins
+*.glo
+*.hd
+*.idx

@@ -73,10 +73,12 @@ This work consists of the files YNUthesis.dtx,
 \generate{
   \usedir{tex/latex/YNUthesis}
     \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
+%</install>
 %<*internal>
   \usedir{source/latex/YNUthesis}
     \file{\jobname.ins}        {\from{\jobname.dtx}{install}}
 %</internal>
+%<*install>
   \usedir{doc/latex/YNUthesis}
   \nopreamble\nopostamble
     \file{README.md}           {\from{\jobname.dtx}{readme}}
@@ -110,20 +112,19 @@ This work consists of the files YNUthesis.dtx,
 %\ProvidesFile{YNUthesis.dtx}
 %</driver>
 %<class>\NeedsTeXFormat{LaTeX2e}[2020/01/01]
-%<class>\ProvidesClass{YNUthesis}
+%<class>\ProvidesExplClass{\ExplFileName}
 %<*class>
 %   [2023/01/01 v0.0.1 Thesis-template-for-Yunnan-University]
 %</class>
 %
 %<*driver>
-%\documentclass{ltxdoc}
-%\EnableCrossrefs
-%\CodelineIndex
-%\RecordChanges
-%\begin{document}
-%\DisableImplementation
-%\DocInput{YNUthesis.dtx}
-%\end{document}
+\documentclass{ctxdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
 %</driver>
 % \fi
 %
@@ -151,46 +152,119 @@ This work consists of the files YNUthesis.dtx,
 %
 % \DoNotIndex{hlist of control sequencesi}
 %
-% \title{The \textsf{YNUthesis} class\thanks{This document
-% corresponds to \textsf{YNUthesis}~\fileversion,
-% dated \filedate.}}
-% \author{hyour namei \\ \texttt{hyour e-mail addressi}}
-%
+% \title{\bfseries \CTeX{} 宏集手册}
+% \author{\href{http://www.ctex.org}{CTEX.ORG}}
+% \date{\filedate\qquad\fileversion\thanks{\ctexkitrev{\ExplFileVersion}.}}
 % \maketitle
 %
 % \begin{abstract}
-% Put text here.
+% \CTeX{} 宏集是面向中文排版的通用 \LaTeX{} 排版框架，为中文 \LaTeX{} 文档
+% 提供了汉字输出支持、标点压缩、字体字号命令、标题文字汉化、中文版式调整、数字
+% 日期转换等支持功能，可适应论文、报告、书籍、幻灯片等不同类型的中文文档。
+%
+% \CTeX{} 宏集支持 \LaTeX、\pdfLaTeX、\XeLaTeX、\LuaLaTeX、\upLaTeX{} 等多种不同
+% 的编译方式，并为它们提供了统一的界面。主要功能由宏包 \pkg{ctex} 以及中文文档类
+% \cls{ctexart}、\cls{ctexrep}、\cls{ctexbook} 和 \cls{ctexbeamer} 实现。
 % \end{abstract}
 %
-% \section{Introduction}
+% \tableofcontents
 %
-% Put text here.
+% \bigskip
+% \setlength{\parskip}{0.8ex}
 %
-% \section{Usage}
+% \begin{documentation}
 %
-% \DescribeMacro{\YOURMACRO}
-% Put description of |\YOURMACRO| here.
+% \section{介绍}
 %
-% \DescribeEnv{YOURENV}
-% Put description of |YOURENV| here.
+% \end{documentation}
 %
-% \StopEventually{\PrintIndex}
+% \StopEventually{}
 %
-% \section{Implementation}
+%\begin{implementation}
+% \clearpage
+% \section{代码实现}
 %
-% \begin{macro}{\YOURMACRO}
-% Put explanation of |\YOURMACRO|’s implementation here.
-% \begin{macrocode}
-%\newcommand{\YOURMACRO}{}
-% \end{macrocode}
-% \end{macro}
+%    \begin{macrocode}
+%<@@=ctex>
+%    \end{macrocode}
 %
-% \begin{environment}{YOURENV}
-% Put explanation of |YOURENV|’s implementation here.
-% \begin{macrocode}
-%\newenvironment{YOURENV}{}{}
-% \end{macrocode}
-% \end{environment}
+% \changes{v2.5.9}{2022/05/27}{设置消息模块的名字和类型。}
+% \changes{v2.5.10}{2022/06/10}{更新一些内部函数。}
+% \changes{v2.5.10}{2022/07/08}{不直接依赖 \pkg{xparse} 和 \pkg{l3keys2e}。}
+%
+%    \begin{macrocode}
+%<*class|style>
+\cs_if_exist:NF \NewDocumentCommand
+  { \RequirePackage { xparse } }
+%<class>\prop_gput:Nnn \g_msg_module_type_prop { ctex } { Class }
+%<article>\prop_gput:Nnn \g_msg_module_name_prop { ctex } { ctexart }
+%<book>\prop_gput:Nnn \g_msg_module_name_prop { ctex } { ctexbook }
+%<report>\prop_gput:Nnn \g_msg_module_name_prop { ctex } { ctexrep }
+%<beamer>\prop_gput:Nnn \g_msg_module_name_prop { ctex } { ctexbeamer }
+%<ctexsize>\prop_gput:Nnn \g_msg_module_name_prop { ctex } { ctexsize }
+%<ctexheading>\prop_gput:Nnn \g_msg_module_name_prop { ctex } { ctexheading }
+%</class|style>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class|ctex>
+%    \end{macrocode}
+%
+% \changes{v2.3}{2015/12/20}{与 \LaTeXiii{} (2015/12/20) 同步。}
+% \changes{v2.4.10}{2017/07/19}{常数 \cs{c_minus_one} 已过时。}
+% \changes{v2.4.10}{2017/07/22}{使用 \texttt{lazy} 函数对 Boolean 表达式
+% 进行最小化运算（\LaTeXiii{} 2017/07/19）。}
+%
+% 检查 \pkg{expl3} 的版本。
+%    \begin{macrocode}
+\msg_new:nnnn { ctex } { l3-too-old }
+  { Support~package~`#1'~too~old. }
+  {
+    Please~update~an~up-to-date~version~of~the~bundles\\\\
+    `l3kernel'~and~`l3packages'\\\\
+    using~your~TeX~package~manager~or~from~CTAN.
+  }
+\@ifpackagelater { expl3 } { 2021/02/10 } { }
+  { \msg_error:nnn { ctex } { l3-too-old } { expl3 } }
+%    \end{macrocode}
+%
+% \begin{variable}{\c_@@_engine_str,\c_@@_engine_file_str}
+% 引擎检查。目前 \LaTeXiii{} 将 \ApTeX{} 识别为 \upTeX。
+%    \begin{macrocode}
+\str_const:Nx \c_@@_engine_str
+  { \cs_if_exist:NTF \ngostype { aptex } { \c_sys_engine_str } }
+\msg_new:nnnn { ctex } { engine-not-supported }
+  { Engine~`#1'~is~not~yet~supported,~ctex~will~abort! }
+  { You~can~switch~to~xelatex,~lualatex,~pdflatex,~uplatex,~or~aplatex. }
+\file_if_exist:nTF { ctex-engine- \c_@@_engine_str .def }
+  {
+    \str_const:Nx \c_@@_engine_file_str
+      { ctex-engine- \c_@@_engine_str .def }
+  }
+  { \msg_critical:nnx { ctex } { engine-not-supported } { \c_@@_engine_str } }
+%    \end{macrocode}
+% \end{variable}
+%
+%    \begin{macrocode}
+%</class|ctex>
+%    \end{macrocode}
+%
+% \changes{v2.5}{2020/04/19}
+%   {处理 \cs{ctex_file_input:n} 在 \pkg{ctexsize} 中未定义的错误。}
+% \changes{v2.5}{2020/04/21}{在 \pkg{ctexsize} 也载入 \pkg{fix-cm}。}
+%
+%    \begin{macrocode}
+%<*class|ctex|ctexheading|ctexsize>
+%    \end{macrocode}
+%
+% \pkg{ctexsize} 也要载入 \pkg{fix-cm} 包解决传统 cm 字体字号缺失的问题。
+%    \begin{macrocode}
+%<!ctexsize>\RequirePackage { ctexhook , ctexpatch }
+%<!ctexheading>\RequirePackage { fix-cm }
+%    \end{macrocode}
+%
+% \end{implementation}
 %
 % \Finale
+%
 \endinput

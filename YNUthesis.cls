@@ -30,7 +30,32 @@
 %% ---------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2020/01/01]
-\ProvidesClass{YNUthesis}
+\ProvidesExplClass{\ExplFileName}
+\cs_if_exist:NF \NewDocumentCommand
+  { \RequirePackage { xparse } }
+\prop_gput:Nnn \g_msg_module_type_prop { ctex } { Class }
+\msg_new:nnnn { ctex } { l3-too-old }
+  { Support~package~`#1'~too~old. }
+  {
+    Please~update~an~up-to-date~version~of~the~bundles\\\\
+    `l3kernel'~and~`l3packages'\\\\
+    using~your~TeX~package~manager~or~from~CTAN.
+  }
+\@ifpackagelater { expl3 } { 2021/02/10 } { }
+  { \msg_error:nnn { ctex } { l3-too-old } { expl3 } }
+\str_const:Nx \c__ctex_engine_str
+  { \cs_if_exist:NTF \ngostype { aptex } { \c_sys_engine_str } }
+\msg_new:nnnn { ctex } { engine-not-supported }
+  { Engine~`#1'~is~not~yet~supported,~ctex~will~abort! }
+  { You~can~switch~to~xelatex,~lualatex,~pdflatex,~uplatex,~or~aplatex. }
+\file_if_exist:nTF { ctex-engine- \c__ctex_engine_str .def }
+  {
+    \str_const:Nx \c__ctex_engine_file_str
+      { ctex-engine- \c__ctex_engine_str .def }
+  }
+  { \msg_critical:nnx { ctex } { engine-not-supported } { \c__ctex_engine_str } }
+\RequirePackage { ctexhook , ctexpatch }
+\RequirePackage { fix-cm }
 \endinput
 %%
 %% End of file `YNUthesis.cls'.
