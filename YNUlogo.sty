@@ -1,301 +1,61 @@
-% \iffalse meta-comment
-% !TeX program  = XeLaTeX
-% !TeX encoding = UTF-8
-%
-% Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
-%--------------------------------------------------------------------------
-%
-% This work may be distributed and/or modified under the
-% conditions of the LaTeX Project Public License, either
-% version 1.3c of this license or (at your option) any later
-% version. This version of this license is in
-%    http://www.latex-project.org/lppl/lppl-1-3c.txt
-% and the latest version of this license is in
-%    http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of
-% LaTeX version 2005/12/01 or later.
-%
-% This work has the LPPL maintenance status "maintained".
-%
-% --------------------------------------------------------------------------
-%
-%<*internal>
-\iffalse
-%</internal>
-%
-%<*readme>
-# YNUthesis
-
----
-Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>.
-%</readme>
-%
-%<*internal>
-\fi
-\begingroup
-  \def\NameOfLaTeXe{LaTeX2e}
-\expandafter\endgroup\ifx\NameOfLaTeXe\fmtname\else
-\csname fi\endcsname
-%</internal>
-%
-%<*install>
-\input docstrip.tex
-\keepsilent
-\askforoverwritefalse
-\usedir{tex/latex/YNUthesis}
-\preamble
-
-Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
----------------------------------------------------------------------
-
-    This work may be distributed and/or modified under the
-    conditions of the LaTeX Project Public License, either
-    version 1.3c of this license or (at your option) any later
-    version. This version of this license is in
-      http://www.latex-project.org/lppl/lppl-1-3c.txt
-    and the latest version of this license is in
-      http://www.latex-project.org/lppl.txt
-    and version 1.3 or later is part of all distributions of
-    LaTeX version 2005/12/01 or later.
-
-    This work has the LPPL maintenance status "maintained".
-
-    The Current Maintainer of this work is Rui-Zhi Li.
-
-    This work consists of the files YNUthesis.dtx,
-                                    YNUthesis-logo.dtx,
-              and the derived files YNUthesis.ins,
-                                    YNUthesis.cls,
-                                and README.md.
----------------------------------------------------------------------
-
-\endpreamble
-
-\generate{
-  \usedir{tex/latex/YNUthesis}
-    \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
-    \file{YNUlogo.sty}         {\from{\jobname.dtx}{logo}}
-%</install>
-%<*internal>
-  \usedir{source/latex/YNUthesis}
-    \file{\jobname.ins}        {\from{\jobname.dtx}{install}}
-%</internal>
-%<*install>
-  \usedir{doc/latex/YNUthesis}
-  \nopreamble\nopostamble
-    \file{README.md}           {\from{\jobname.dtx}{readme}}
-}
-
-\obeyspaces
-\Msg{*************************************************************}
-\Msg{*                                                           *}
-\Msg{* To finish the installation you have to move the following *}
-\Msg{* files into a directory searched by TeX:                   *}
-\Msg{*                                                           *}
-\Msg{* The recommended directory is TDS:tex/latex/fduthesis      *}
-\Msg{*                                                           *}
-\Msg{*     YNUthesis.cls                                         *}
-\Msg{*                                                           *}
-\Msg{* To produce the documentation, run the file fduthesis.dtx  *}
-\Msg{* through XeLaTeX.                                          *}
-\Msg{*                                                           *}
-\Msg{* Happy TeXing!                                             *}
-\Msg{*                                                           *}
-\Msg{*************************************************************}
-
-\endbatchfile
-%</install>
-%
-%<*internal>
-\fi
-%</internal>
-%
-%<*driver>
-%\ProvidesFile{YNUthesis.dtx}
-%</driver>
-%
-%<class|logo>\NeedsTeXFormat{LaTeX2e}[2020/01/01]
-%<*class>
-%   [2023/01/01 v0.0.1 Thesis-template-for-Yunnan-University]
-%</class>
-%
-%<*!(driver|install)>
-%<class>\ProvidesExplClass{\ExplFileName}
-%^^A <logo>{Yunnan University's Visual Identity}
-%<logo>\ProvidesExplPackage{YNUlogo}
-%<!readme>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
-%</!(driver|install)>
-%
-%<*driver>
-\documentclass{ctxdoc}
-\usepackage{YNUlogo}
-\EnableCrossrefs
-\CodelineIndex
-\RecordChanges
-\begin{document}
-  \DocInput{\jobname.dtx}
-\end{document}
-%</driver>
-% \fi
-%
-% \CheckSum{0}
-%
-% \CharacterTable
-%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%   Digits        \0\1\2\3\4\5\6\7\8\9
-%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%   Dollar        \$     Percent       \%     Ampersand     \&
-%   Acute accent  \'     Left paren    \(     Right paren   \)
-%   Asterisk      \*     Plus          \+     Comma         \,
-%   Minus         \-     Point         \.     Solidus       \/
-%   Colon         \:     Semicolon     \;     Less than     \<
-%   Equals        \=     Greater than  \>     Question mark \?
-%   Commercial at \@     Left bracket  \[     Backslash     \\
-%   Right bracket \]     Circumflex    \^     Underscore    \_
-%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%   Right brace   \}     Tilde         \~}
-%
-% \changes{v1.0}{hYYYY i/hMM i/hDDi}{Initial version}
-%
-% \GetFileInfo{YNUthesis.dtx}
-%
-% \DoNotIndex{hlist of control sequencesi}
-%
-% \title{\bfseries 云南大学学位论文\LaTeX{} 模板}
-% \author{\href{https://gitee.com/Astro-Lee/YNUthesis}{Gitee.com}}
-% \date{\filedate\qquad\fileversion\thanks{\ctexkitrev{\ExplFileVersion}.}}
-%
-% \maketitle
-% \vfil
-%^^A \begin{center}
-%^^A   \includegraphics[options]{name}
-%^^A \end{center}
-% \vfil
-%
-% \begin{abstract}
-% \CTeX{} 宏集是面向中文排版的通用 \LaTeX{} 排版框架，为中文 \LaTeX{} 文档
-% 提供了汉字输出支持、标点压缩、字体字号命令、标题文字汉化、中文版式调整、数字
-% 日期转换等支持功能，可适应论文、报告、书籍、幻灯片等不同类型的中文文档。
-%
-% \CTeX{} 宏集支持 \LaTeX、\pdfLaTeX、\XeLaTeX、\LuaLaTeX、\upLaTeX{} 等多种不同
-% 的编译方式，并为它们提供了统一的界面。主要功能由宏包 \pkg{ctex} 以及中文文档类
-% \cls{ctexart}、\cls{ctexrep}、\cls{ctexbook} 和 \cls{ctexbeamer} 实现。
-% \end{abstract}
-%
-% \tableofcontents
-%
-% \bigskip
-% \setlength{\parskip}{0.8ex}
-%
-% \begin{documentation}
-%
-% \section{介绍}
-% 这里是介绍\LaTeX{}模板的使用
-% \begin{center}
-%   \YNUemblem  \YNUname
-% \end{center}
-%
-% \subsection{子节}
-% 这里是介绍\LaTeX{}模板的使用
-%
-% \end{documentation}
-%
-% \StopEventually{}
-%
-%\begin{implementation}
-% \clearpage
-% \section{代码实现}
-%
-%    \begin{macrocode}
-%<@@=YNUthesis>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\cs_if_exist:NF \NewDocumentCommand
-  { \RequirePackage { xparse } }
-%    \end{macrocode}
-%
-% 检查 \pkg{expl3} 的版本。
-%    \begin{macrocode}
-\msg_new:nnnn { ctex } { l3-too-old }
-  { Support~package~`#1'~too~old. }
-  {
-    Please~update~an~up-to-date~version~of~the~bundles\\\\
-    `l3kernel'~and~`l3packages'\\\\
-    using~your~TeX~package~manager~or~from~CTAN.
-  }
-\@ifpackagelater { expl3 } { 2021/02/10 } { }
-  { \msg_error:nnn { ctex } { l3-too-old } { expl3 } }
-%    \end{macrocode}
-%
-% \begin{macro}{\c_@@_engine_str,\c_@@_engine_file_str}
-% 引擎检查。目前 \LaTeXiii{} 将 \ApTeX{} 识别为 \upTeX。
-%    \begin{macrocode}
-\str_const:Nx \c_@@_engine_str
-  { \cs_if_exist:NTF \ngostype { aptex } { \c_sys_engine_str } }
-\msg_new:nnnn { ctex } { engine-not-supported }
-  { Engine~`#1'~is~not~yet~supported,~ctex~will~abort! }
-  { You~can~switch~to~xelatex,~lualatex,~pdflatex,~uplatex,~or~aplatex. }
-\file_if_exist:nTF { ctex-engine- \c_@@_engine_str .def }
-  {
-    \str_const:Nx \c_@@_engine_file_str
-      { ctex-engine- \c_@@_engine_str .def }
-  }
-  { \msg_critical:nnx { ctex } { engine-not-supported } { \c_@@_engine_str } }
-%    \end{macrocode}
-% \end{macro}
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-% 
-%   \subsection{视觉识别系统 \pkg{YNUlogo}}
-%    \begin{macrocode}
-%<*logo>
+%%
+%% This is file `YNUlogo.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% YNUthesis.dtx  (with options: `logo')
+%% 
+%% Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
+%% ---------------------------------------------------------------------
+%% 
+%%     This work may be distributed and/or modified under the
+%%     conditions of the LaTeX Project Public License, either
+%%     version 1.3c of this license or (at your option) any later
+%%     version. This version of this license is in
+%%       http://www.latex-project.org/lppl/lppl-1-3c.txt
+%%     and the latest version of this license is in
+%%       http://www.latex-project.org/lppl.txt
+%%     and version 1.3 or later is part of all distributions of
+%%     LaTeX version 2005/12/01 or later.
+%% 
+%%     This work has the LPPL maintenance status "maintained".
+%% 
+%%     The Current Maintainer of this work is Rui-Zhi Li.
+%% 
+%%     This work consists of the files YNUthesis.dtx,
+%%                                     YNUthesis-logo.dtx,
+%%               and the derived files YNUthesis.ins,
+%%                                     YNUthesis.cls,
+%%                                 and README.md.
+%% ---------------------------------------------------------------------
+%% 
+\NeedsTeXFormat{LaTeX2e}[2020/01/01]
+\ProvidesExplPackage{YNUlogo}
+  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 \RequirePackage { xcolor, tikz }
-%    \end{macrocode}
-%
-% \begin{variable}{\c_@@_default_arg_tl}
-% 默认参数。
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_default_arg_tl { x = 1 pt, y = 1 pt}
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{macro}{\@@_tikz:nn,\@@_tikz:nx}
-% 对 \env{tikzpicture} 环境的封装。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_tikz:nn #1#2
+\tl_const:Nn \c__YNUthesis_default_arg_tl { x = 1 pt, y = 1 pt}
+\cs_new_protected:Npn \__YNUthesis_tikz:nn #1#2
   {
     \begin{tikzpicture} [#2]
       #1
     \end{tikzpicture}
   }
-\cs_generate_variant:Nn \@@_tikz:nn { nx }
+\cs_generate_variant:Nn \__YNUthesis_tikz:nn { nx }
 
 \NewDocumentCommand \YNUemblem { O { } }
   {
-    \@@_tikz:nx
+    \__YNUthesis_tikz:nx
       { \YNUlogo@emblem }
-      { \c_@@_default_arg_tl, #1, yscale = -1.0, xscale = 1.0 }
+      { \c__YNUthesis_default_arg_tl, #1, yscale = -1.0, xscale = 1.0 }
   }
 
 \NewDocumentCommand \YNUname { O { } }
   {
-    \@@_tikz:nx
+    \__YNUthesis_tikz:nx
       { \YNUlogo@name }
-      { \c_@@_default_arg_tl, #1, yscale = -1.0, xscale = 1.0 }
+      { \c__YNUthesis_default_arg_tl, #1, yscale = -1.0, xscale = 1.0 }
   }
-%    \end{macrocode}
-% \end{macro}
-%
-%    \subsubsection{绘制``云南大学''校徽}
-%    \begin{macrocode}
 \definecolor{YNUlogoGreen}{RGB}{48,112,76}
 \definecolor{YNUlogoBlue}{RGB}{43,75,157}
 
@@ -309,10 +69,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
         \YNUlogo@emblem@xue
         \YNUlogo@emblem@en
         \YNUlogo@emblem@ring@outer;}
-%    \end{macrocode}
-%
-% ``1923''年
-%    \begin{macrocode}
 \def\YNUlogo@emblem@year{%
   (24.6592,39.5145) --
   (24.6592,39.6377) -- (24.6142,39.6377) .. controls (24.5144,39.6377) and
@@ -390,10 +146,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (25.0387,38.7184) and (25.0759,38.8553) .. (25.0759,39.0509) .. controls
   (25.0759,39.2328) and (25.0387,39.3698) .. (24.9585,39.4773) .. controls
   (24.8861,39.5732) and (24.7864,39.6299) .. (24.6592,39.6377)}
-%    \end{macrocode}
-%
-% 小圈
-%    \begin{macrocode}
 \def\YNUlogo@emblem@ring@inner{%
   (25.4573,20.2021) ..
   controls (20.0233,20.2021) and (15.5927,24.6346) .. (15.5927,30.0686) ..
@@ -405,10 +157,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (31.0203,40.1698) .. (25.4573,40.1698) .. controls (19.8942,40.1698) and
   (15.3541,35.6317) .. (15.3541,30.0686) .. controls (15.3541,24.5035) and
   (19.8942,19.9654) .. (25.4573,19.9654)}
-%    \end{macrocode}
-%
-% 大圈
-%    \begin{macrocode}
 \def\YNUlogo@emblem@ring@outer{%
   (25.4573,13.7744) ..
   controls (29.9445,13.7744) and (34.0190,15.6033) .. (36.9688,18.5551) ..
@@ -424,11 +172,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (41.2252,38.7516) .. (41.2252,30.0686) .. controls (41.2252,25.7261) and
   (39.4530,21.7846) .. (36.5971,18.9267) .. controls (33.7413,16.0708) and
   (29.7997,14.3006) .. (25.4573,14.3006)}
-%    \end{macrocode}
-%
-%
-% ``YUNNAN UNIVERSITY''字样
-%    \begin{macrocode}
 \def\YNUlogo@emblem@en{%
   %Y
   (11.5536,31.1289) --
@@ -573,10 +316,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (38.3030,31.0252) -- (36.8633,31.8683) -- (36.9533,31.1348) --
   (37.8453,30.6634) -- (37.0942,29.9963) -- (37.1841,29.2667) --
   (38.3754,30.4501) -- (39.3554,30.5714) -- cycle(39.2850,31.1465)}
-%    \end{macrocode}
-%
-% ``云''字样
-%    \begin{macrocode}
 \def\YNUlogo@emblem@yun{%
   (15.4379,20.5101) ..
   controls (15.4232,20.4676) and (15.3916,20.4780) .. (15.3683,20.4809) ..
@@ -688,11 +427,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   controls (16.0005,21.8464) and (15.9947,21.8630) .. (15.9904,21.8798) ..
   controls (16.0092,21.8950) and (16.0272,21.8930) .. (16.0513,21.8848) ..
   controls (16.1225,21.8560) and (16.2021,21.7253) .. (16.2255,21.6930)}
-%    \end{macrocode}
-%
-%
-% ``南''字样
-%    \begin{macrocode}
 \def\YNUlogo@emblem@nan{%
   (20.5036,19.1730) ..
   controls (19.9143,19.0059) and (20.1379,19.3411) .. (20.2299,19.8687) ..
@@ -758,11 +492,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (21.2442,18.6069) .. (21.2831,18.4907) .. controls (21.3206,18.4684) and
   (21.3544,18.4825) .. (21.3847,18.4992) .. controls (21.3881,18.5115) and
   (21.4003,18.5794) .. (21.3975,18.6509)}
-%    \end{macrocode}
-%
-%
-% ``大''字样
-%    \begin{macrocode}
 \def\YNUlogo@emblem@da{%
   (31.3322,19.9616) ..
   controls (31.3049,19.9383) and (31.2830,19.9232) .. (31.2642,19.9022) ..
@@ -807,10 +536,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   controls (31.2666,20.4113) and (31.3073,20.3958) .. (31.4003,20.3871) ..
   controls (31.5596,20.3223) and (31.6774,20.2867) .. (31.7759,20.0729) ..
   controls (31.6884,20.0239) and (31.5929,19.9963) .. (31.3321,19.9616)}
-%    \end{macrocode}
-%
-% ``学''字样
-%    \begin{macrocode}
 \def\YNUlogo@emblem@xue{%
   (37.5973,22.8795) ..
   controls (37.5630,22.8814) and (37.5218,22.8824) .. (37.4784,22.8890) ..
@@ -935,10 +660,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (36.3575,21.6527) and (36.0370,22.0345) .. (35.7242,22.0843) .. controls
   (35.7200,21.9631) and (35.7292,21.8470) .. (35.7647,21.7341) .. controls
   (36.0679,21.6133) and (36.1406,21.5539) .. (36.3671,21.2918)}
-%    \end{macrocode}
-%
-% 会泽院
-%    \begin{macrocode}
 \def\YNUlogo@emblem@building{%
   (22.6309,25.5328) --
   (22.5668,27.4502) -- (22.4309,27.4530) -- (22.5038,25.5284) -- cycle
@@ -1303,19 +1024,11 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (30.2361,26.3412) -- (31.7306,26.4111) -- (32.9453,26.5138) --
   (33.6867,26.5728) -- (34.2578,26.6296) -- (34.7508,26.6537) --
   cycle(34.7508,26.8045)}
-%    \end{macrocode}
-%
-%    \subsubsection{绘制``云南大学''校名}
-%    \begin{macrocode}
 \def\YNUlogo@name{%
   \fill \YNUlogo@name@yun
         \YNUlogo@name@nan
         \YNUlogo@name@da
         \YNUlogo@name@xue;}
-%    \end{macrocode}
-%
-% ``云''字
-%    \begin{macrocode}
 \def\YNUlogo@name@yun{%
   (14.0842,44.9857) ..
   controls (14.1228,44.8866) and (14.0499,44.8568) .. (14.0033,44.8264) ..
@@ -1427,10 +1140,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (13.0548,48.2555) and (13.0192,48.2770) .. (12.9859,48.3007) .. controls
   (12.9966,48.3566) and (13.0322,48.3803) .. (13.0881,48.4030) .. controls
   (13.2604,48.4601) and (13.6040,48.3459) .. (13.6955,48.3233)}
-%    \end{macrocode}
-%
-% ``南''字
-%    \begin{macrocode}
 \def\YNUlogo@name@nan{%
   (18.6199,49.7473) ..
   controls (17.6227,49.1518) and (17.8675,49.8756) .. (17.7772,50.8872) ..
@@ -1496,10 +1205,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (20.2543,49.0733) .. (20.3826,48.8796) .. controls (20.4621,48.8571) and
   (20.5172,48.8993) .. (20.5645,48.9450) .. controls (20.5645,48.9687) and
   (20.5538,49.0995) .. (20.5134,49.2290)}
-%    \end{macrocode}
-%
-% ``大''字
-%    \begin{macrocode}
 \def\YNUlogo@name@da{%
   (31.7126,50.4450) ..
   controls (31.6603,50.4201) and (31.6198,50.4057) .. (31.5818,50.3808) ..
@@ -1544,10 +1249,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   controls (31.7983,51.1731) and (31.8552,51.1321) .. (31.9967,51.0798) ..
   controls (32.2178,50.9122) and (32.3866,50.8076) .. (32.4507,50.4332) ..
   controls (32.2939,50.3934) and (32.1336,50.3903) .. (31.7126,50.4451)}
-%    \end{macrocode}
-%
-% ``学''字
-%    \begin{macrocode}
 \def\YNUlogo@name@xue{%
   (41.2964,44.5150) ..
   controls (41.2571,44.5923) and (41.2072,44.6838) .. (41.1668,44.7872) ..
@@ -1672,16 +1373,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   (37.0417,45.6795) and (37.4724,46.8637) .. (37.1861,47.6114) .. controls
   (36.9155,47.4674) and (36.6728,47.3008) .. (36.4706,47.0801) .. controls
   (36.5894,46.2635) and (36.5514,46.0294) .. (36.2638,45.2021)}
-%</logo>
-%    \end{macrocode}
-%
-%    \subsection{结束}
-%    \begin{macrocode}
-%<@@=>
-%    \end{macrocode}
-%
-% \end{implementation}
-%
-% \Finale
-%
 \endinput
+%%
+%% End of file `YNUlogo.sty'.
