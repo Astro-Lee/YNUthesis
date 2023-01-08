@@ -34,27 +34,27 @@
 \ProvidesExplPackage{YNUlogo}
   {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 \RequirePackage { xcolor, tikz }
-\tl_const:Nn \c__YNUthesis_default_arg_tl { x = 1 pt, y = 1 pt}
-\cs_new_protected:Npn \__YNUthesis_tikz:nn #1#2
+\tl_const:Nn \c__YNU_default_arg_tl { x = 1 pt, y = 1 pt }
+\cs_new_protected:Npn \__YNU_tikz:nn #1#2
   {
     \begin{tikzpicture} [#2]
       #1
     \end{tikzpicture}
   }
-\cs_generate_variant:Nn \__YNUthesis_tikz:nn { nx }
+\cs_generate_variant:Nn \__YNU_tikz:nn { nx }
 
 \NewDocumentCommand \YNUemblem { O { } }
   {
-    \__YNUthesis_tikz:nx
+    \__YNU_tikz:nx
       { \YNUlogo@emblem }
-      { \c__YNUthesis_default_arg_tl, #1, yscale = -1.0, xscale = 1.0 }
+      { \c__YNU_default_arg_tl, #1, yscale = -1.0, xscale = 1.0 }
   }
 
 \NewDocumentCommand \YNUname { O { } }
   {
-    \__YNUthesis_tikz:nx
+    \__YNU_tikz:nx
       { \YNUlogo@name }
-      { \c__YNUthesis_default_arg_tl, #1, yscale = -1.0, xscale = 1.0 }
+      { \c__YNU_default_arg_tl, #1, yscale = -1.0, xscale = 1.0 }
   }
 \definecolor{YNUlogoGreen}{RGB}{48,112,76}
 \definecolor{YNUlogoBlue}{RGB}{43,75,157}
