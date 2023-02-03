@@ -30,9 +30,13 @@
 %%                                 and README.md.
 %% ---------------------------------------------------------------------
 %% 
-\NeedsTeXFormat{LaTeX2e}[2020/01/01]
+\NeedsTeXFormat{LaTeX2e}[2022/11/01]
+\RequirePackage{expl3}
+\GetIdInfo $Id: YNUthesis.dtx 0.0.1 2023-02-01 12:00:00Z Rui-Zhi Li <liruizhi0871@gmail.com> $
+  {Thesis template for Yunnan University}
 \ProvidesExplClass{\ExplFileName}
   {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+\RequirePackage { xtemplate, l3keys2e }
 \msg_new:nnnn { YNUthesis } { l3-too-old }
   { Support~ package~ `#1'~ too~ old. }
   {
@@ -40,7 +44,7 @@
     `l3kernel'~ and~` l3packages'\\\\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2021/02/10 } { }
+\@ifpackagelater { expl3 } { 2023/02/01 } { }
   { \msg_error:nnn { YNUthesis } { l3-too-old } { expl3 } }
 \msg_new:nnn { YNUthesis } { unsupported-engine }
   {
@@ -118,6 +122,10 @@
   { \tl_const:cn { c__YNU_ #1 _format_tl } {#2} }
 \cs_new_protected:Npn \__YNU_define_name:nn #1#2
   { \tl_const:cn { c__YNU_name_ #1 _tl } {#2} }
+\cs_new_protected:Npn \__YNU_define_name:nnn #1#2#3
+  {
+    \tl_const:cn { c__YNU_name_ #1    _tl } {#2}
+  }
 \cs_new:Npn \__YNU_msg_new:nn  { \msg_new:nnn      { YNUthesis } }
 \cs_new:Npn \__YNU_error:n     { \msg_error:nn     { YNUthesis } }
 \cs_new:Npn \__YNU_error:nn    { \msg_error:nnn    { YNUthesis } }
@@ -221,15 +229,19 @@
     Please~ update~ an~ up-to-date~ version~ of~ it \\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\__YNU_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
+\__YNU_check_class:nnn { ctexbook } { 2022/07/14 } { 2.5.10 }
 \sys_if_engine_xetex:T
-  { \__YNU_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
+  { \__YNU_check_package:nnn { xeCJK } { 2022/08/05 } { 3.9.1 } }
 \geometry
   {
-    paper      = a4paper,
-    vmargin    = 2.54 cm,
-    hmargin    = 3.18 cm,
-    headheight = 15 pt
+    paper         = a4paper,
+    top           = 3cm,
+    bottom        = 2.5cm,
+    left          = 2.5cm,
+    right         = 2.5cm,
+    bindingoffset = 1.0cm,
+    head          = 1.6cm,
+    foot          = 1.5cm
   }
 \bool_if:NT \g__YNU_draft_bool { \geometry { showframe } }
 \tl_new:N \g__YNU_fontset_tl

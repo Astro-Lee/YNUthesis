@@ -74,6 +74,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 \generate{
   \usedir{tex/latex/YNUthesis}
     \file{\jobname.cls}        {\from{\jobname.dtx}{class}}
+    \file{\jobname.def}        {\from{\jobname.dtx}{definition}}
     \file{YNUlogo.sty}         {\from{\jobname.dtx}{logo}}
 %</install>
 %<*internal>
@@ -114,15 +115,21 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %\ProvidesFile{YNUthesis.dtx}
 %</driver>
 %
-%<class|logo>\NeedsTeXFormat{LaTeX2e}[2020/01/01]
-%<*class>
-%   [2023/01/01 v0.0.1 Thesis-template-for-Yunnan-University]
-%</class>
+%^^A https://tex.stackexchange.com/questions/201660/latex3s-getidinfo-how-is-its-argument-automatically-populated
+%<class|logo>\NeedsTeXFormat{LaTeX2e}[2022/11/01]
+%<class|logo>\RequirePackage{expl3}
 %
 %<*!(driver|install)>
+%<!readme>\GetIdInfo $Id: YNUthesis.dtx 0.0.1 2023-02-01 12:00:00Z Rui-Zhi Li <liruizhi0871@gmail.com> $
+%<class>  {Thesis template for Yunnan University}
 %<class>\ProvidesExplClass{\ExplFileName}
-%^^A <logo>{Yunnan University's Visual Identity}
+%
+%<logo>{Yunnan University's Visual Identity}
 %<logo>\ProvidesExplPackage{YNUlogo}
+%
+%<definition>  {Definition file for fduthesis}
+%<definition>\ProvidesExplFile{\ExplFileName.def}
+%
 %<!readme>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %</!(driver|install)>
 %
@@ -162,8 +169,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %
 % \DoNotIndex{hlist of control sequencesi}
 % \hypersetup{
-%   pdftitle  = {YNUthesis: 复旦大学论文模板},
-%   pdfauthor = {曾祥东}}
+%   pdftitle  = {YNUthesis: 云南大学论文模板},
+%   pdfauthor = {李睿智}}
 %^^A 全角标点放在引号中，需要改成半角式，否则间距过大，不好看
 % \def\FSID{“{\xeCJKsetup{PunctStyle=banjiao}。}”} ^^A % U+3002
 % \def\FSFW{“{\xeCJKsetup{PunctStyle=banjiao}．}”} ^^A % U+FF0E
@@ -243,6 +250,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %
 % 检查 \pkg{expl3} 的版本。
 %    \begin{macrocode}
+\RequirePackage { xtemplate, l3keys2e }
 \msg_new:nnnn { YNUthesis } { l3-too-old }
   { Support~ package~ `#1'~ too~ old. }
   {
@@ -250,7 +258,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     `l3kernel'~ and~` l3packages'\\\\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2021/02/10 } { }
+\@ifpackagelater { expl3 } { 2023/02/01 } { }
   { \msg_error:nnn { YNUthesis } { l3-too-old } { expl3 } }
 %    \end{macrocode}
 %
@@ -429,6 +437,11 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   { \tl_const:cn { c_@@_ #1 _format_tl } {#2} }
 \cs_new_protected:Npn \@@_define_name:nn #1#2
   { \tl_const:cn { c_@@_name_ #1 _tl } {#2} }
+\cs_new_protected:Npn \@@_define_name:nnn #1#2#3
+  {
+    \tl_const:cn { c_@@_name_ #1    _tl } {#2}
+%    \tl_const:cn { c_@@_name_ #1 _en_tl } {#3}
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -620,9 +633,9 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \end{macro}
 %
 %    \begin{macrocode}
-\@@_check_class:nnn { ctexbook } { 2021/03/14 } { 2.5.6 }
+\@@_check_class:nnn { ctexbook } { 2022/07/14 } { 2.5.10 }
 \sys_if_engine_xetex:T
-  { \@@_check_package:nnn { xeCJK } { 2020/05/01 } { 3.8.3 } }
+  { \@@_check_package:nnn { xeCJK } { 2022/08/05 } { 3.9.1 } }
 %    \end{macrocode}
 %
 % \subsection{页面布局}
@@ -631,10 +644,14 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \geometry
   {
-    paper      = a4paper,
-    vmargin    = 2.54 cm,
-    hmargin    = 3.18 cm,
-    headheight = 15 pt
+    paper         = a4paper,
+    top           = 3cm,
+    bottom        = 2.5cm,
+    left          = 2.5cm,
+    right         = 2.5cm,
+    bindingoffset = 1.0cm,
+    head          = 1.6cm,
+    foot          = 1.5cm
   }
 %    \end{macrocode}
 %
@@ -3612,7 +3629,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \tl_const:Nn \c_@@_auth_decl_text_tl
   {
-    本人完全了解复旦大学有关收藏和利用博士、硕士学位论文的规定，即：学
+    本人完全了解云南大学有关收藏和利用博士、硕士学位论文的规定，即：学
     校有权收藏、使用并向国家有关部门或机构送交论文的印刷本和电子版本；
     允许论文被查阅和借阅；学校可以公布论文的全部或部分内容，可以采用影
     印、缩印或其它复制手段保存论文。涉密学位论文在解密后遵守此规定。
