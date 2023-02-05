@@ -17,4 +17,6 @@
 *.glo
 *.hd
 *.idx
-*bcf
+*.bcf
+*.xml
+*.thm
