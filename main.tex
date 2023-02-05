@@ -11,8 +11,72 @@
 }
 
 \begin{document}
+
+% 这个命令用来关闭版心底部强制对齐，可以减少不必要的 underfull \vbox 提示，但会影响排版效果
+% \raggedbottom
+
+% 前置部分包含目录、中英文摘要以及符号表等
+\frontmatter
+
+% 目录
 \tableofcontents
-\chapter{测试}
+% 插图目录
+\listoffigures
+% 表格目录
+% \listoftables
+
+\begin{abstract}
+  中文摘要
+\end{abstract}
+
+\begin{abstract*}
+  English abstract
+\end{abstract*}
+
+% 符号表
+% 语法与 LaTeX 表格一致：列用 & 区分，行用 \\ 区分
+% 如需修改格式，可以使用可选参数：
+%   \begin{notation}[ll]
+%     $x$ & 坐标 \\
+%     $p$ & 动量
+%   \end{notation}
+% 可选参数与 LaTeX 标准表格的列格式说明语法一致
+% 这里的 “ll” 表示两列均为自动宽度，并且左对齐
+\begin{notation}[ll]
+  $x$                  & 坐标        \\
+  $p$                  & 动量        \\
+\end{notation}
+
+% 主体部分是论文的核心
+\mainmatter
+
+% 建议采用多文件编译的方式
+% 比较好的做法是把每一章放进一个单独的 tex 文件里，并在这里用 \include 导入，例如
+%   \include{chapter1}
+%   \include{chapter2}
+%   \include{chapter3}
+
+\chapter{介绍}
 \zhlipsum[10]
+\[
+    a^2+b^2=c^2
+\]
+
+\section{动力学演化}
+\zhlipsum[10]
+
+\subsection{动力学演化}
+\zhlipsum[10]
+
+\subsubsection{动力学演化}
+\zhlipsum[10]
+
+\chapter{总结与展望}
+
+% 后置部分包含参考文献、声明页（自动生成）等
+\backmatter
+
+% 打印参考文献列表
+\printbibliography
 
 \end{document}

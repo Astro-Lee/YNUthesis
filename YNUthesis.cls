@@ -125,6 +125,7 @@
 \cs_new_protected:Npn \__YNU_define_name:nnn #1#2#3
   {
     \tl_const:cn { c__YNU_name_ #1    _tl } {#2}
+    \tl_const:cn { c__YNU_name_ #1 _en_tl } {#3}
   }
 \cs_new:Npn \__YNU_msg_new:nn  { \msg_new:nnn      { YNUthesis } }
 \cs_new:Npn \__YNU_error:n     { \msg_error:nn     { YNUthesis } }
@@ -725,22 +726,37 @@
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
+      },
+      subsubsection =
+      {
+        format      = \large \normalfont \sffamily \raggedright,
+        beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
+        afterskip   = 2.5  ex plus 0.3 ex,
+        fixskip     = true
       }
+  }
+\cs_new_protected:Npn \__YNU_sanitize_chapter_title:n #1
+  {
+    \tl_clear:N \l__YNU_tmpa_tl
+    \tl_set:No \l__YNU_tmpa_tl {#1}
+    \tl_remove_all:Nn \l__YNU_tmpa_tl { \quad }
   }
 \cs_new_protected:Npn \__YNU_chapter:n #1
   {
+    \__YNU_sanitize_chapter_title:n {#1}
     \group_begin:
       \ctexset { chapter / numbering = false }
-      \chapter {#1}
-      \__YNU_chapter_header:n {#1}
+      \chapter [ \l__YNU_tmpa_tl ] {#1}
     \group_end:
+    \__YNU_chapter_header:n {#1}
   }
 \cs_generate_variant:Nn \__YNU_chapter:n { V }
 \cs_new_protected:Npn \__YNU_chapter_no_toc:n #1
   {
-    \chapter *           {#1}
+    \chapter * {#1}
+    \__YNU_sanitize_chapter_title:n {#1}
+    \pdfbookmark [0] { \l__YNU_tmpa_tl } { toc }
     \__YNU_chapter_header:n {#1}
-    \pdfbookmark [0] {#1} { toc }
   }
 \cs_generate_variant:Nn \__YNU_chapter_no_toc:n { V }
 \cs_new_protected:Npn \__YNU_chapter_header:n #1

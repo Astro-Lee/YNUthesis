@@ -434,7 +434,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 \cs_new_protected:Npn \@@_define_name:nnn #1#2#3
   {
     \tl_const:cn { c_@@_name_ #1    _tl } {#2}
-%    \tl_const:cn { c_@@_name_ #1 _en_tl } {#3}
+    \tl_const:cn { c_@@_name_ #1 _en_tl } {#3}
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1443,9 +1443,28 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
+      },
+      subsubsection =
+      {
+        format      = \large \normalfont \sffamily \raggedright,
+        beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
+        afterskip   = 2.5  ex plus 0.3 ex,
+        fixskip     = true
       }
   }
 %    \end{macrocode}
+%
+% \begin{macro}{\@@_sanitize_chapter_title:n}
+% 删除章标题中的 \tn{quad}。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_sanitize_chapter_title:n #1
+  {
+    \tl_clear:N \l_@@_tmpa_tl
+    \tl_set:No \l_@@_tmpa_tl {#1}
+    \tl_remove_all:Nn \l_@@_tmpa_tl { \quad }
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_chapter:n,\@@_chapter:V}
 % 手动生成章的标题，用于摘要、参考文献等。
@@ -1453,11 +1472,12 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_chapter:n #1
   {
+    \@@_sanitize_chapter_title:n {#1}
     \group_begin:
       \ctexset { chapter / numbering = false }
-      \chapter {#1}
-      \@@_chapter_header:n {#1}
+      \chapter [ \l_@@_tmpa_tl ] {#1}
     \group_end:
+    \@@_chapter_header:n {#1}
   }
 \cs_generate_variant:Nn \@@_chapter:n { V }
 %    \end{macrocode}
@@ -1469,9 +1489,10 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_chapter_no_toc:n #1
   {
-    \chapter *           {#1}
+    \chapter * {#1}
+    \@@_sanitize_chapter_title:n {#1}
+    \pdfbookmark [0] { \l_@@_tmpa_tl } { toc }
     \@@_chapter_header:n {#1}
-    \pdfbookmark [0] {#1} { toc }
   }
 \cs_generate_variant:Nn \@@_chapter_no_toc:n { V }
 %    \end{macrocode}
