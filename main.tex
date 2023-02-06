@@ -5,15 +5,207 @@
 \usepackage{zhlipsum}
 
 \YNUsetup{
-    style = {
-        font = times,
-    }
+  % 参数设置
+  % 允许采用两种方式设置选项：
+  %   1. style/... = ...
+  %   2. style = { ... = ... }
+  % 注意事项：
+  %   1. 不要出现空行
+  %   2. “=” 两侧的空格会被忽略
+  %   3. “/” 两侧的空格不会被忽略
+  %   4. 请使用英文逗号 “,” 分隔选项
+  %
+  % style 类用于设置论文格式
+  style = {
+    font = times,
+    % 西文字体（包括数学字体）
+    % 允许选项：
+    %   font = garamond|libertinus|lm|palatino|times|times*|none
+    %
+    cjk-font = windows,
+    % 中文字体
+    % 允许选项：
+    %   cjk-font = adobe|fandol|founder|mac|sinotype|sourcehan|windows|none
+    %
+    % 注意：
+    %   1. 中文字体设置高度依赖于系统。各系统建议方案：
+    %        windows：cjk-font = windows
+    %        mac：    cjk-font = mac
+    %        linux：  cjk-font = fandol（默认值）
+    %   2. 除 fandol 和 sourcehan 外，其余字体均为商用字体，请注意版权问题
+    %   3. 但 fandol 字体缺字比较严重，而 sourcehan 没有配备楷体和仿宋体
+    %   4. 这里中西文字体设置均注释掉了，即使用默认设置：
+    %        font     = times
+    %        cjk-font = fandol
+    %   5. 使用 font = none / cjk-font = none 关闭默认字体设置，需手动进行配置
+    %
+    font-size = -4,
+    % 字号
+    % 允许选项：
+    %   font-size = -4|5
+    %
+    % fullwidth-stop = catcode,
+    % 是否把全角实心句点 “．” 作为默认的句号形状
+    % 允许选项：
+    %   fullwidth-stop = catcode|mapping|false
+    % 说明：
+    %   catcode   显式的 “。” 会被替换为 “．”（e.g. 不包括用宏定义保存的 “。”）
+    %   mapping   所有的 “。” 会被替换为 “．”（使用 LuaLaTeX 编译则无效）
+    %   false     不进行替换
+    %
+    footnote-style = xits,
+    % 脚注编号样式
+    % 允许选项：
+    %   footnote-style = plain|libertinus|libertinus*|libertinus-sans|
+    %                    pifont|pifont*|pifont-sans|pifont-sans*|
+    %                    xits|xits-sans|xits-sans*
+    % 默认与西文字体保持一致
+    %
+    hyperlink = color,
+    % 超链接样式
+    % 允许选项：
+    %   hyperlink = border|color|none
+    %
+    hyperlink-color = prl,
+    % 超链接颜色
+    % 允许选项：
+    %   hyperlink-color = default|classic|material|graylevel|prl
+    %
+    bib-backend = bibtex,
+    % 参考文献支持方式
+    % 允许选项：
+    %   bib-backend = bibtex|biblatex
+    %
+    % bib-style = numerical,
+    % 参考文献样式
+    % 允许选项：
+    %   bib-style = author-year|numerical|<其他样式>
+    % 说明：
+    %   author-year  著者—出版年制
+    %   numerical    顺序编码制
+    %   <其他样式>   使用其他 .bst（bibtex）或 .bbx（biblatex）格式文件
+    %
+    % cite-style = {},
+    % 引用样式
+    % 默认为空，即与参考文献样式保持一致
+    % 仅适用于 biblatex；如要填写，需保证相应的 .cbx 格式文件能被调用
+    %
+    bib-resource = {main.bib},
+    % 参考文献数据源
+    % 可以是单个文件，也可以是用英文逗号 “,” 隔开的一组文件
+    % 如果使用 biblatex，则必须明确给出 .bib 后缀名
+    %
+    % logo = {fudan-name.pdf},
+    % 封面中的校名图片
+    % 模版已自带，通常不需要额外配置
+    %
+    % logo-size = {0.5\textwidth},      % 只设置宽度
+    % logo-size = {{}, 3cm},            % 只设置高度
+    % logo-size = {8cm, 3cm},           % 设置宽度和高度
+    % 设置校名图片的大小
+    % 通常不需要调整
+    %
+    % auto-make-cover = true
+    % 是否自动生成论文封面（封一）、指导小组成员名单（封二）和声明页（封三）
+    % 除非特殊需要（e.g. 不要封面），否则不建议设为 false
+  },
+  %
+  % info 类用于录入论文信息
+  info = {
+    title = {论文标题},
+    % 中文标题
+    % 长标题建议使用 “\\” 命令手动换行（不是指在源文件里输入回车符，当然
+    % 源文件里适当的换行可以有助于代码清晰）：
+    %   title = {最高人民法院、最高人民检察院关于适用\\
+    %            犯罪嫌疑人、被告人逃匿、死亡案件违法所得\\
+    %            没收程序若干问题的规定},
+    %
+    title* = {Thesis Title},
+    % 英文标题
+    %
+    author = {王二},
+    % 作者姓名
+    %
+    % author* = {Your name},
+    % 作者姓名（英文 / 拼音）
+    % 目前不需要填写
+    %
+    supervisor = {某某某\quad 教授},
+    % 导师
+    % 姓名与职称之间可以用 \quad 打印一个空格
+    %
+    major = {物理学},
+    % 专业
+    %
+    degree = academic,
+    % 学位类型
+    % 允许选项：
+    %   degree = academic|professional
+    % 说明：
+    %   academic      学术学位
+    %   professional  专业学位
+    %
+    department = {物理系},
+    % 院系
+    %
+    student-id = {12300000000},
+    % 作者学号
+    %
+    % date = {2021 年 1 月 1 日},
+    % 日期
+    % 注释掉表示使用编译日期
+    %
+    secret-level = none,
+    % 密级
+    % 允许选项：
+    %   secret-level = none|i|ii|iii
+    % 说明：
+    %   none  不显示密级与保密年限
+    %   i     秘密
+    %   ii    机密
+    %   iii   绝密
+    %
+    % secret-year = {五年},
+    % 保密年限
+    % secret-level = none 时该选项无效
+    %
+    instructors = {
+      {张\quad 三 \quad 教\quad 授},
+      {李\quad 四 \quad 教\quad 授},
+      {王五六     \quad 研究员}
+    },
+    % 指导小组成员
+    % 使用英文逗号 “,” 分隔
+    % 如有需要，可以用 \quad 手工对齐
+    %
+    keywords = {不确定关系, 量子力学, 理论物理},
+    % 中文关键字
+    % 使用英文逗号 “,” 分隔
+    %
+    keywords* = {Uncertainty principle, quantum mechanics, theoretical physics},
+    % 英文关键字
+    % 使用英文逗号 “,” 分隔
+    %
+    clc = {O413.1},
+    % 中图分类号
+    %
+    % jel = {C02},
+    % JEL 分类号，仅适用于经济学院等部分院系
+  }
 }
 
 \begin{document}
 
 % 这个命令用来关闭版心底部强制对齐，可以减少不必要的 underfull \vbox 提示，但会影响排版效果
 % \raggedbottom
+
+\begin{abstract}
+  中文摘要
+\end{abstract}
+
+\begin{abstract*}
+  English abstract
+\end{abstract*}
 
 % 前置部分包含目录、中英文摘要以及符号表等
 \frontmatter
@@ -23,15 +215,7 @@
 % 插图目录
 \listoffigures
 % 表格目录
-% \listoftables
-
-\begin{abstract}
-  中文摘要
-\end{abstract}
-
-\begin{abstract*}
-  English abstract
-\end{abstract*}
+\listoftables
 
 % 符号表
 % 语法与 LaTeX 表格一致：列用 & 区分，行用 \\ 区分
@@ -58,9 +242,15 @@
 
 \chapter{介绍}
 \zhlipsum[10]
+
 \[
     a^2+b^2=c^2
 \]
+
+\zhlipsum[10]
+\zhlipsum[10]
+\zhlipsum[10]
+\zhlipsum[10]
 
 \section{动力学演化}
 \zhlipsum[10]
@@ -72,11 +262,22 @@
 \zhlipsum[10]
 
 \chapter{总结与展望}
+\zhlipsum[10]
+
+\appendix
+\chapter{附录}
+\zhlipsum[10]
 
 % 后置部分包含参考文献、声明页（自动生成）等
 \backmatter
 
 % 打印参考文献列表
 \printbibliography
+
+\chapter{攻读XX期间完成的科研成果}
+\zhlipsum[10]
+
+\chapter{致谢}
+\zhlipsum[10]
 
 \end{document}

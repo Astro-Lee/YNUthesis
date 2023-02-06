@@ -124,7 +124,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %<class>  {Thesis template for Yunnan University}
 %<class>\ProvidesExplClass{\ExplFileName}
 %
-%<logo>{Yunnan University's Visual Identity}
+%<logo>  {Yunnan University's Visual Identity}
 %<logo>\ProvidesExplPackage{YNUlogo}
 %
 %<definition>  {Definition file for fduthesis}
@@ -140,7 +140,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
-%^^A \DisableImplementation
+\DisableImplementation
 \begin{document}
   \DocInput{\jobname.dtx}
 \end{document}
@@ -734,6 +734,11 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   { \@@_set_family:nnn { YNU@kai } {#2} {#1} }
 \cs_new_protected:Npn \YNU@kai
   { \@@_switch_family:n { YNU@kai } }
+% 行楷
+  \cs_new_protected:Npn \@@_set_cjk_font_xingkai:nn #1#2
+  { \@@_set_family:nnn { YNU@xingkai } {#2} {#1} }
+\cs_new_protected:Npn \YNU@xingkai
+  { \@@_switch_family:n { YNU@xingkai } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -742,7 +747,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %   \@@_setCJKmainfont:n,
 %   \@@_setCJKsansfont:n,
 %   \@@_setCJKmonofont:n,
-%   \@@_set_cjk_font_kai:n}
+%   \@@_set_cjk_font_kai:n,
+%   \@@_set_cjk_font_xingkai:n}
 % 将 bold、italic 和 bold italic 统一按照 roman 设置，只需提供字体名即可。
 %    \begin{macrocode}
 \tl_const:Nn \@@_cjk_font_options:
@@ -755,6 +761,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   { \@@_setCJKmonofont:nn   {#1} { \@@_cjk_font_options: } }
 \cs_new_protected:Npx \@@_set_cjk_font_kai:n #1
   { \@@_set_cjk_font_kai:nn {#1} { \@@_cjk_font_options: } }
+\cs_new_protected:Npx \@@_set_cjk_font_xingkai:n #1
+  { \@@_set_cjk_font_xingkai:nn {#1} { \@@_cjk_font_options: } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1159,10 +1167,11 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_sinotype:
   {
-    \@@_setCJKmainfont:n   { STSong     }
-    \@@_setCJKsansfont:n   { STHeiti    }
-    \@@_setCJKmonofont:n   { STFangsong }
-    \@@_set_cjk_font_kai:n { STKaiti    }
+    \@@_setCJKmainfont:n       { STSong     }
+    \@@_setCJKsansfont:n       { STHeiti    }
+    \@@_setCJKmonofont:n       { STFangsong }
+    \@@_set_cjk_font_kai:n     { STKaiti    }
+    \@@_set_cjk_font_xingkai:n { STXingkai  }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1198,10 +1207,11 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_cjk_font_windows:
   {
-    \@@_setCJKmainfont:n   { SimSun   }
-    \@@_setCJKsansfont:n   { SimHei   }
-    \@@_setCJKmonofont:n   { FangSong }
-    \@@_set_cjk_font_kai:n { KaiTi    }
+    \@@_setCJKmainfont:n       { SimSun     }
+    \@@_setCJKsansfont:n       { SimHei     }
+    \@@_setCJKmonofont:n       { FangSong   }
+    \@@_set_cjk_font_kai:n     { KaiTi      }
+    \@@_set_cjk_font_xingkai:n { STXingkai  }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2028,7 +2038,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 \clist_map_inline:nn
   {
     title, date, author, supervisor, department, major, student_id,
-    school_id, clc, jel
+    UDC, number, clc, jel
   }
   { \tl_new:c { l_@@_info_ #1 _tl } }
 \clist_new:N \l_@@_info_instructors_clist
@@ -2099,7 +2109,10 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \begin{macro}{info/supervisor,info/supervisor*}
 % 导师姓名。
 %    \begin{macrocode}
-    supervisor  .tl_set:N    = \l_@@_info_supervisor_tl,
+%    supervisor  .clist_set:N = \l_@@_info_supervisor_clist,
+%   supervisor*  .clist_set:N = \l_@@_info_supervisor_clist, 
+%
+   supervisor  .tl_set:N    = \l_@@_info_supervisor_tl,
 %   supervisor* .tl_set:N    = \l_@@_info_supervisor_en_tl,
 %    \end{macrocode}
 % \end{macro}
@@ -2199,19 +2212,19 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %
 % \begin{macro}{info/secret-level}
 %
-% 密级。\opt{none} 表示不涉密，\opt{i}、\opt{ii}、\opt{iii} 分别为
+% 密级。\opt{none} 表示公开，\opt{i}、\opt{ii}、\opt{iii} 分别为
 % 秘密、机密、绝密。
 %    \begin{macrocode}
     secret-level .choices:nn  =
       { none, i, ii, iii }
       {
-        \int_compare:nTF { \l_keys_choice_int >= 2 }
+        \int_compare:nTF { \l_keys_choice_int >= 1 }
           {
             \bool_set_true:N \l_@@_secret_bool
             \tl_set:Nn \l_@@_info_secret_level_tl
               {
                 \clist_item:Nn \c_@@_secret_clist
-                  { \l_keys_choice_int - 1 }
+                  { \l_keys_choice_int }
               }
           }
           { \bool_set_false:N \l_@@_secret_bool }
@@ -2345,35 +2358,28 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \subsubsection{封面各部件}
 %
 % \begin{macro}{\@@_cover_id:,\@@_cover_id_aux:n}
-% 右上角的学校代码和学号。
+% 左上角的分类信息。
 %    \begin{macrocode}
+\newcommand\reduline{\bgroup 是\markoverwith
+{\textcolor{red}{\rule[-0.5ex]{2pt}{0.4pt}}}\ULon}
 \cs_new_protected:Npn \@@_cover_id:
   {
-    \@@_fixed_width_box:nn { 120 pt }
-      {
-        \bool_if:NT \l_@@_secret_bool
-          {
-            \group_begin:
-              \sffamily
-              \@@_cover_id_aux:n { secret_level }
-              \c_@@_name_secret_star_tl
-              \l_@@_info_secret_year_tl
-            \group_end:
-            \par
-          }
-        \@@_cover_id_aux:n { school_id  } \par
-        \@@_cover_id_aux:n { student_id }
+    \@@_fixed_width_box:nn { \textwidth }
+      { 
+        \@@_cover_id_aux:n { clc          }
+        \@@_cover_id_aux:n { secret_level } \par
+        \@@_cover_id_aux:n { UDC          }
+        \@@_cover_id_aux:n { number       }
       }
-%    \end{macrocode}
-% 插入一个宽度为负的水平盒子以减少右侧边距。
-%    \begin{macrocode}
-    \hbox_to_wd:nn { -24 pt } { }
   }
+%    \end{macrocode}
+% 
+%    \begin{macrocode}
 \cs_new:Npn \@@_cover_id_aux:n #1
   {
-    \tl_use:c { c_@@_name_ #1 _tl }
+    \makebox[3em][c]{ \tl_use:c { c_@@_name_ #1 _tl } }
     \c_@@_fwid_colon_tl
-    \tl_use:c { l_@@_info_ #1 _tl }
+    \underline{ \makebox[6em][c]{ \tl_use:c { l_@@_info_ #1 _tl } } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2384,18 +2390,19 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_logo:
   {
-    \clist_pop:NN   \l_@@_cover_logo_size_clist \l_@@_tmpa_tl
-    \clist_pop:NNTF \l_@@_cover_logo_size_clist \l_@@_tmpb_tl
-      {
-        \tl_if_empty:NTF \l_@@_tmpa_tl
-          { \includegraphics [ height = \l_@@_tmpb_tl ] }
-          {
-            \includegraphics
-              [ width  = \l_@@_tmpa_tl, height = \l_@@_tmpb_tl ]
-          }
-      }
-      { \includegraphics [ width = \l_@@_tmpa_tl ] }
-    { \l_@@_cover_logo_tl }
+    \YNUnameTwo[scale=0.045]
+%    \clist_pop:NN   \l_@@_cover_logo_size_clist \l_@@_tmpa_tl
+%    \clist_pop:NNTF \l_@@_cover_logo_size_clist \l_@@_tmpb_tl
+%      {
+%        \tl_if_empty:NTF \l_@@_tmpa_tl
+%          { \includegraphics [ height = \l_@@_tmpb_tl ] }
+%          {
+%            \includegraphics
+%              [ width  = \l_@@_tmpa_tl, height = \l_@@_tmpb_tl ]
+%          }
+%      }
+%      { \includegraphics [ width = \l_@@_tmpa_tl ] }
+%    { \l_@@_cover_logo_tl }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2410,7 +2417,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
         \clist_item:Nn \c_@@_thesis_type_clist
           { \g_@@_thesis_type_int }
       }
-    \@@_spread_box:nn { 0.45 \textwidth } { \l_@@_tmpa_tl }
+      \@@_center_box:nn { 9em } { \l_@@_tmpa_tl }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2696,7 +2703,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % 指导小组成员名单（封二）。
 %    \begin{macrocode}
 \NewDocumentCommand \makecoverii { }
-  {
+  { 
+    \cleardoublepage
     \thispagestyle { empty }
     \clist_if_empty:NF \l_@@_info_instructors_clist
       { \UseInstance { YNU / cover } { cover-ii-default } }
@@ -2752,23 +2760,23 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
       \@@_fixed_width_center_box:nn
         { 0.9 \textwidth } { \l_@@_info_title_en_tl },
     info     / content     = \@@_cover_info:,
-    id       / format      = \zihao { -5 },
-    type     / format      = \zihao {  2 },
-    degree   / format      = \zihao {  4 },
-    title    / format      = \zihao { -2 } \bfseries,
-    title-en / format      = \@@_line_spread:n { 1.2 } \zihao { 4 } \bfseries,
-    id       / bottom-skip = 0 pt plus 1.6 fill,
-    logo     / bottom-skip = 0 pt plus 0.3 fill,
-    type     / bottom-skip = -18 pt,
-    degree   / bottom-skip = 0 pt plus 0.8 fill,
-    title-en / bottom-skip = 0 pt plus 2.5 fill,
-    id       / align       = right,
+    id       / format      = \zihao { 5 },
+    type     / format      = \zihao { 0 } \YNU@xingkai,
+    degree   / format      = \zihao { 4 },
+    title    / format      = \zihao { 2 } \bfseries,
+    title-en / format      = \@@_line_spread:n { 1.2 } \zihao { 2 } \bfseries,
+%    id       / bottom-skip = 0 pt plus 1.6 fill,
+%    logo     / bottom-skip = 0 pt plus 0.3 fill,
+%    type     / bottom-skip = -18 pt,
+%    degree   / bottom-skip = 0 pt plus 0.8 fill,
+%    title-en / bottom-skip = 0 pt plus 2.5 fill,
+    id       / align       = left,
     logo     / align       = center,
     type     / align       = center,
     degree   / align       = center,
     title    / align       = center,
     title-en / align       = center,
-    info     / align       = center,
+    info     / align       = right,
   }
 \DeclareInstance { YNU / cover } { cover-ii-default } { cover-ii }
   {
@@ -2827,8 +2835,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{v0.8}{2021/09/21}{新增 \opt{style/declaration-page} 选项。}
-%
 % \begin{macro}{style/declaration-page}
 % 设置扫描版的声明页 PDF 文档。
 %    \begin{macrocode}
@@ -2841,14 +2847,15 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \end{macrocode}
 % \end{macro}
 %
-% 在 \env{document} 开始位置添加封面以及指导小组成员名单。
+% 在 \env{document} 开始位置添加封面、学位申请表和声明页。
 %    \begin{macrocode}
 \ctex_after_end_preamble:n
   {
     \bool_if:NT \l_@@_auto_make_cover_bool
       {
         \begin{titlepage}
-          \makecoveri \newpage \makecoverii
+%^^A          \@@_vspace:n {-1.5cm} 
+          \makecoveri \newpage \makecoverii \newpage \makecoveriii
         \end{titlepage}
       }
   }
@@ -2856,8 +2863,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %
 % 在 \env{document} 结束位置添加声明页。
 %    \begin{macrocode}
-\@@_gadd_ltxhook:nn { enddocument }
-  { \bool_if:NT \l_@@_auto_make_cover_bool { \makecoveriii } }
+% \@@_gadd_ltxhook:nn { enddocument }
+%   { \bool_if:NT \l_@@_auto_make_cover_bool { \makecoveriii } }
 %    \end{macrocode}
 %
 % \subsection{目录}
@@ -2885,11 +2892,13 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     subsection / tocline =
       {
         \CTEXnumberline {#1} #2
+      },
+      subsubsection / tocline =
+      {
+        \CTEXnumberline {#1} #2
       }
   }
 %    \end{macrocode}
-%
-% \changes{v0.7e}{2019/05/12}{增加对插图、表格目录的处理。}
 %
 % \begin{macro}{\tableofcontents,\listoffigures,\listoftables}
 % 修改 \cs{tableofcontents}、\cs{listoffigures} 和 \cs{listoftables} 的定义，
@@ -2955,12 +2964,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     \@@_keywords:nNn
       { \sffamily \c_@@_name_keywords_tl \c_@@_fwid_colon_tl }
       \l_@@_info_keywords_clist { \c_@@_fwid_semicolon_tl }
-    \tl_if_empty:NF \l_@@_info_clc_tl
-      {
-        \@@_clc_jel:nn
-          { \sffamily \c_@@_name_clc_tl \c_@@_fwid_colon_tl }
-          { \l_@@_info_clc_tl }
-      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2973,20 +2976,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     \@@_keywords:nNn
       { \bfseries \c_@@_name_keywords_en_tl \@@_quad: }
       \l_@@_info_keywords_en_clist { ; ~ }
-    \tl_if_empty:NTF \l_@@_info_jel_tl
-      {
-        \tl_if_empty:NF \l_@@_info_clc_tl
-          {
-            \@@_clc_jel:nn
-              { \bfseries \c_@@_name_clc_en_tl \@@_quad: }
-              { \l_@@_info_clc_tl }
-          }
-      }
-      {
-        \@@_clc_jel:nn
-          { \bfseries \c_@@_name_jel_en_tl \@@_quad: }
-          { \l_@@_info_jel_tl }
-      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3008,7 +2997,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   }
 \cs_new_protected:Npn \@@_clc_jel:nn #1#2
   {
-    \par \tex_prevdepth:D \@@_keywords_prevdepth: \noindent
+%    \par \tex_prevdepth:D \@@_keywords_prevdepth: \noindent
     \group_begin: #1 \group_end:
     #2
   }
@@ -3555,8 +3544,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %
 % \subsection{模板参数配置文件}
 %
-%
-%
 %    \begin{macrocode}
 %<*definition>
 %    \end{macrocode}
@@ -3670,16 +3657,16 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % 论文类型与学位类型。
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_thesis_type_clist
-  { 博士学位论文, 硕士学位论文, 本科毕业论文 }
+  { 博士研究生学位论文, 硕士研究生学位论文, 本科毕业论文 }
 \clist_const:Nn \c_@@_degree_type_clist
   { 学术学位, 专业学位 }
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{variable}{\c_@@_secret_clist}
-% 三种密级。
+% 四种密级。
 %    \begin{macrocode}
-\clist_const:Nn \c_@@_secret_clist { 秘密, 机密, 绝密 }
+\clist_const:Nn \c_@@_secret_clist { 公开, 秘密, 机密, 绝密 }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3687,25 +3674,26 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { secret_level       } { 密 \qquad 级                  },
-    { secret_star        } { \textrm { \bigstar }          },
-    { school_id          } { 学校代码                      },
-    { student_id         } { 学 \qquad 号                  },
-    { department         } { 院系                          },
-    { major              } { 专业                          },
-    { major_professional } { 专业学位类别（领域）          },
-    { author             } { 姓名                          },
-    { supervisor         } { 指导教师                      },
-    { date               } { 完成日期                      },
-    { instructors        } { 指导小组成员                  },
-    { author_sign        } { 作者签名                      },
-    { supervisor_sign    } { 导师签名                      },
-    { sign_date          } { 日期                          },
-    { toc                } { 目 \quad 录                   },
-    { lof                } { 插图目录                      },
-    { lot                } { 表格目录                      },
-    { bib_en             } { Bibliography                  },
-    { pdf_creator        } { LaTeX~ with~ YNUthesis~ class },
+    { secret_level       } { \hskip 1em 密级                },
+    { secret_star        } { \textrm { \bigstar }           },
+    { UDC                } { UDC                            },
+    { number             } { \hskip 1em 编号                 },
+    { student_id         } { 学号                            },
+    { department         } { 学院（所、中心）                 },
+    { major              } { 专业名称                        },
+    { major_professional } { 专业学位类别（领域）             },
+    { author             } { 研究生姓名                      },
+    { supervisor         } { 导师姓名                        },
+    { date               } { 完成日期                        },
+    { instructors        } { 指导小组成员                    },
+    { author_sign        } { 作者签名                        },
+    { supervisor_sign    } { 导师签名                        },
+    { sign_date          } { 日期                            },
+    { toc                } { 目 \quad 录                     },
+    { lof                } { 插图目录                        },
+    { lot                } { 表格目录                        },
+    { bib_en             } { Bibliography                    },
+    { pdf_creator        } { LaTeX~ with~ YNUthesis~ class   },
     { orig_decl          } { \c_@@_name_simp_tl \\ 学位论文独创性声明   },
     { auth_decl          } { \c_@@_name_simp_tl \\ 学位论文使用授权声明 }
   }
@@ -3714,7 +3702,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   {
     { abstract } { 摘 \quad 要 } { Abstract          },
     { keywords } { 关键字      } { Keywords:         },
-    { clc      } { 中图分类号  } { CLC~ code:        },
+    { clc      } { 分类号      } { CLC~ code:        },
     { jel      } { JEL 分类号  } { JEL~ code:        },
     { notation } { 符号表      } { List~ of~ Symbols }
   }

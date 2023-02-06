@@ -277,6 +277,10 @@
   { \__YNU_set_family:nnn { YNU@kai } {#2} {#1} }
 \cs_new_protected:Npn \YNU@kai
   { \__YNU_switch_family:n { YNU@kai } }
+  \cs_new_protected:Npn \__YNU_set_cjk_font_xingkai:nn #1#2
+  { \__YNU_set_family:nnn { YNU@xingkai } {#2} {#1} }
+\cs_new_protected:Npn \YNU@xingkai
+  { \__YNU_switch_family:n { YNU@xingkai } }
 \tl_const:Nn \__YNU_cjk_font_options:
  { UprightFont = *, ItalicFont = *, AutoFakeBold = true }
 \cs_new_protected:Npx \__YNU_setCJKmainfont:n   #1
@@ -287,6 +291,8 @@
   { \__YNU_setCJKmonofont:nn   {#1} { \__YNU_cjk_font_options: } }
 \cs_new_protected:Npx \__YNU_set_cjk_font_kai:n #1
   { \__YNU_set_cjk_font_kai:nn {#1} { \__YNU_cjk_font_options: } }
+\cs_new_protected:Npx \__YNU_set_cjk_font_xingkai:n #1
+  { \__YNU_set_cjk_font_xingkai:nn {#1} { \__YNU_cjk_font_options: } }
 \sys_if_engine_xetex:TF
   {
     \cs_new_eq:NN \__YNU_set_family:nnn  \xeCJK_set_family:nnn
@@ -576,10 +582,11 @@
   }
 \cs_new_protected:Npn \__YNU_load_cjk_font_sinotype:
   {
-    \__YNU_setCJKmainfont:n   { STSong     }
-    \__YNU_setCJKsansfont:n   { STHeiti    }
-    \__YNU_setCJKmonofont:n   { STFangsong }
-    \__YNU_set_cjk_font_kai:n { STKaiti    }
+    \__YNU_setCJKmainfont:n       { STSong     }
+    \__YNU_setCJKsansfont:n       { STHeiti    }
+    \__YNU_setCJKmonofont:n       { STFangsong }
+    \__YNU_set_cjk_font_kai:n     { STKaiti    }
+    \__YNU_set_cjk_font_xingkai:n { STXingkai  }
   }
 \cs_new_protected:Npn \__YNU_load_cjk_font_sourcehan:
   {
@@ -603,10 +610,11 @@
   { Font~ set~ "sourcehan"~ does~ not~ contain~ kaiti~ and~ fangsong. }
 \cs_new_protected:Npn \__YNU_load_cjk_font_windows:
   {
-    \__YNU_setCJKmainfont:n   { SimSun   }
-    \__YNU_setCJKsansfont:n   { SimHei   }
-    \__YNU_setCJKmonofont:n   { FangSong }
-    \__YNU_set_cjk_font_kai:n { KaiTi    }
+    \__YNU_setCJKmainfont:n       { SimSun     }
+    \__YNU_setCJKsansfont:n       { SimHei     }
+    \__YNU_setCJKmonofont:n       { FangSong   }
+    \__YNU_set_cjk_font_kai:n     { KaiTi      }
+    \__YNU_set_cjk_font_xingkai:n { STXingkai  }
   }
 \cs_new_protected:Npn \__YNU_load_font:
   {
@@ -997,7 +1005,7 @@
 \clist_map_inline:nn
   {
     title, date, author, supervisor, department, major, student_id,
-    school_id, clc, jel
+    UDC, number, clc, jel
   }
   { \tl_new:c { l__YNU_info_ #1 _tl } }
 \clist_new:N \l__YNU_info_instructors_clist
@@ -1017,7 +1025,7 @@
     date        .tl_set:N    = \l__YNU_info_date_tl,
     author      .tl_set:N    = \l__YNU_info_author_tl,
     author*     .tl_set:N    = \l__YNU_info_author_en_tl,
-    supervisor  .tl_set:N    = \l__YNU_info_supervisor_tl,
+   supervisor  .tl_set:N    = \l__YNU_info_supervisor_tl,
     instructors .clist_set:N = \l__YNU_info_instructors_clist,
     department  .tl_set:N    = \l__YNU_info_department_tl,
     major       .tl_set:N    = \l__YNU_info_major_tl,
@@ -1042,13 +1050,13 @@
     secret-level .choices:nn  =
       { none, i, ii, iii }
       {
-        \int_compare:nTF { \l_keys_choice_int >= 2 }
+        \int_compare:nTF { \l_keys_choice_int >= 1 }
           {
             \bool_set_true:N \l__YNU_secret_bool
             \tl_set:Nn \l__YNU_info_secret_level_tl
               {
                 \clist_item:Nn \c__YNU_secret_clist
-                  { \l_keys_choice_int - 1 }
+                  { \l_keys_choice_int }
               }
           }
           { \bool_set_false:N \l__YNU_secret_bool }
@@ -1096,45 +1104,27 @@
   { \linespread { \fp_use:N #1 } \selectfont }
 \cs_new:Npn \__YNU_line_spread:n #1
   { \linespread {#1} \selectfont }
+\newcommand\reduline{\bgroup 是\markoverwith
+{\textcolor{red}{\rule[-0.5ex]{2pt}{0.4pt}}}\ULon}
 \cs_new_protected:Npn \__YNU_cover_id:
   {
-    \__YNU_fixed_width_box:nn { 120 pt }
+    \__YNU_fixed_width_box:nn { \textwidth }
       {
-        \bool_if:NT \l__YNU_secret_bool
-          {
-            \group_begin:
-              \sffamily
-              \__YNU_cover_id_aux:n { secret_level }
-              \c__YNU_name_secret_star_tl
-              \l__YNU_info_secret_year_tl
-            \group_end:
-            \par
-          }
-        \__YNU_cover_id_aux:n { school_id  } \par
-        \__YNU_cover_id_aux:n { student_id }
+        \__YNU_cover_id_aux:n { clc          }
+        \__YNU_cover_id_aux:n { secret_level } \par
+        \__YNU_cover_id_aux:n { UDC          }
+        \__YNU_cover_id_aux:n { number       }
       }
-    \hbox_to_wd:nn { -24 pt } { }
   }
 \cs_new:Npn \__YNU_cover_id_aux:n #1
   {
-    \tl_use:c { c__YNU_name_ #1 _tl }
+    \makebox[3em][c]{ \tl_use:c { c__YNU_name_ #1 _tl } }
     \c__YNU_fwid_colon_tl
-    \tl_use:c { l__YNU_info_ #1 _tl }
+    \underline{ \makebox[6em][c]{ \tl_use:c { l__YNU_info_ #1 _tl } } }
   }
 \cs_new_protected:Npn \__YNU_cover_logo:
   {
-    \clist_pop:NN   \l__YNU_cover_logo_size_clist \l__YNU_tmpa_tl
-    \clist_pop:NNTF \l__YNU_cover_logo_size_clist \l__YNU_tmpb_tl
-      {
-        \tl_if_empty:NTF \l__YNU_tmpa_tl
-          { \includegraphics [ height = \l__YNU_tmpb_tl ] }
-          {
-            \includegraphics
-              [ width  = \l__YNU_tmpa_tl, height = \l__YNU_tmpb_tl ]
-          }
-      }
-      { \includegraphics [ width = \l__YNU_tmpa_tl ] }
-    { \l__YNU_cover_logo_tl }
+    \YNUnameTwo[scale=0.045]
   }
 \cs_new_protected:Npn \__YNU_cover_type:
   {
@@ -1143,7 +1133,7 @@
         \clist_item:Nn \c__YNU_thesis_type_clist
           { \g__YNU_thesis_type_int }
       }
-    \__YNU_spread_box:nn { 0.45 \textwidth } { \l__YNU_tmpa_tl }
+      \__YNU_center_box:nn { 9em } { \l__YNU_tmpa_tl }
   }
 \cs_new_protected:Npn \__YNU_cover_degree:
   {
@@ -1336,6 +1326,7 @@
   }
 \NewDocumentCommand \makecoverii { }
   {
+    \cleardoublepage
     \thispagestyle { empty }
     \clist_if_empty:NF \l__YNU_info_instructors_clist
       { \UseInstance { YNU / cover } { cover-ii-default } }
@@ -1376,23 +1367,18 @@
       \__YNU_fixed_width_center_box:nn
         { 0.9 \textwidth } { \l__YNU_info_title_en_tl },
     info     / content     = \__YNU_cover_info:,
-    id       / format      = \zihao { -5 },
-    type     / format      = \zihao {  2 },
-    degree   / format      = \zihao {  4 },
-    title    / format      = \zihao { -2 } \bfseries,
-    title-en / format      = \__YNU_line_spread:n { 1.2 } \zihao { 4 } \bfseries,
-    id       / bottom-skip = 0 pt plus 1.6 fill,
-    logo     / bottom-skip = 0 pt plus 0.3 fill,
-    type     / bottom-skip = -18 pt,
-    degree   / bottom-skip = 0 pt plus 0.8 fill,
-    title-en / bottom-skip = 0 pt plus 2.5 fill,
-    id       / align       = right,
+    id       / format      = \zihao { 5 },
+    type     / format      = \zihao { 0 } \YNU@xingkai,
+    degree   / format      = \zihao { 4 },
+    title    / format      = \zihao { 2 } \bfseries,
+    title-en / format      = \__YNU_line_spread:n { 1.2 } \zihao { 2 } \bfseries,
+    id       / align       = left,
     logo     / align       = center,
     type     / align       = center,
     degree   / align       = center,
     title    / align       = center,
     title-en / align       = center,
-    info     / align       = center,
+    info     / align       = right,
   }
 \DeclareInstance { YNU / cover } { cover-ii-default } { cover-ii }
   {
@@ -1449,12 +1435,10 @@
     \bool_if:NT \l__YNU_auto_make_cover_bool
       {
         \begin{titlepage}
-          \makecoveri \newpage \makecoverii
+          \makecoveri \newpage \makecoverii \newpage \makecoveriii
         \end{titlepage}
       }
   }
-\__YNU_gadd_ltxhook:nn { enddocument }
-  { \bool_if:NT \l__YNU_auto_make_cover_bool { \makecoveriii } }
 \keys_set:nn { ctex }
   {
     contentsname   = \c__YNU_name_toc_tl,
@@ -1470,6 +1454,10 @@
         \CTEXnumberline {#1} #2
       },
     subsection / tocline =
+      {
+        \CTEXnumberline {#1} #2
+      },
+      subsubsection / tocline =
       {
         \CTEXnumberline {#1} #2
       }
@@ -1508,32 +1496,12 @@
     \__YNU_keywords:nNn
       { \sffamily \c__YNU_name_keywords_tl \c__YNU_fwid_colon_tl }
       \l__YNU_info_keywords_clist { \c__YNU_fwid_semicolon_tl }
-    \tl_if_empty:NF \l__YNU_info_clc_tl
-      {
-        \__YNU_clc_jel:nn
-          { \sffamily \c__YNU_name_clc_tl \c__YNU_fwid_colon_tl }
-          { \l__YNU_info_clc_tl }
-      }
   }
 \cs_new_protected:Npn \__YNU_abstract_en_end:
   {
     \__YNU_keywords:nNn
       { \bfseries \c__YNU_name_keywords_en_tl \__YNU_quad: }
       \l__YNU_info_keywords_en_clist { ; ~ }
-    \tl_if_empty:NTF \l__YNU_info_jel_tl
-      {
-        \tl_if_empty:NF \l__YNU_info_clc_tl
-          {
-            \__YNU_clc_jel:nn
-              { \bfseries \c__YNU_name_clc_en_tl \__YNU_quad: }
-              { \l__YNU_info_clc_tl }
-          }
-      }
-      {
-        \__YNU_clc_jel:nn
-          { \bfseries \c__YNU_name_jel_en_tl \__YNU_quad: }
-          { \l__YNU_info_jel_tl }
-      }
   }
 \cs_new_protected:Npn \__YNU_keywords:nNn #1#2#3
   {
@@ -1548,7 +1516,6 @@
   }
 \cs_new_protected:Npn \__YNU_clc_jel:nn #1#2
   {
-    \par \tex_prevdepth:D \__YNU_keywords_prevdepth: \noindent
     \group_begin: #1 \group_end:
     #2
   }
