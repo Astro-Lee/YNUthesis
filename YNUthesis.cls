@@ -1004,12 +1004,14 @@
   { \thechapter - \__YNU_arabic:n { table  } }
 \clist_map_inline:nn
   {
-    title, date, author, supervisor, department, major, student_id,
-    UDC, number, clc, jel
+    title, date, author, supervisor, professional_title, department, major, major_professional, student_id, UDC, number, clc, jel
   }
   { \tl_new:c { l__YNU_info_ #1 _tl } }
-\clist_new:N \l__YNU_info_instructors_clist
-\clist_new:N \l__YNU_info_keywords_clist
+\clist_map_inline:nn
+  {
+    instructors, supervisor, keywords
+  }
+  { \clist_new:c { l__YNU_info_ #1 _clist } }
 \clist_map_inline:nn
   { title, author, supervisor, department, major }
   { \tl_new:c { l__YNU_info_ #1 _en_tl } }
@@ -1025,10 +1027,11 @@
     date        .tl_set:N    = \l__YNU_info_date_tl,
     author      .tl_set:N    = \l__YNU_info_author_tl,
     author*     .tl_set:N    = \l__YNU_info_author_en_tl,
-   supervisor  .tl_set:N    = \l__YNU_info_supervisor_tl,
+    supervisor  .clist_set:N = \l__YNU_info_supervisor_clist,
     instructors .clist_set:N = \l__YNU_info_instructors_clist,
     department  .tl_set:N    = \l__YNU_info_department_tl,
     major       .tl_set:N    = \l__YNU_info_major_tl,
+    major_professional       .tl_set:N    = \l__YNU_info_major_professional_tl,
     student-id  .tl_set:N    = \l__YNU_info_student_id_tl,
     school-id   .tl_set:N    = \l__YNU_info_school_id_tl,
     keywords    .clist_set:N = \l__YNU_info_keywords_clist,
@@ -1121,6 +1124,11 @@
     \c__YNU_fwid_colon_tl
     \underline{ \makebox[6em][c]{ \tl_use:c { l__YNU_info_ #1 _tl } } }
   }
+\cs_new:Npn \__YNU_cover_aux:nnnn #1#2#3#4
+  {
+    \__YNU_spread_box:nn { #1 } { \tl_use:c { c__YNU_name_ #2 _tl } }
+    \UnderlineCentered{ #3 } { #4 } { \tl_use:c { l__YNU_info_ #2 _tl } }
+  }
 \cs_new_protected:Npn \__YNU_cover_logo:
   {
     \__YNU_fixed_width_center_box:nn
@@ -1143,7 +1151,7 @@
   {
     \__YNU_fixed_width_center_box:nn
         { \textwidth }
-        { 题目 \hskip 0.5\ccwd
+        { 题目 \hskip 1\ccwd
           \__YNU_fixed_width_box:nn
           { 16\ccwd }
           { \UnderlineCentered{16\ccwd}{1.5mm}{ \l__YNU_info_title_tl } }
@@ -1153,7 +1161,7 @@
   {
     \__YNU_fixed_width_center_box:nn
         { \textwidth }
-        { Title \hskip 0.5\ccwd
+        { Title \hskip 1\ccwd
           \__YNU_fixed_width_box:nn
           { 16\ccwd }
           { \UnderlineCentered{16\ccwd}{1.7mm}{ \l__YNU_info_title_en_tl } }
@@ -1162,52 +1170,42 @@
 
 \cs_new_protected:Npn \__YNU_cover_info:
   {
-    \tl_set:Nx \l__YNU_cover_info_left_width_tl
+    \__YNU_fixed_width_box:nn { 22.5em }
       {
-        \int_case:nn { \l__YNU_info_degree_type_int }
-          {
-            { 1 } { 6 em }
-            { 2 } { 9 em }
-          }
+        \__YNU_cover_aux:nnnn
+          { 8em  }{ department }
+          { 14.5em }{ 1.5mm      } \par
+        \__YNU_cover_aux:nnnn
+          { 5em  }{ major }
+          { 17.5em }{ 1.5mm } \par
+        \__YNU_cover_aux:nnnn
+          { 5em  }{ major_professional }
+          { 17.5em }{ 1.5mm              } \par
+        \__YNU_cover_aux:nnnn
+          { 5em }{ author }
+          { 6.5em }{ 1.5mm  } \hskip 1em
+        \__YNU_cover_aux:nnnn
+          { 2em }{ student_id }
+          { 8em }{ 1.5mm      } \par
+        \bool_until_do:nn { \clist_if_empty_p:N \l__YNU_info_supervisor_clist }{
+          \clist_pop:NN \l__YNU_info_supervisor_clist \l_tmpa_clist
+          \clist_pop:NN \l_tmpa_clist \l__YNU_info_supervisor_tl
+          \clist_pop:NN \l_tmpa_clist \l__YNU_info_professional_title_tl
+          \__YNU_cover_aux:nnnn
+            { 5em }{ supervisor }
+            { 6.5em }{ 1.5mm      } \hskip 1em
+          \__YNU_cover_aux:nnnn
+            { 2em }{ professional_title }
+            { 8em }{ 1.5mm              }\par
+        }
       }
-    \begin{minipage} [ c ] { \textwidth }
-      \centering \zihao { 4 }
-      \clist_set:Nx \l__YNU_tmpa_clist
-        {
-          \c__YNU_name_department_tl,
-          \int_case:nn { \l__YNU_info_degree_type_int }
-            {
-              { 1 } { \c__YNU_name_major_tl              }
-              { 2 } { \c__YNU_name_major_professional_tl }
-            },
-          \c__YNU_name_author_tl,
-          \c__YNU_name_supervisor_tl,
-          \c__YNU_name_date_tl,
-        }
-      \clist_set:Nx \l__YNU_tmpb_clist
-        {
-          { \l__YNU_info_department_tl },
-          { \l__YNU_info_major_tl      },
-          { \l__YNU_info_author_tl     },
-          { \l__YNU_info_supervisor_tl },
-          { \l__YNU_info_date_tl       }
-        }
-      \__YNU_get_max_text_width:NN \l__YNU_tmpb_dim \l__YNU_tmpb_clist
-      \bool_until_do:nn
-        { \clist_if_empty_p:N \l__YNU_tmpa_clist }
-        {
-          \clist_pop:NN \l__YNU_tmpa_clist \l__YNU_tmpa_tl
-          \clist_pop:NN \l__YNU_tmpb_clist \l__YNU_tmpb_tl
-          \__YNU_spread_box:nn
-            { \l__YNU_cover_info_left_width_tl }
-            { \l__YNU_tmpa_tl }
-          \c__YNU_fwid_colon_tl
-          \__YNU_center_box:Vn \l__YNU_tmpb_dim { \l__YNU_tmpb_tl }
-          \skip_vertical:n { 1 ex }
-        }
-    \end{minipage}
   }
-\tl_new:N \l__YNU_cover_info_left_width_tl
+\cs_new_protected:Npn \__YNU_cover_date:
+  {
+    \__YNU_fixed_width_center_box:nn
+      { \textwidth         }
+      { \number\year 年 \number\month 月 }
+  }
 \cs_new_protected:Npn \__YNU_cover_signature:N #1
   {
     \clist_map_inline:Nn #1
@@ -1356,7 +1354,7 @@
       { \includepdf { \l__YNU_declaration_page_tl } }
   }
 \DeclareCoverTemplate { cover-i   }
-  { id, logo, type, degree, title, title-en, info }
+  { id, logo, type, degree, title, title-en, info, date }
 \DeclareCoverTemplate { cover-ii  } { title, name-list }
 \DeclareCoverTemplate { cover-iii }
   {
@@ -1384,23 +1382,28 @@
 }%
 \DeclareInstance { YNU / cover } { cover-i-default } { cover-i }
   {
-    bottom-skip            = 0 pt plus 1.5 fill,
+    bottom-skip            = 0 pt plus 0.0 fill,
     id       / content     = \__YNU_cover_id:,
     logo     / content     = \__YNU_cover_logo:,
     type     / content     = \__YNU_cover_type:,
     title    / content     = \__YNU_cover_title:,
     title-en / content     = \__YNU_cover_title_en:,
     info     / content     = \__YNU_cover_info:,
+    date     / content     = \__YNU_cover_date:,
     id       / format      = \zihao { 5 },
     type     / format      = \zihao { 0 } \YNU@xingkai,
     degree   / format      = \zihao { 4 },
     title    / format      = \__YNU_line_spread:n { 1 } \sffamily \zihao { 2 } \bfseries,
     title-en / format      = \__YNU_line_spread:n { 1 } \zihao { 2 } \bfseries,
-    id       / bottom-skip = 0 pt plus 1.0 fill,
+    info     / format      = \__YNU_line_spread:n { 2 } \sffamily \zihao { 3 },
+    date     / format      = \__YNU_line_spread:n { 2 } \sffamily \zihao { 3 },
+    id       / bottom-skip = 0 pt plus 1 fill,
     logo     / bottom-skip = -15 pt,%0 pt plus 0.5 fill,
     type     / bottom-skip = -25 pt,
-    title / bottom-skip = 0 pt plus 0.5 fill,
-    title-en / bottom-skip = 0 pt plus 2.5 fill,
+    title / bottom-skip = 5 pt plus 0.5 fill,
+    title-en / bottom-skip = 30 pt plus 2 fill,
+    info / bottom-skip = 40 pt plus 10 fill,
+    date / bottom-skip = -20 pt plus 0 fill,
     id       / align       = left,
     logo     / align       = center,
     type     / align       = center,
@@ -1408,6 +1411,7 @@
     title    / align       = center,
     title-en / align       = center,
     info     / align       = right,
+    date    / align       = center,
   }
 \DeclareInstance { YNU / cover } { cover-ii-default } { cover-ii }
   {

@@ -2025,6 +2025,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %   \l_@@_info_date_tl,
 %   \l_@@_info_author_tl,
 %   \l_@@_info_supervisor_tl,
+%   \l_@@_info_professional_title_tl,
 %   \l_@@_info_department_tl,
 %   \l_@@_info_major_tl,
 %   \l_@@_info_student_id_tl,
@@ -2037,12 +2038,14 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    title, date, author, supervisor, department, major, student_id,
-    UDC, number, clc, jel
+    title, date, author, supervisor, professional_title, department, major, major_professional, student_id, UDC, number, clc, jel
   }
   { \tl_new:c { l_@@_info_ #1 _tl } }
-\clist_new:N \l_@@_info_instructors_clist
-\clist_new:N \l_@@_info_keywords_clist
+\clist_map_inline:nn
+  {
+    instructors, supervisor, keywords
+  }
+  { \clist_new:c { l_@@_info_ #1 _clist } }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2109,10 +2112,10 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \begin{macro}{info/supervisor,info/supervisor*}
 % 导师姓名。
 %    \begin{macrocode}
-%    supervisor  .clist_set:N = \l_@@_info_supervisor_clist,
-%   supervisor*  .clist_set:N = \l_@@_info_supervisor_clist, 
+    supervisor  .clist_set:N = \l_@@_info_supervisor_clist,
+%   supervisor*  .clist_set:N = \l_@@_info_supervisor_en_clist, 
 %
-   supervisor  .tl_set:N    = \l_@@_info_supervisor_tl,
+%   supervisor  .tl_set:N    = \l_@@_info_supervisor_tl,
 %   supervisor* .tl_set:N    = \l_@@_info_supervisor_en_tl,
 %    \end{macrocode}
 % \end{macro}
@@ -2136,6 +2139,14 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % 专业。
 %    \begin{macrocode}
     major       .tl_set:N    = \l_@@_info_major_tl,
+%   major*      .tl_set:N    = \l_@@_info_major_en_tl,
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/major_professional}
+% 研究领域。
+%    \begin{macrocode}
+    major_professional       .tl_set:N    = \l_@@_info_major_professional_tl,
 %   major*      .tl_set:N    = \l_@@_info_major_en_tl,
 %    \end{macrocode}
 % \end{macro}
@@ -2381,6 +2392,11 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     \c_@@_fwid_colon_tl
     \underline{ \makebox[6em][c]{ \tl_use:c { l_@@_info_ #1 _tl } } }
   }
+\cs_new:Npn \@@_cover_aux:nnnn #1#2#3#4
+  {
+    \@@_spread_box:nn { #1 } { \tl_use:c { c_@@_name_ #2 _tl } } 
+    \UnderlineCentered{ #3 } { #4 } { \tl_use:c { l_@@_info_ #2 _tl } }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2447,7 +2463,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   {
     \@@_fixed_width_center_box:nn
         { \textwidth } 
-        { 题目 \hskip 0.5\ccwd 
+        { 题目 \hskip 1\ccwd 
           \@@_fixed_width_box:nn
           { 16\ccwd }
           { \UnderlineCentered{16\ccwd}{1.5mm}{ \l_@@_info_title_tl } }
@@ -2457,7 +2473,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   {
     \@@_fixed_width_center_box:nn
         { \textwidth } 
-        { Title \hskip 0.5\ccwd
+        { Title \hskip 1\ccwd
           \@@_fixed_width_box:nn
           { 16\ccwd }
           { \UnderlineCentered{16\ccwd}{1.7mm}{ \l_@@_info_title_en_tl } }
@@ -2472,62 +2488,105 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_info:
   {
-    \tl_set:Nx \l_@@_cover_info_left_width_tl
+    \@@_fixed_width_box:nn { 22.5em }
       {
-        \int_case:nn { \l_@@_info_degree_type_int }
-          {
-            { 1 } { 6 em }
-            { 2 } { 9 em }
-          }
+        \@@_cover_aux:nnnn 
+          { 8em  }{ department }
+          { 14.5em }{ 1.5mm      } \par
+        \@@_cover_aux:nnnn 
+          { 5em  }{ major }
+          { 17.5em }{ 1.5mm } \par
+        \@@_cover_aux:nnnn 
+          { 5em  }{ major_professional }
+          { 17.5em }{ 1.5mm              } \par
+        \@@_cover_aux:nnnn 
+          { 5em }{ author }
+          { 6.5em }{ 1.5mm  } \hskip 1em
+        \@@_cover_aux:nnnn 
+          { 2em }{ student_id }
+          { 8em }{ 1.5mm      } \par
+        \bool_until_do:nn { \clist_if_empty_p:N \l_@@_info_supervisor_clist }{
+          \clist_pop:NN \l_@@_info_supervisor_clist \l_tmpa_clist
+          \clist_pop:NN \l_tmpa_clist \l_@@_info_supervisor_tl
+          \clist_pop:NN \l_tmpa_clist \l_@@_info_professional_title_tl
+          \@@_cover_aux:nnnn
+            { 5em }{ supervisor }
+            { 6.5em }{ 1.5mm      } \hskip 1em
+          \@@_cover_aux:nnnn 
+            { 2em }{ professional_title }
+            { 8em }{ 1.5mm              }\par
+        }
       }
-    \begin{minipage} [ c ] { \textwidth }
-      \centering \zihao { 4 }
+  }
+%    \end{macrocode}
+% 日期
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_cover_date:
+  {
+    \@@_fixed_width_center_box:nn
+      { \textwidth         } 
+      { \number\year 年 \number\month 月 }
+  }
+%    \end{macrocode}
+%    \begin{macrocode}
+%\cs_new_protected:Npn \@@_cover_info:
+%  {
+%    \tl_set:Nx \l_@@_cover_info_left_width_tl
+%      {
+%        \int_case:nn { \l_@@_info_degree_type_int }
+%          {
+%            { 1 } { 6 em }
+%            { 2 } { 9 em }
+%          }
+%      }
+%    \begin{minipage} [ c ] { \textwidth }
+%      \centering \zihao { 4 }
 %    \end{macrocode}
 % 读取左侧名称字段。
 %    \begin{macrocode}
-      \clist_set:Nx \l_@@_tmpa_clist
-        {
-          \c_@@_name_department_tl,
-          \int_case:nn { \l_@@_info_degree_type_int }
-            {
-              { 1 } { \c_@@_name_major_tl              }
-              { 2 } { \c_@@_name_major_professional_tl }
-            },
-          \c_@@_name_author_tl,
-          \c_@@_name_supervisor_tl,
-          \c_@@_name_date_tl,
-        }
+%      \clist_set:Nx \l_@@_tmpa_clist
+%        {
+%          \c_@@_name_department_tl,
+%          \int_case:nn { \l_@@_info_degree_type_int }
+%            {
+%              { 1 } { \c_@@_name_major_tl              }
+%              { 2 } { \c_@@_name_major_professional_tl }
+%            },
+%          \c_@@_name_author_tl,
+%          \c_@@_name_supervisor_tl,
+%          \c_@@_name_date_tl,
+%        }
 %    \end{macrocode}
 % 设置信息栏右侧宽度。读取各字段，并将最宽者的宽度赋给
 % \cs{l_@@_tmpb_dim}。
 %    \begin{macrocode}
-      \clist_set:Nx \l_@@_tmpb_clist
-        {
-          { \l_@@_info_department_tl },
-          { \l_@@_info_major_tl      },
-          { \l_@@_info_author_tl     },
-          { \l_@@_info_supervisor_tl },
-          { \l_@@_info_date_tl       }
-        }
-      \@@_get_max_text_width:NN \l_@@_tmpb_dim \l_@@_tmpb_clist
+%      \clist_set:Nx \l_@@_tmpb_clist
+%        {
+%          { \l_@@_info_department_tl },
+%          { \l_@@_info_major_tl      },
+%          { \l_@@_info_author_tl     },
+%          { \l_@@_info_supervisor_tl },
+%          { \l_@@_info_date_tl       }
+%        }
+%      \@@_get_max_text_width:NN \l_@@_tmpb_dim \l_@@_tmpb_clist
 %    \end{macrocode}
 % 用循环输出各字段。
 %    \begin{macrocode}
-      \bool_until_do:nn
-        { \clist_if_empty_p:N \l_@@_tmpa_clist }
-        {
-          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
-          \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
-          \@@_spread_box:nn
-            { \l_@@_cover_info_left_width_tl }
-            { \l_@@_tmpa_tl }
-          \c_@@_fwid_colon_tl
-          \@@_center_box:Vn \l_@@_tmpb_dim { \l_@@_tmpb_tl }
-          \skip_vertical:n { 1 ex }
-        }
-    \end{minipage}
-  }
-\tl_new:N \l_@@_cover_info_left_width_tl
+%      \bool_until_do:nn
+%        { \clist_if_empty_p:N \l_@@_tmpa_clist }
+%        {
+%          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
+%          \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
+%          \@@_spread_box:nn
+%            { \l_@@_cover_info_left_width_tl }
+%            { \l_@@_tmpa_tl }
+%          \c_@@_fwid_colon_tl
+%          \@@_center_box:Vn \l_@@_tmpb_dim { \l_@@_tmpb_tl }
+%          \skip_vertical:n { 1 ex }
+%        }
+%    \end{minipage}
+%  }
+%\tl_new:N \l_@@_cover_info_left_width_tl
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2759,7 +2818,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % 声明各封面模板组成部分。
 %    \begin{macrocode}
 \DeclareCoverTemplate { cover-i   }
-  { id, logo, type, degree, title, title-en, info }
+  { id, logo, type, degree, title, title-en, info, date }
 \DeclareCoverTemplate { cover-ii  } { title, name-list }
 \DeclareCoverTemplate { cover-iii }
   {
@@ -2773,6 +2832,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \end{macrocode}
 %
 % 定义封面的具体配置参数。
+% \url{https://syvshc.github.io/2021-08-04-thesis-title/}
 %    \begin{macrocode}
 \RequirePackage{adjustbox}
 \newlength\myheight%可以重构为LaTeX3代码
@@ -2791,7 +2851,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 }%
 \DeclareInstance { YNU / cover } { cover-i-default } { cover-i }
   {
-    bottom-skip            = 0 pt plus 1.5 fill,
+    bottom-skip            = 0 pt plus 0.0 fill,
     id       / content     = \@@_cover_id:,
     logo     / content     = \@@_cover_logo:,
     type     / content     = \@@_cover_type:,
@@ -2799,17 +2859,22 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     title    / content     = \@@_cover_title:,
     title-en / content     = \@@_cover_title_en:,
     info     / content     = \@@_cover_info:,
+    date     / content     = \@@_cover_date:,
     id       / format      = \zihao { 5 },
     type     / format      = \zihao { 0 } \YNU@xingkai,
     degree   / format      = \zihao { 4 },
     title    / format      = \@@_line_spread:n { 1 } \sffamily \zihao { 2 } \bfseries,
     title-en / format      = \@@_line_spread:n { 1 } \zihao { 2 } \bfseries,
-    id       / bottom-skip = 0 pt plus 1.0 fill,
+    info     / format      = \@@_line_spread:n { 2 } \sffamily \zihao { 3 },
+    date     / format      = \@@_line_spread:n { 2 } \sffamily \zihao { 3 },
+    id       / bottom-skip = 0 pt plus 1 fill,
     logo     / bottom-skip = -15 pt,%0 pt plus 0.5 fill,
     type     / bottom-skip = -25 pt,
 %    degree   / bottom-skip = 0 pt plus 0.8 fill,
-    title / bottom-skip = 0 pt plus 0.5 fill,
-    title-en / bottom-skip = 0 pt plus 2.5 fill,
+    title / bottom-skip = 5 pt plus 0.5 fill,
+    title-en / bottom-skip = 30 pt plus 2 fill,
+    info / bottom-skip = 40 pt plus 10 fill,
+    date / bottom-skip = -20 pt plus 0 fill,
     id       / align       = left,
     logo     / align       = center,
     type     / align       = center,
@@ -2817,6 +2882,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     title    / align       = center,
     title-en / align       = center,
     info     / align       = right,
+    date    / align       = center,
   }
 \DeclareInstance { YNU / cover } { cover-ii-default } { cover-ii }
   {
@@ -3089,9 +3155,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \end{macro}
 %
 % \subsection{参考文献著录与引用}
-%
-%
-%
 %
 % \begin{variable}{\l_@@_bibtex_bool}
 % 是否使用 \BibTeX{} 作为参考文献处理程序。若为否，则使用
@@ -3721,9 +3784,10 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     { student_id         } { 学号                            },
     { department         } { 学院（所、中心）                 },
     { major              } { 专业名称                        },
-    { major_professional } { 专业学位类别（领域）             },
+    { major_professional } { 研究方向                        },
     { author             } { 研究生姓名                      },
     { supervisor         } { 导师姓名                        },
+    { professional_title } { 职称                            },
     { date               } { 完成日期                        },
     { instructors        } { 指导小组成员                    },
     { author_sign        } { 作者签名                        },
