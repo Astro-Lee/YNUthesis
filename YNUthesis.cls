@@ -1034,7 +1034,6 @@
     keywords    .clist_set:N = \l__YNU_info_keywords_clist,
     keywords*   .clist_set:N = \l__YNU_info_keywords_en_clist,
     clc         .tl_set:N    = \l__YNU_info_clc_tl,
-    jel         .tl_set:N    = \l__YNU_info_jel_tl
   }
 \tl_new:N    \l__YNU_cover_logo_tl
 \clist_new:N \l__YNU_cover_logo_size_clist
@@ -1077,7 +1076,7 @@
   }
 \cs_generate_variant:Nn \__YNU_center_box:nn  { Vn }
 \cs_new:Npn \__YNU_fixed_width_box:nn #1#2
-  { \parbox {#1} {#2} }
+  { \parbox[t][0cm][l] {#1} {#2} }
 \cs_new:Npn \__YNU_fixed_width_center_box:nn #1#2
   { \parbox {#1} { \centering #2 } }
 \cs_new:Npn \__YNU_get_text_width:Nn #1#2
@@ -1124,7 +1123,9 @@
   }
 \cs_new_protected:Npn \__YNU_cover_logo:
   {
-    \YNUnameTwo[scale=0.045]
+    \__YNU_fixed_width_center_box:nn
+        { \textwidth               }
+        { \YNUnameTwo[scale=0.045] }
   }
 \cs_new_protected:Npn \__YNU_cover_type:
   {
@@ -1133,17 +1134,30 @@
         \clist_item:Nn \c__YNU_thesis_type_clist
           { \g__YNU_thesis_type_int }
       }
-      \__YNU_center_box:nn { 9em } { \l__YNU_tmpa_tl }
+      \__YNU_spread_box:nn { \textwidth } { \l__YNU_tmpa_tl }
   }
 \cs_new_protected:Npn \__YNU_cover_degree:
   {
-    \int_compare:nT { \g__YNU_thesis_type_int != 3 }
-      {
-        \c__YNU_fwid_left_paren_tl
-        \clist_item:Nn \c__YNU_degree_type_clist
-          { \l__YNU_info_degree_type_int }
-        \c__YNU_fwid_right_paren_tl
-      }
+  }
+\cs_new_protected:Npn \__YNU_cover_title:
+  {
+    \__YNU_fixed_width_center_box:nn
+        { \textwidth }
+        { 题目 \hskip 0.5\ccwd
+          \__YNU_fixed_width_box:nn
+          { 16\ccwd }
+          { \UnderlineCentered{16\ccwd}{1.5mm}{ \l__YNU_info_title_tl } }
+        }
+  }
+\cs_new_protected:Npn \__YNU_cover_title_en:
+  {
+    \__YNU_fixed_width_center_box:nn
+        { \textwidth }
+        { Title \hskip 0.5\ccwd
+          \__YNU_fixed_width_box:nn
+          { 16\ccwd }
+          { \UnderlineCentered{16\ccwd}{1.7mm}{ \l__YNU_info_title_en_tl } }
+        }
   }
 
 \cs_new_protected:Npn \__YNU_cover_info:
@@ -1353,25 +1367,40 @@
     authorization-decl-text,
     authorization-decl-sig
   }
+\RequirePackage{adjustbox}
+\newlength\myheight%可以重构为LaTeX3代码
+\newcommand\Mysavedprevdepth{}%
+\newcommand\UnderlineCentered[3]{%
+  \begin{adjustbox}{minipage=[t]{\dimexpr#1\relax},gstore~ totalheight=\myheight,margin=0pt}%
+    \centering\leavevmode#3\par\xdef\Mysavedprevdepth{\the\prevdepth}%
+  \end{adjustbox}%
+  \hspace*{-\dimexpr#1\relax}%
+  \begin{adjustbox}{minipage=[t][\myheight]{\dimexpr#1\relax},margin=0pt}%
+    \vphantom{Eg}\lower\dimexpr#2\relax\hbox to\hsize{\leaders\hrule\hfill\kern0pt}\par
+    \kern-\dimexpr#2\relax
+    \xleaders\vbox to\baselineskip {\vfill\hbox{\lower\dimexpr#2\relax\hbox to\hsize{\leaders\hrule\hfill\kern0pt}}\kern-\dimexpr#2\relax}\vfill
+    \kern\Mysavedprevdepth
+  \end{adjustbox}%
+}%
 \DeclareInstance { YNU / cover } { cover-i-default } { cover-i }
   {
     bottom-skip            = 0 pt plus 1.5 fill,
     id       / content     = \__YNU_cover_id:,
     logo     / content     = \__YNU_cover_logo:,
     type     / content     = \__YNU_cover_type:,
-    degree   / content     = \__YNU_cover_degree:,
-    title    / content     =
-      \__YNU_fixed_width_center_box:nn
-        { 0.9 \textwidth } { \l__YNU_info_title_tl },
-    title-en / content     =
-      \__YNU_fixed_width_center_box:nn
-        { 0.9 \textwidth } { \l__YNU_info_title_en_tl },
+    title    / content     = \__YNU_cover_title:,
+    title-en / content     = \__YNU_cover_title_en:,
     info     / content     = \__YNU_cover_info:,
     id       / format      = \zihao { 5 },
     type     / format      = \zihao { 0 } \YNU@xingkai,
     degree   / format      = \zihao { 4 },
-    title    / format      = \zihao { 2 } \bfseries,
-    title-en / format      = \__YNU_line_spread:n { 1.2 } \zihao { 2 } \bfseries,
+    title    / format      = \__YNU_line_spread:n { 1 } \sffamily \zihao { 2 } \bfseries,
+    title-en / format      = \__YNU_line_spread:n { 1 } \zihao { 2 } \bfseries,
+    id       / bottom-skip = 0 pt plus 1.0 fill,
+    logo     / bottom-skip = -15 pt,%0 pt plus 0.5 fill,
+    type     / bottom-skip = -25 pt,
+    title / bottom-skip = 0 pt plus 0.5 fill,
+    title-en / bottom-skip = 0 pt plus 2.5 fill,
     id       / align       = left,
     logo     / align       = center,
     type     / align       = center,
