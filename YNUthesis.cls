@@ -1188,9 +1188,8 @@
           { 2em }{ student_id }
           { 8em }{ 1.5mm      } \par
         \bool_until_do:nn { \clist_if_empty_p:N \l__YNU_info_supervisor_clist }{
-          \clist_pop:NN \l__YNU_info_supervisor_clist \l_tmpa_clist
-          \clist_pop:NN \l_tmpa_clist \l__YNU_info_supervisor_tl
-          \clist_pop:NN \l_tmpa_clist \l__YNU_info_professional_title_tl
+          \clist_pop:NN \l__YNU_info_supervisor_clist \l__YNU_info_supervisor_tl
+          \clist_pop:NN \l__YNU_info_supervisor_clist \l__YNU_info_professional_title_tl
           \__YNU_cover_aux:nnnn
             { 5em }{ supervisor }
             { 6.5em }{ 1.5mm      } \hskip 1em
