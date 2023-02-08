@@ -1205,6 +1205,99 @@
       { \textwidth         }
       { \number\year 年 \number\month 月 }
   }
+\cs_new_protected:Npn \table_content:Nn #1#2
+  {
+    \clist_set:Nn \l_tmpa_clist {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p}
+    \clist_map_inline:Nn \l_tmpa_clist
+      {\tl_new:c {tl_tmp_ ##2 _#1} }
+
+    \bool_until_do:nn {\clist_if_empty_p:N #1}{
+      \clist_pop:NN \l_tmpa_clist \l_tmpa_tl
+      \clist_pop:NN #1 \l_tmpb_tl
+      \tl_set:cx { tl_tmp_#2_\l_tmpa_tl } \l_tmpb_tl
+
+    }
+  }
+
+\RequirePackage{tabularray}
+\cs_new_protected:Npn \__YNU_cover_table:
+  {
+    \begin{tblr}{%
+      width=\textwidth,
+      colspec={|c|c|c|c|c|c|},
+      cells={valign=m,halign=c},%垂直居中
+      hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
+      hline{1,8,15,20,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度
+      cell{1}{1} = {r=26,c=1}{c,cmd={\bfseries 云\\南\\大\\学\\博\\士\\研\\究\\生\\学\\位\\申\\请\\简\\况\\表}},%云南大学博士研究生学位申请简况表
+      cell{1}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\预\\审}},%论文预审
+      cell{8}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\预\\答\\辩}},%论文预答辩
+      cell{15}{2} = {r=5,c=1}{c,cmd={\bfseries 论\\文\\送\\审}},%论文送审
+      cell{20}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\答\\辩}},%论文答辩
+      cell{1}{3} = {r=1,c=4}{l,cmd={论文预审结果：}},%论文预审结果：
+      cell{8}{3} = {r=1,c=4}{l,cmd={预答辩结果：}},%预答辩结果：
+      cell{20}{3} = {r=1,c=4}{l,cmd={答辩结果：}},%答辩结果：
+      cell{2,9,21}{5} = {r=1,c=2}{c,cmd={所在单位（校内：学院/校外：所在单位）}},%所在单位（校内：学院/校外：所在单位）
+      cell{2,9,15}{3} = {cmd={专家姓名}},
+      cell{21}{3} = {cmd={答辩专家}},
+      cell{2,9,15,21}{4} = {cmd={职称}},
+      cell{15}{5} = {cmd={所在单位（校内：学院/校外：所在单位）}},
+      cell{15}{6} = {cmd={结果}},
+      cell{3-7,10-14,22-26}{5} = {r=1,c=2}{c},%填写单位
+      }
+      %预审
+      & & \\
+
+      & & & & \\
+
+      & & & & \\
+
+      & & & & \\
+
+      & & & & \\
+
+      & & & & \\
+
+      & & & & \\
+      %预答辩, 博士
+      & & \\
+
+      & & & & \\
+
+      & & & &  \\
+
+      & & & &  \\
+
+      & & & &  \\
+
+      & & & &  \\
+
+      & & & &  \\
+      %送审
+      & & & & & \\
+
+      & &  & & &\\
+
+      & &  & & &\\
+
+      & &  & & &\\
+
+      & &  & & &\\
+      %答辩
+      & & \\
+
+      & & & & \\
+
+      & & & &  \\
+
+      & & & &  \\
+
+      & & & &  \\
+
+      & & & &  \\
+
+      & & & &  \\
+      \end{tblr}
+  }
 \cs_new_protected:Npn \__YNU_cover_signature:N #1
   {
     \clist_map_inline:Nn #1
@@ -1354,7 +1447,7 @@
   }
 \DeclareCoverTemplate { cover-i   }
   { id, logo, type, degree, title, title-en, info, date }
-\DeclareCoverTemplate { cover-ii  } { title, name-list }
+\DeclareCoverTemplate { cover-ii  } { table }
 \DeclareCoverTemplate { cover-iii }
   {
     originality-decl-name,
@@ -1410,18 +1503,13 @@
     title    / align       = center,
     title-en / align       = center,
     info     / align       = right,
-    date    / align       = center,
+    date     / align       = center,
   }
 \DeclareInstance { YNU / cover } { cover-ii-default } { cover-ii }
   {
-    title     / content =
-      \__YNU_spread_box:nn { 7 em } { \c__YNU_name_instructors_tl },
-    name-list / content =
-      \clist_use:Nn \l__YNU_info_instructors_clist { \par },
-    title     / format  = \zihao { 2 } \sffamily,
-    name-list / format  = \large,
-    title     / align   = center,
-    name-list / align   = center,
+    table    / content =\__YNU_cover_table:,
+    table     / format  = \zihao { -4 },
+    table     / align   = center,
   }
 \DeclareInstance { YNU / cover } { cover-iii-default } { cover-iii }
   {
