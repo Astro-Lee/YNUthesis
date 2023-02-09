@@ -160,25 +160,26 @@
     % 日期
     % 注释掉表示使用编译日期
     %
-    secret-level = none,
+    % secret-level = iv,
     % 密级
     % 允许选项：
-    %   secret-level = none|i|ii|iii
+    %   secret-level = none|i|ii|iii|iv
     % 说明：
-    %   none  不显示密级与保密年限
-    %   i     秘密
-    %   ii    机密
-    %   iii   绝密
+    %   none  公开(默认)
+    %   i     内部
+    %   ii    秘密
+    %   iii   机密
+    %   iv    绝密
     %
     % secret-year = {五年},
     % 保密年限
     % secret-level = none 时该选项无效
     %
-    %instructors = {
+    % instructors = {
     %  {张\quad 三 \quad 教\quad 授},
     %  {李\quad 四 \quad 教\quad 授},
     %  {王五六     \quad 研究员}
-   % },
+    % },
     % 指导小组成员
     % 使用英文逗号 “,” 分隔
     % 如有需要，可以用 \quad 手工对齐
@@ -186,7 +187,7 @@
     pre-approval = {
       同意送审,
       XXX,教授,校内,
-      },
+    },
     pre-defense = {
       优秀,
       XXX,教授,校内,

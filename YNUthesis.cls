@@ -210,7 +210,9 @@
     graphicx,
     longtable,
     caption,
-    xcolor
+    xcolor,
+    adjustbox,
+    tabularray
   }
 \cs_new_protected:Npn \__YNU_check_package:nnn #1#2#3
   {
@@ -735,7 +737,7 @@
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
       },
-      subsubsection =
+    subsubsection =
       {
         format      = \large \normalfont \sffamily \raggedright,
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
@@ -1048,26 +1050,21 @@
     logo      .tl_set:N    = \l__YNU_cover_logo_tl,
     logo-size .clist_set:N = \l__YNU_cover_logo_size_clist
   }
-\bool_new:N \l__YNU_secret_bool
 \tl_new:N \l__YNU_info_secret_level_tl
+\int_new:N \l__YNU_secret_level_item_int
 \keys_define:nn { YNU / info }
   {
     secret-level .choices:nn  =
-      { none, i, ii, iii }
+      { none, i, ii, iii, iv }
       {
-        \int_compare:nTF { \l_keys_choice_int >= 1 }
+        \int_set_eq:NN \l__YNU_secret_level_item_int \l_keys_choice_int
+        \tl_set:Nn \l__YNU_info_secret_level_tl
           {
-            \bool_set_true:N \l__YNU_secret_bool
-            \tl_set:Nn \l__YNU_info_secret_level_tl
-              {
-                \clist_item:Nn \c__YNU_secret_clist
-                  { \l_keys_choice_int }
-              }
+            \clist_item:Nn \c__YNU_secret_clist
+              { \l__YNU_secret_level_item_int }
           }
-          { \bool_set_false:N \l__YNU_secret_bool }
       },
     secret-level .value_required:n = true,
-    secret-year  .tl_set:N = \l__YNU_info_secret_year_tl
   }
 \cs_new_protected:Npn \__YNU_spread_box:nn #1#2
   {
@@ -1118,7 +1115,7 @@
         \__YNU_cover_aux_a:nnnn { 3em }{ clc          }{ 6em }{ 1mm } \hskip 1em
         \__YNU_cover_aux_a:nnnn { 2em }{ secret_level }{ 6em }{ 1mm } \par
         \__YNU_cover_aux_a:nnnn { 3em }{ UDC          }{ 6em }{ 1mm } \hskip 1em
-        \__YNU_cover_aux_a:nnnn { 2em }{ number       }{ 6em }{ 1mm }
+        \__YNU_cover_aux_a:nnnn { 2em }{ number       }{ 6em }{ 1mm } \par
       }
   }
 \cs_new:Npn \__YNU_cover_aux:nnnn #1#2#3#4
@@ -1198,7 +1195,7 @@
             { 6.5em }{ 1.5mm      } \hskip 1em
           \__YNU_cover_aux:nnnn
             { 2em }{ professional_title }
-            { 8em }{ 1.5mm              }\par
+            { 8em }{ 1.5mm              } \par
         }
       }
   }
@@ -1220,7 +1217,6 @@
       \tl_set:cx { l__YNU_info_ #1 _ \l_tmpa_tl _tl } \l_tmpb_tl
     }
   }
-\RequirePackage{tabularray}
 \cs_new_protected:Npn \__YNU_cover_table:
   {
     \table_content:n {pre_approval}
@@ -1231,7 +1227,7 @@
     \begin{tblr}{%
       width=\textwidth,
       colspec={|c|c|c|c|c|c|},
-      column{1} = {wd=2em},
+      column{1} = {wd=1.5em},
       cells={valign=m,halign=c},%垂直居中
       hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
       hline{1,8,15,20,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度
@@ -1282,6 +1278,7 @@
       & & \l__YNU_info_defense_k_tl & \l__YNU_info_defense_l_tl & \l__YNU_info_defense_m_tl \\
       & & \l__YNU_info_defense_n_tl & \l__YNU_info_defense_o_tl & \l__YNU_info_defense_p_tl \\
       \end{tblr}
+
   }
 \cs_new_protected:Npn \__YNU_cover_signature:N #1
   {
@@ -1442,7 +1439,6 @@
     authorization-decl-text,
     authorization-decl-sig
   }
-\RequirePackage{adjustbox}
 \newlength\myheight%可以重构为LaTeX3代码
 \newcommand\Mysavedprevdepth{}%
 \newcommand\UnderlineCentered[3]{%

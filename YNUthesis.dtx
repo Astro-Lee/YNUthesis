@@ -593,7 +593,9 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     graphicx,
     longtable,
     caption,
-    xcolor
+    xcolor,
+    adjustbox,
+    tabularray
   }
 %    \end{macrocode}
 %
@@ -1454,7 +1456,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
       },
-      subsubsection =
+    subsubsection =
       {
         format      = \large \normalfont \sffamily \raggedright,
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
@@ -2208,14 +2210,15 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \begin{variable}{\l_@@_secret_bool}
 % 是否显示密级。
 %    \begin{macrocode}
-\bool_new:N \l_@@_secret_bool
+%\bool_new:N \l_@@_secret_bool
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\l_@@_info_secret_level_tl}
-% 保存当前的密级。
+% \begin{variable}{\l_@@_info_secret_level_tl,\l_@@_secret_level_item_int}
+% 保存当前的密级,密级的第几个item。
 %    \begin{macrocode}
 \tl_new:N \l_@@_info_secret_level_tl
+\int_new:N \l_@@_secret_level_item_int
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2225,23 +2228,18 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \end{macrocode}
 %
 % \begin{macro}{info/secret-level}
-%
 % 密级。\opt{none} 表示公开，\opt{i}、\opt{ii}、\opt{iii} 分别为
-% 秘密、机密、绝密。
+% 内部、秘密、机密、绝密。
 %    \begin{macrocode}
     secret-level .choices:nn  =
-      { none, i, ii, iii }
-      {
-        \int_compare:nTF { \l_keys_choice_int >= 1 }
+      { none, i, ii, iii, iv }
+      { 
+        \int_set_eq:NN \l_@@_secret_level_item_int \l_keys_choice_int
+        \tl_set:Nn \l_@@_info_secret_level_tl
           {
-            \bool_set_true:N \l_@@_secret_bool
-            \tl_set:Nn \l_@@_info_secret_level_tl
-              {
-                \clist_item:Nn \c_@@_secret_clist
-                  { \l_keys_choice_int }
-              }
+            \clist_item:Nn \c_@@_secret_clist
+              { \l_@@_secret_level_item_int }
           }
-          { \bool_set_false:N \l_@@_secret_bool }
       },
     secret-level .value_required:n = true,
 %    \end{macrocode}
@@ -2250,7 +2248,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \begin{macro}{info/secret-year}
 % 保密年限。
 %    \begin{macrocode}
-    secret-year  .tl_set:N = \l_@@_info_secret_year_tl
+%    secret-year  .tl_set:N = \l_@@_info_secret_year_tl
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2383,7 +2381,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
         \@@_cover_aux_a:nnnn { 3em }{ clc          }{ 6em }{ 1mm } \hskip 1em
         \@@_cover_aux_a:nnnn { 2em }{ secret_level }{ 6em }{ 1mm } \par
         \@@_cover_aux_a:nnnn { 3em }{ UDC          }{ 6em }{ 1mm } \hskip 1em
-        \@@_cover_aux_a:nnnn { 2em }{ number       }{ 6em }{ 1mm }
+        \@@_cover_aux_a:nnnn { 2em }{ number       }{ 6em }{ 1mm } \par
       }
   }
 %    \end{macrocode}
@@ -2516,7 +2514,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
             { 6.5em }{ 1.5mm      } \hskip 1em
           \@@_cover_aux:nnnn 
             { 2em }{ professional_title }
-            { 8em }{ 1.5mm              }\par
+            { 8em }{ 1.5mm              } \par
         }
       }
   }
@@ -2612,7 +2610,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \begin{macro}{\@@_cover_table:}
 % 学位申请简况表
 %    \begin{macrocode}
-\RequirePackage{tabularray}
 \cs_new_protected:Npn \@@_cover_table:
   { 
     \table_content:n {pre_approval}
@@ -2623,7 +2620,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     \begin{tblr}{%
       width=\textwidth,
       colspec={|c|c|c|c|c|c|},
-      column{1} = {wd=2em},
+      column{1} = {wd=1.5em},
       cells={valign=m,halign=c},%垂直居中
       hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
       hline{1,8,15,20,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度
@@ -2674,6 +2671,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
       & & \l_@@_info_defense_k_tl & \l_@@_info_defense_l_tl & \l_@@_info_defense_m_tl \\
       & & \l_@@_info_defense_n_tl & \l_@@_info_defense_o_tl & \l_@@_info_defense_p_tl \\
       \end{tblr}
+
   }
 %    \end{macrocode}
 % \end{macro}
@@ -2922,7 +2920,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % 定义封面的具体配置参数。
 % \url{https://syvshc.github.io/2021-08-04-thesis-title/}
 %    \begin{macrocode}
-\RequirePackage{adjustbox}
 \newlength\myheight%可以重构为LaTeX3代码
 \newcommand\Mysavedprevdepth{}%
 \newcommand\UnderlineCentered[3]{%
@@ -3850,9 +3847,9 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \end{variable}
 %
 % \begin{variable}{\c_@@_secret_clist}
-% 四种密级。
+% 五种密级。
 %    \begin{macrocode}
-\clist_const:Nn \c_@@_secret_clist { 公开, 秘密, 机密, 绝密 }
+\clist_const:Nn \c_@@_secret_clist { 公开, 内部, 秘密, 机密, 绝密 }
 %    \end{macrocode}
 % \end{variable}
 %
