@@ -1009,7 +1009,7 @@
   { \tl_new:c { l__YNU_info_ #1 _tl } }
 \clist_map_inline:nn
   {
-    instructors, supervisor, keywords
+    instructors, supervisor, keywords, pre_approval, pre_defense, submission,defense
   }
   { \clist_new:c { l__YNU_info_ #1 _clist } }
 \clist_map_inline:nn
@@ -1028,7 +1028,10 @@
     author      .tl_set:N    = \l__YNU_info_author_tl,
     author*     .tl_set:N    = \l__YNU_info_author_en_tl,
     supervisor  .clist_set:N = \l__YNU_info_supervisor_clist,
-    instructors .clist_set:N = \l__YNU_info_instructors_clist,
+    pre-approval .clist_set:N = \l__YNU_info_pre_approval_clist,
+    pre-defense  .clist_set:N = \l__YNU_info_pre_defense_clist,
+    submission   .clist_set:N = \l__YNU_info_submission_clist,
+    defense      .clist_set:N = \l__YNU_info_defense_clist,
     department  .tl_set:N    = \l__YNU_info_department_tl,
     major       .tl_set:N    = \l__YNU_info_major_tl,
     major_professional       .tl_set:N    = \l__YNU_info_major_professional_tl,
@@ -1205,23 +1208,26 @@
       { \textwidth         }
       { \number\year 年 \number\month 月 }
   }
-\cs_new_protected:Npn \table_content:Nn #1#2
+\cs_new_protected:Npn \table_content:n #1
   {
     \clist_set:Nn \l_tmpa_clist {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p}
     \clist_map_inline:Nn \l_tmpa_clist
-      {\tl_new:c {tl_tmp_ ##2 _#1} }
+      {\tl_new:c { l__YNU_info_ #1 _ ##1 _tl } }
 
-    \bool_until_do:nn {\clist_if_empty_p:N #1}{
+    \bool_until_do:nn {\clist_if_empty_p:c { l__YNU_info_ #1 _clist } }{
       \clist_pop:NN \l_tmpa_clist \l_tmpa_tl
-      \clist_pop:NN #1 \l_tmpb_tl
-      \tl_set:cx { tl_tmp_#2_\l_tmpa_tl } \l_tmpb_tl
-
+      \clist_pop:cN { l__YNU_info_ #1 _clist } \l_tmpb_tl
+      \tl_set:cx { l__YNU_info_ #1 _ \l_tmpa_tl _tl } \l_tmpb_tl
     }
   }
-
 \RequirePackage{tabularray}
 \cs_new_protected:Npn \__YNU_cover_table:
   {
+    \table_content:n {pre_approval}
+    \table_content:n {pre_defense}
+    \table_content:n {submission}
+    \table_content:n {defense}
+
     \begin{tblr}{%
       width=\textwidth,
       colspec={|c|c|c|c|c|c|},
@@ -1245,57 +1251,35 @@
       cell{3-7,10-14,22-26}{5} = {r=1,c=2}{c},%填写单位
       }
       %预审
-      & & \\
-
+      & & \l__YNU_info_pre_approval_a_tl \\
       & & & & \\
-
-      & & & & \\
-
-      & & & & \\
-
-      & & & & \\
-
-      & & & & \\
-
-      & & & & \\
+      & & \l__YNU_info_pre_approval_b_tl & \l__YNU_info_pre_approval_c_tl & \l__YNU_info_pre_approval_d_tl \\
+      & & \l__YNU_info_pre_approval_e_tl & \l__YNU_info_pre_approval_f_tl & \l__YNU_info_pre_approval_g_tl \\
+      & & \l__YNU_info_pre_approval_h_tl & \l__YNU_info_pre_approval_i_tl & \l__YNU_info_pre_approval_j_tl \\
+      & & \l__YNU_info_pre_approval_k_tl & \l__YNU_info_pre_approval_l_tl & \l__YNU_info_pre_approval_m_tl \\
+      & & \l__YNU_info_pre_approval_n_tl & \l__YNU_info_pre_approval_o_tl & \l__YNU_info_pre_approval_p_tl \\
       %预答辩, 博士
-      & & \\
-
+      & & \l__YNU_info_pre_defense_a_tl \\
       & & & & \\
-
-      & & & &  \\
-
-      & & & &  \\
-
-      & & & &  \\
-
-      & & & &  \\
-
-      & & & &  \\
+      & & \l__YNU_info_pre_defense_b_tl & \l__YNU_info_pre_defense_c_tl & \l__YNU_info_pre_defense_d_tl \\
+      & & \l__YNU_info_pre_defense_e_tl & \l__YNU_info_pre_defense_f_tl & \l__YNU_info_pre_defense_g_tl \\
+      & & \l__YNU_info_pre_defense_h_tl & \l__YNU_info_pre_defense_i_tl & \l__YNU_info_pre_defense_j_tl \\
+      & & \l__YNU_info_pre_defense_k_tl & \l__YNU_info_pre_defense_l_tl & \l__YNU_info_pre_defense_m_tl \\
+      & & \l__YNU_info_pre_defense_n_tl & \l__YNU_info_pre_defense_o_tl & \l__YNU_info_pre_defense_p_tl \\
       %送审
-      & & & & & \\
-
-      & &  & & &\\
-
-      & &  & & &\\
-
-      & &  & & &\\
-
-      & &  & & &\\
+      & & & & &\\
+      & & \l__YNU_info_submission_a_tl & \l__YNU_info_submission_b_tl & \l__YNU_info_submission_c_tl & \l__YNU_info_submission_d_tl \\
+      & & \l__YNU_info_submission_e_tl & \l__YNU_info_submission_f_tl & \l__YNU_info_submission_g_tl & \l__YNU_info_submission_h_tl \\
+      & & \l__YNU_info_submission_i_tl & \l__YNU_info_submission_j_tl & \l__YNU_info_submission_k_tl & \l__YNU_info_submission_l_tl \\
+      & & \l__YNU_info_submission_m_tl & \l__YNU_info_submission_n_tl & \l__YNU_info_submission_o_tl & \l__YNU_info_submission_p_tl \\
       %答辩
-      & & \\
-
+      & & \l__YNU_info_defense_a_tl \\
       & & & & \\
-
-      & & & &  \\
-
-      & & & &  \\
-
-      & & & &  \\
-
-      & & & &  \\
-
-      & & & &  \\
+      & & \l__YNU_info_defense_b_tl & \l__YNU_info_defense_c_tl & \l__YNU_info_defense_d_tl \\
+      & & \l__YNU_info_defense_e_tl & \l__YNU_info_defense_f_tl & \l__YNU_info_defense_g_tl \\
+      & & \l__YNU_info_defense_h_tl & \l__YNU_info_defense_i_tl & \l__YNU_info_defense_j_tl \\
+      & & \l__YNU_info_defense_k_tl & \l__YNU_info_defense_l_tl & \l__YNU_info_defense_m_tl \\
+      & & \l__YNU_info_defense_n_tl & \l__YNU_info_defense_o_tl & \l__YNU_info_defense_p_tl \\
       \end{tblr}
   }
 \cs_new_protected:Npn \__YNU_cover_signature:N #1
@@ -1432,7 +1416,7 @@
   {
     \cleardoublepage
     \thispagestyle { empty }
-    \clist_if_empty:NF \l__YNU_info_instructors_clist
+    \clist_if_empty:NF \l__YNU_info_pre_approval_clist
       { \UseInstance { YNU / cover } { cover-ii-default } }
   }
 \NewDocumentCommand \makecoveriii { }
