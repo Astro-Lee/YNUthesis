@@ -1187,15 +1187,30 @@
         \__YNU_cover_aux:nnnn
           { 2em }{ student_id }
           { 8em }{ 1.5mm      } \par
-        \bool_until_do:nn { \clist_if_empty_p:N \l__YNU_info_supervisor_clist }{
-          \clist_pop:NN \l__YNU_info_supervisor_clist \l__YNU_info_supervisor_tl
-          \clist_pop:NN \l__YNU_info_supervisor_clist \l__YNU_info_professional_title_tl
-          \__YNU_cover_aux:nnnn
-            { 5em }{ supervisor }
-            { 6.5em }{ 1.5mm      } \hskip 1em
-          \__YNU_cover_aux:nnnn
-            { 2em }{ professional_title }
-            { 8em }{ 1.5mm              } \par
+        \int_case:nn {\g__YNU_thesis_type_int}
+        {
+          { 1 }{
+            \bool_until_do:nn { \clist_if_empty_p:N \l__YNU_info_supervisor_clist }{
+              \clist_pop:NN \l__YNU_info_supervisor_clist \l__YNU_info_supervisor_tl
+              \clist_pop:NN \l__YNU_info_supervisor_clist \l__YNU_info_professional_title_tl
+              \__YNU_cover_aux:nnnn
+                { 5em }{ supervisor }
+                { 6.5em }{ 1.5mm      } \hskip 1em
+              \__YNU_cover_aux:nnnn
+                { 2em }{ professional_title }
+                { 8em }{ 1.5mm              } \par
+            }
+          }
+          { 2 }{
+            \clist_pop:NN \l__YNU_info_supervisor_clist \l__YNU_info_supervisor_tl
+            \clist_pop:NN \l__YNU_info_supervisor_clist \l__YNU_info_professional_title_tl
+            \__YNU_cover_aux:nnnn
+              { 5em }{ supervisor }
+              { 6.5em }{ 1.5mm      } \hskip 1em
+            \__YNU_cover_aux:nnnn
+              { 2em }{ professional_title }
+              { 8em }{ 1.5mm              } \par
+          }
         }
       }
   }
@@ -1224,61 +1239,112 @@
     \table_content:n {submission}
     \table_content:n {defense}
 
-    \begin{tblr}{%
-      width=\textwidth,
-      colspec={|c|c|c|c|c|c|},
-      column{1} = {wd=1.5em},
-      cells={valign=m,halign=c},%垂直居中
-      hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
-      hline{1,8,15,20,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度
-      cell{1}{1} = {r=26,c=1}{c,cmd={\bfseries 云\\南\\大\\学\\博\\士\\研\\究\\生\\学\\位\\申\\请\\简\\况\\表}},%云南大学博士研究生学位申请简况表
-      cell{1}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\预\\审}},%论文预审
-      cell{8}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\预\\答\\辩}},%论文预答辩
-      cell{15}{2} = {r=5,c=1}{c,cmd={\bfseries 论\\文\\送\\审}},%论文送审
-      cell{20}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\答\\辩}},%论文答辩
-      cell{1}{3} = {r=1,c=4}{l,cmd={论文预审结果：}},%论文预审结果：
-      cell{8}{3} = {r=1,c=4}{l,cmd={预答辩结果：}},%预答辩结果：
-      cell{20}{3} = {r=1,c=4}{l,cmd={答辩结果：}},%答辩结果：
-      cell{2,9,21}{5} = {r=1,c=2}{c,cmd={所在单位（校内：学院/校外：所在单位）}},%所在单位（校内：学院/校外：所在单位）
-      cell{2,9,15}{3} = {cmd={专家姓名}},
-      cell{21}{3} = {cmd={答辩专家}},
-      cell{2,9,15,21}{4} = {cmd={职称}},
-      cell{15}{5} = {cmd={所在单位（校内：学院/校外：所在单位）}},
-      cell{15}{6} = {cmd={结果}},
-      cell{3-7,10-14,22-26}{5} = {r=1,c=2}{c},%填写单位
+    \int_case:nn { \g__YNU_thesis_type_int }
+    {
+      {1}{ % 博士
+        \begin{tblr}{%
+          width=\textwidth,
+          colspec={|c|c|c|c|c|c|},
+          column{1} = {wd=1.5em},
+          cells={valign=m,halign=c},%垂直居中
+          hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
+          hline{1,8,15,20,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度
+          cell{1}{1} = {r=26,c=1}{c,cmd={\bfseries 云\\南\\大\\学\\博\\士\\研\\究\\生\\学\\位\\申\\请\\简\\况\\表}},%云南大学博士研究生学位申请简况表
+          cell{1}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\预\\审}},%论文预审
+          cell{8}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\预\\答\\辩}},%论文预答辩
+          cell{15}{2} = {r=5,c=1}{c,cmd={\bfseries 论\\文\\送\\审}},%论文送审
+          cell{20}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\答\\辩}},%论文答辩
+          cell{1}{3} = {r=1,c=4}{l,cmd={论文预审结果：}},%论文预审结果：
+          cell{8}{3} = {r=1,c=4}{l,cmd={预答辩结果：}},%预答辩结果：
+          cell{20}{3} = {r=1,c=4}{l,cmd={答辩结果：}},%答辩结果：
+          cell{2,9,21}{5} = {r=1,c=2}{c,cmd={所在单位（校内：学院/校外：所在单位）}},%所在单位（校内：学院/校外：所在单位）
+          cell{2,9,15}{3} = {cmd={专家姓名}},
+          cell{21}{3} = {cmd={答辩专家}},
+          cell{2,9,15,21}{4} = {cmd={职称}},
+          cell{15}{5} = {cmd={所在单位（校内：学院/校外：所在单位）}},
+          cell{15}{6} = {cmd={结果}},
+          cell{3-7,10-14,22-26}{5} = {r=1,c=2}{c},%填写单位
+          }
+          % 预审
+          & & \l__YNU_info_pre_approval_a_tl \\
+          & & & & \\
+          & & \l__YNU_info_pre_approval_b_tl & \l__YNU_info_pre_approval_c_tl & \l__YNU_info_pre_approval_d_tl \\
+          & & \l__YNU_info_pre_approval_e_tl & \l__YNU_info_pre_approval_f_tl & \l__YNU_info_pre_approval_g_tl \\
+          & & \l__YNU_info_pre_approval_h_tl & \l__YNU_info_pre_approval_i_tl & \l__YNU_info_pre_approval_j_tl \\
+          & & \l__YNU_info_pre_approval_k_tl & \l__YNU_info_pre_approval_l_tl & \l__YNU_info_pre_approval_m_tl \\
+          & & \l__YNU_info_pre_approval_n_tl & \l__YNU_info_pre_approval_o_tl & \l__YNU_info_pre_approval_p_tl \\
+          % 预答辩, 仅博士
+          & & \l__YNU_info_pre_defense_a_tl \\
+          & & & & \\
+          & & \l__YNU_info_pre_defense_b_tl & \l__YNU_info_pre_defense_c_tl & \l__YNU_info_pre_defense_d_tl \\
+          & & \l__YNU_info_pre_defense_e_tl & \l__YNU_info_pre_defense_f_tl & \l__YNU_info_pre_defense_g_tl \\
+          & & \l__YNU_info_pre_defense_h_tl & \l__YNU_info_pre_defense_i_tl & \l__YNU_info_pre_defense_j_tl \\
+          & & \l__YNU_info_pre_defense_k_tl & \l__YNU_info_pre_defense_l_tl & \l__YNU_info_pre_defense_m_tl \\
+          & & \l__YNU_info_pre_defense_n_tl & \l__YNU_info_pre_defense_o_tl & \l__YNU_info_pre_defense_p_tl \\
+          % 送审
+          & & & & &\\
+          & & \l__YNU_info_submission_a_tl & \l__YNU_info_submission_b_tl & \l__YNU_info_submission_c_tl & \l__YNU_info_submission_d_tl \\
+          & & \l__YNU_info_submission_e_tl & \l__YNU_info_submission_f_tl & \l__YNU_info_submission_g_tl & \l__YNU_info_submission_h_tl \\
+          & & \l__YNU_info_submission_i_tl & \l__YNU_info_submission_j_tl & \l__YNU_info_submission_k_tl & \l__YNU_info_submission_l_tl \\
+          & & \l__YNU_info_submission_m_tl & \l__YNU_info_submission_n_tl & \l__YNU_info_submission_o_tl & \l__YNU_info_submission_p_tl \\
+          % 答辩
+          & & \l__YNU_info_defense_a_tl \\
+          & & & & \\
+          & & \l__YNU_info_defense_b_tl & \l__YNU_info_defense_c_tl & \l__YNU_info_defense_d_tl \\
+          & & \l__YNU_info_defense_e_tl & \l__YNU_info_defense_f_tl & \l__YNU_info_defense_g_tl \\
+          & & \l__YNU_info_defense_h_tl & \l__YNU_info_defense_i_tl & \l__YNU_info_defense_j_tl \\
+          & & \l__YNU_info_defense_k_tl & \l__YNU_info_defense_l_tl & \l__YNU_info_defense_m_tl \\
+          & & \l__YNU_info_defense_n_tl & \l__YNU_info_defense_o_tl & \l__YNU_info_defense_p_tl \\
+        \end{tblr}
       }
-      %预审
-      & & \l__YNU_info_pre_approval_a_tl \\
-      & & & & \\
-      & & \l__YNU_info_pre_approval_b_tl & \l__YNU_info_pre_approval_c_tl & \l__YNU_info_pre_approval_d_tl \\
-      & & \l__YNU_info_pre_approval_e_tl & \l__YNU_info_pre_approval_f_tl & \l__YNU_info_pre_approval_g_tl \\
-      & & \l__YNU_info_pre_approval_h_tl & \l__YNU_info_pre_approval_i_tl & \l__YNU_info_pre_approval_j_tl \\
-      & & \l__YNU_info_pre_approval_k_tl & \l__YNU_info_pre_approval_l_tl & \l__YNU_info_pre_approval_m_tl \\
-      & & \l__YNU_info_pre_approval_n_tl & \l__YNU_info_pre_approval_o_tl & \l__YNU_info_pre_approval_p_tl \\
-      %预答辩, 博士
-      & & \l__YNU_info_pre_defense_a_tl \\
-      & & & & \\
-      & & \l__YNU_info_pre_defense_b_tl & \l__YNU_info_pre_defense_c_tl & \l__YNU_info_pre_defense_d_tl \\
-      & & \l__YNU_info_pre_defense_e_tl & \l__YNU_info_pre_defense_f_tl & \l__YNU_info_pre_defense_g_tl \\
-      & & \l__YNU_info_pre_defense_h_tl & \l__YNU_info_pre_defense_i_tl & \l__YNU_info_pre_defense_j_tl \\
-      & & \l__YNU_info_pre_defense_k_tl & \l__YNU_info_pre_defense_l_tl & \l__YNU_info_pre_defense_m_tl \\
-      & & \l__YNU_info_pre_defense_n_tl & \l__YNU_info_pre_defense_o_tl & \l__YNU_info_pre_defense_p_tl \\
-      %送审
-      & & & & &\\
-      & & \l__YNU_info_submission_a_tl & \l__YNU_info_submission_b_tl & \l__YNU_info_submission_c_tl & \l__YNU_info_submission_d_tl \\
-      & & \l__YNU_info_submission_e_tl & \l__YNU_info_submission_f_tl & \l__YNU_info_submission_g_tl & \l__YNU_info_submission_h_tl \\
-      & & \l__YNU_info_submission_i_tl & \l__YNU_info_submission_j_tl & \l__YNU_info_submission_k_tl & \l__YNU_info_submission_l_tl \\
-      & & \l__YNU_info_submission_m_tl & \l__YNU_info_submission_n_tl & \l__YNU_info_submission_o_tl & \l__YNU_info_submission_p_tl \\
-      %答辩
-      & & \l__YNU_info_defense_a_tl \\
-      & & & & \\
-      & & \l__YNU_info_defense_b_tl & \l__YNU_info_defense_c_tl & \l__YNU_info_defense_d_tl \\
-      & & \l__YNU_info_defense_e_tl & \l__YNU_info_defense_f_tl & \l__YNU_info_defense_g_tl \\
-      & & \l__YNU_info_defense_h_tl & \l__YNU_info_defense_i_tl & \l__YNU_info_defense_j_tl \\
-      & & \l__YNU_info_defense_k_tl & \l__YNU_info_defense_l_tl & \l__YNU_info_defense_m_tl \\
-      & & \l__YNU_info_defense_n_tl & \l__YNU_info_defense_o_tl & \l__YNU_info_defense_p_tl \\
-      \end{tblr}
-
+      {2}{ % 硕士
+         \begin{tblr}{%
+          width=\textwidth,
+          colspec={|c|c|c|c|c|c|},
+          column{1} = {wd=1.5em},
+          cells={valign=m,halign=c},%垂直居中
+          hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
+          hline{1,8,13,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度
+          cell{1}{1} = {r=19,c=1}{c,cmd={\bfseries 云\\南\\大\\学\\硕\\士\\研\\究\\生\\学\\位\\申\\请\\简\\况\\表}},%云南大学博士研究生学位申请简况表
+          cell{1}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\预\\审}},%论文预审
+          cell{8}{2} = {r=5,c=1}{c,cmd={\bfseries 论\\文\\送\\审}},%论文送审
+          cell{13}{2} = {r=7,c=1}{c,cmd={\bfseries 论\\文\\答\\辩}},%论文答辩
+          cell{1}{3} = {r=1,c=4}{l,cmd={论文预审结果：}},%论文预审结果：
+          cell{13}{3} = {r=1,c=4}{l,cmd={答辩结果：}},%答辩结果：
+          cell{2,14}{5} = {r=1,c=2}{c,cmd={所在单位（校内：学院/校外：所在单位）}},%所在单位（校内：学院/校外：所在单位）
+          cell{2,8}{3} = {cmd={专家姓名}},
+          cell{14}{3} = {cmd={答辩专家}},
+          cell{2,8,14}{4} = {cmd={职称}},
+          cell{8}{5} = {cmd={所在单位（校内：学院/校外：所在单位）}},
+          cell{8}{6} = {cmd={结果}},
+          cell{3-7,15-19}{5} = {r=1,c=2}{c},%填写单位
+          rows = {ht=2.5em}
+          }
+          % 预审
+          & & \l__YNU_info_pre_approval_a_tl \\
+          & & & & \\
+          & & \l__YNU_info_pre_approval_b_tl & \l__YNU_info_pre_approval_c_tl & \l__YNU_info_pre_approval_d_tl \\
+          & & \l__YNU_info_pre_approval_e_tl & \l__YNU_info_pre_approval_f_tl & \l__YNU_info_pre_approval_g_tl \\
+          & & \l__YNU_info_pre_approval_h_tl & \l__YNU_info_pre_approval_i_tl & \l__YNU_info_pre_approval_j_tl \\
+          & & \l__YNU_info_pre_approval_k_tl & \l__YNU_info_pre_approval_l_tl & \l__YNU_info_pre_approval_m_tl \\
+          & & \l__YNU_info_pre_approval_n_tl & \l__YNU_info_pre_approval_o_tl & \l__YNU_info_pre_approval_p_tl \\
+          % 送审
+          & & & & &\\
+          & & \l__YNU_info_submission_a_tl & \l__YNU_info_submission_b_tl & \l__YNU_info_submission_c_tl & \l__YNU_info_submission_d_tl \\
+          & & \l__YNU_info_submission_e_tl & \l__YNU_info_submission_f_tl & \l__YNU_info_submission_g_tl & \l__YNU_info_submission_h_tl \\
+          & & \l__YNU_info_submission_i_tl & \l__YNU_info_submission_j_tl & \l__YNU_info_submission_k_tl & \l__YNU_info_submission_l_tl \\
+          & & \l__YNU_info_submission_m_tl & \l__YNU_info_submission_n_tl & \l__YNU_info_submission_o_tl & \l__YNU_info_submission_p_tl \\
+          % 答辩
+          & & \l__YNU_info_defense_a_tl \\
+          & & & & \\
+          & & \l__YNU_info_defense_b_tl & \l__YNU_info_defense_c_tl & \l__YNU_info_defense_d_tl \\
+          & & \l__YNU_info_defense_e_tl & \l__YNU_info_defense_f_tl & \l__YNU_info_defense_g_tl \\
+          & & \l__YNU_info_defense_h_tl & \l__YNU_info_defense_i_tl & \l__YNU_info_defense_j_tl \\
+          & & \l__YNU_info_defense_k_tl & \l__YNU_info_defense_l_tl & \l__YNU_info_defense_m_tl \\
+          & & \l__YNU_info_defense_n_tl & \l__YNU_info_defense_o_tl & \l__YNU_info_defense_p_tl \\
+        \end{tblr}
+      }
+    }
   }
 \cs_new_protected:Npn \__YNU_cover_signature:N #1
   {
