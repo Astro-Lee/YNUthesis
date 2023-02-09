@@ -1115,21 +1115,21 @@
   {
     \__YNU_fixed_width_box:nn { \textwidth }
       {
-        \__YNU_cover_id_aux:n { clc          }
-        \__YNU_cover_id_aux:n { secret_level } \par
-        \__YNU_cover_id_aux:n { UDC          }
-        \__YNU_cover_id_aux:n { number       }
+        \__YNU_cover_aux_a:nnnn { 3em }{ clc          }{ 6em }{ 1mm } \hskip 1em
+        \__YNU_cover_aux_a:nnnn { 2em }{ secret_level }{ 6em }{ 1mm } \par
+        \__YNU_cover_aux_a:nnnn { 3em }{ UDC          }{ 6em }{ 1mm } \hskip 1em
+        \__YNU_cover_aux_a:nnnn { 2em }{ number       }{ 6em }{ 1mm }
       }
-  }
-\cs_new:Npn \__YNU_cover_id_aux:n #1
-  {
-    \makebox[3em][c]{ \tl_use:c { c__YNU_name_ #1 _tl } }
-    \c__YNU_fwid_colon_tl
-    \underline{ \makebox[6em][c]{ \tl_use:c { l__YNU_info_ #1 _tl } } }
   }
 \cs_new:Npn \__YNU_cover_aux:nnnn #1#2#3#4
   {
     \__YNU_spread_box:nn { #1 } { \tl_use:c { c__YNU_name_ #2 _tl } }
+    \UnderlineCentered{ #3 } { #4 } { \tl_use:c { l__YNU_info_ #2 _tl } }
+  }
+\cs_new:Npn \__YNU_cover_aux_a:nnnn #1#2#3#4
+  {
+    \__YNU_center_box:nn { #1 } { \tl_use:c { c__YNU_name_ #2 _tl } }
+    \c__YNU_fwid_colon_tl
     \UnderlineCentered{ #3 } { #4 } { \tl_use:c { l__YNU_info_ #2 _tl } }
   }
 \cs_new_protected:Npn \__YNU_cover_logo:
@@ -1232,7 +1232,6 @@
       width=\textwidth,
       colspec={|c|c|c|c|c|c|},
       column{1} = {wd=2em},
-      column{2} = {wd=1em},
       cells={valign=m,halign=c},%垂直居中
       hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
       hline{1,8,15,20,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度

@@ -2380,24 +2380,24 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   {
     \@@_fixed_width_box:nn { \textwidth }
       { 
-        \@@_cover_id_aux:n { clc          }
-        \@@_cover_id_aux:n { secret_level } \par
-        \@@_cover_id_aux:n { UDC          }
-        \@@_cover_id_aux:n { number       }
+        \@@_cover_aux_a:nnnn { 3em }{ clc          }{ 6em }{ 1mm } \hskip 1em
+        \@@_cover_aux_a:nnnn { 2em }{ secret_level }{ 6em }{ 1mm } \par
+        \@@_cover_aux_a:nnnn { 3em }{ UDC          }{ 6em }{ 1mm } \hskip 1em
+        \@@_cover_aux_a:nnnn { 2em }{ number       }{ 6em }{ 1mm }
       }
   }
 %    \end{macrocode}
 % 
 %    \begin{macrocode}
-\cs_new:Npn \@@_cover_id_aux:n #1
-  {
-    \makebox[3em][c]{ \tl_use:c { c_@@_name_ #1 _tl } }
-    \c_@@_fwid_colon_tl
-    \underline{ \makebox[6em][c]{ \tl_use:c { l_@@_info_ #1 _tl } } }
-  }
 \cs_new:Npn \@@_cover_aux:nnnn #1#2#3#4
   {
     \@@_spread_box:nn { #1 } { \tl_use:c { c_@@_name_ #2 _tl } } 
+    \UnderlineCentered{ #3 } { #4 } { \tl_use:c { l_@@_info_ #2 _tl } }
+  }
+\cs_new:Npn \@@_cover_aux_a:nnnn #1#2#3#4
+  {
+    \@@_center_box:nn { #1 } { \tl_use:c { c_@@_name_ #2 _tl } } 
+    \c_@@_fwid_colon_tl
     \UnderlineCentered{ #3 } { #4 } { \tl_use:c { l_@@_info_ #2 _tl } }
   }
 %    \end{macrocode}
@@ -2624,7 +2624,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
       width=\textwidth,
       colspec={|c|c|c|c|c|c|},
       column{1} = {wd=2em},
-      column{2} = {wd=1em},
       cells={valign=m,halign=c},%垂直居中
       hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
       hline{1,8,15,20,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度
@@ -3861,10 +3860,10 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { secret_level       } { \hskip 1em 密级                },
+    { secret_level       } { 密级                           },
     { secret_star        } { \textrm { \bigstar }           },
     { UDC                } { UDC                            },
-    { number             } { \hskip 1em 编号                 },
+    { number             } { 编号                            },
     { student_id         } { 学号                            },
     { department         } { 学院（所、中心）                 },
     { major              } { 专业名称                        },
