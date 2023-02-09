@@ -1231,6 +1231,8 @@
     \begin{tblr}{%
       width=\textwidth,
       colspec={|c|c|c|c|c|c|},
+      column{1} = {wd=2em},
+      column{2} = {wd=1em},
       cells={valign=m,halign=c},%垂直居中
       hlines = {wd=0.5pt},vlines={wd=0.5pt},%表内边框线宽度
       hline{1,8,15,20,Z} = {wd=1.5pt},vline{1,2,Z} = {wd=1.5pt},%表外边框线宽度
