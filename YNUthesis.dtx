@@ -1388,7 +1388,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
         { 1 } { \@@_fancy_head:nn { EL } { 云南大学博士学位论文  } }
         { 2 } { \@@_fancy_head:nn { EL } { 云南大学（专业）硕士学位论文  } }
       }
-    
   }
   {
     \@@_fancy_head:nn { C } {
@@ -1452,7 +1451,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
     chapter =
       {
-        format      = \huge \normalfont \sffamily \centering,
+        format      = \large \normalfont \sffamily \centering,
         beforeskip  = 50 pt,
         afterskip   = 40 pt,
         number      = \@@_arabic:n { chapter },
@@ -1460,21 +1459,21 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
       },
     section =
       {
-        format      = \Large \normalfont \sffamily \raggedright,
+        format      = \zihao{ 4 } \normalfont \sffamily \raggedright,
         beforeskip  = 3.5 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.7 ex plus 0.5 ex,
         fixskip     = true
       },
     subsection =
       {
-        format      = \large \normalfont \sffamily \raggedright,
+        format      = \normalfont \sffamily \raggedright,
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
       },
     subsubsection =
       {
-        format      = \large \normalfont \sffamily \raggedright,
+        format      = \normalfont \sffamily \raggedright,
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
@@ -3136,6 +3135,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %
 % 设置目录中章节标题的样式。
 %    \begin{macrocode}
+    tocdepth       = 3,
+    secnumdepth    = 3,
     chapter / tocline =
       {
         \normalfont \sffamily

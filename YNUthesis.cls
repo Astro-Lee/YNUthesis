@@ -701,7 +701,6 @@
         { 1 } { \__YNU_fancy_head:nn { EL } { 云南大学博士学位论文  } }
         { 2 } { \__YNU_fancy_head:nn { EL } { 云南大学（专业）硕士学位论文  } }
       }
-
   }
   {
     \__YNU_fancy_head:nn { C } {
@@ -732,7 +731,7 @@
   {
     chapter =
       {
-        format      = \huge \normalfont \sffamily \centering,
+        format      = \large \normalfont \sffamily \centering,
         beforeskip  = 50 pt,
         afterskip   = 40 pt,
         number      = \__YNU_arabic:n { chapter },
@@ -740,21 +739,21 @@
       },
     section =
       {
-        format      = \Large \normalfont \sffamily \raggedright,
+        format      = \zihao{ 4 } \normalfont \sffamily \raggedright,
         beforeskip  = 3.5 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.7 ex plus 0.5 ex,
         fixskip     = true
       },
     subsection =
       {
-        format      = \large \normalfont \sffamily \raggedright,
+        format      = \normalfont \sffamily \raggedright,
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
       },
     subsubsection =
       {
-        format      = \large \normalfont \sffamily \raggedright,
+        format      = \normalfont \sffamily \raggedright,
         beforeskip  = 3.25 ex plus 1.0 ex minus 0.2 ex,
         afterskip   = 2.5  ex plus 0.3 ex,
         fixskip     = true
@@ -1614,6 +1613,8 @@
     contentsname   = \c__YNU_name_toc_tl,
     listfigurename = \c__YNU_name_lof_tl,
     listtablename  = \c__YNU_name_lot_tl,
+    tocdepth       = 3,
+    secnumdepth    = 3,
     chapter / tocline =
       {
         \normalfont \sffamily
