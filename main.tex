@@ -2,6 +2,7 @@
 % !TeX encoding = UTF-8
 \documentclass{YNUthesis}
 \usepackage{YNUlogo}
+\usepackage{booktabs}
 \usepackage{zhlipsum}
 
 \YNUsetup{
@@ -264,32 +265,57 @@
 %   \include{chapter3}
 
 \chapter{介绍}
-\zhlipsum[10]
+
+\zhlipsum
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\linewidth]{example-image-a}%
+  \caption{这是一个示例图片}
+  \label{fig:一个示例图片}
+\end{figure}
+
+\zhlipsum
+
+\begin{table}[htbp]
+  \centering
+  \caption{An example Table.}
+  \label{tab:example-tab}
+  \begin{tabular}{lcc}
+  \toprule
+  Star & Mass & Luminosity\\
+  & $M_{\odot}$ & $L_{\odot}$\\
+  \midrule
+  Sun & 1.00 & 1.00\\
+  $\alpha$~Cen~A & 1.10 & 1.52\\
+  $\epsilon$~Eri & 0.82 & 0.34\\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+\zhlipsum
 
 \[
     a^2+b^2=c^2
 \]
 
-\zhlipsum[10]
-\zhlipsum[10]
-\zhlipsum[10]
-\zhlipsum[10]
+\zhlipsum
 
 \section{动力学演化}
-\zhlipsum[10]
+\zhlipsum
 
 \subsection{动力学演化}
-\zhlipsum[10]
+\zhlipsum
 
 \subsubsection{动力学演化}
-\zhlipsum[10]
+\zhlipsum
 
 \chapter{总结与展望}
-\zhlipsum[10]
+\zhlipsum
 
 \appendix
 \chapter{附录}
-\zhlipsum[10]
+\zhlipsum
 
 % 后置部分包含参考文献、声明页（自动生成）等
 \backmatter
@@ -298,9 +324,9 @@
 \printbibliography
 
 \chapter{攻读XX期间完成的科研成果}
-\zhlipsum[10]
+\zhlipsum
 
 \chapter{致谢}
-\zhlipsum[10]
+\zhlipsum
 
 \end{document}

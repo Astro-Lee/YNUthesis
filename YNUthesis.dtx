@@ -1452,8 +1452,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     chapter =
       {
         format      = \large \normalfont \sffamily \centering,
-        beforeskip  = 50 pt,
-        afterskip   = 40 pt,
+        beforeskip  = 19 pt,
+        afterskip   = 17 pt,
         number      = \@@_arabic:n { chapter },
         fixskip     = true
       },
@@ -2014,13 +2014,19 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \captionsetup [ figure ]
   {
-    font     = small,
-    labelsep = quad
+    font      = small,
+    labelfont = bf,
+    textfont  = bf,
+    labelsep  = quad,
+    position  = top
   }
 \captionsetup [ table  ]
   {
-    font     = { small, sf },
-    labelsep = quad
+    font      = small,
+    labelfont = bf,
+    textfont  = bf,
+    labelsep  = quad,
+    position  = bottom
   }
 %    \end{macrocode}
 %
@@ -2379,6 +2385,10 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   { \linespread { \fp_use:N #1 } \selectfont }
 \cs_new:Npn \@@_line_spread:n #1
   { \linespread {#1} \selectfont }
+%    \end{macrocode}
+% 正文行距1.5倍。
+%    \begin{macrocode}
+\@@_line_spread:n {1.5}
 %    \end{macrocode}
 % \end{macro}
 %

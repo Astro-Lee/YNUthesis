@@ -732,8 +732,8 @@
     chapter =
       {
         format      = \large \normalfont \sffamily \centering,
-        beforeskip  = 50 pt,
-        afterskip   = 40 pt,
+        beforeskip  = 19 pt,
+        afterskip   = 17 pt,
         number      = \__YNU_arabic:n { chapter },
         fixskip     = true
       },
@@ -1006,13 +1006,19 @@
 \cs_generate_variant:Nn \YNU_thm_set_body_font:n   { V }
 \captionsetup [ figure ]
   {
-    font     = small,
-    labelsep = quad
+    font      = small,
+    labelfont = bf,
+    textfont  = bf,
+    labelsep  = quad,
+    position  = top
   }
 \captionsetup [ table  ]
   {
-    font     = { small, sf },
-    labelsep = quad
+    font      = small,
+    labelfont = bf,
+    textfont  = bf,
+    labelsep  = quad,
+    position  = bottom
   }
 \cs_set:Npn \thefigure
   { \thechapter - \__YNU_arabic:n { figure } }
@@ -1120,6 +1126,7 @@
   { \linespread { \fp_use:N #1 } \selectfont }
 \cs_new:Npn \__YNU_line_spread:n #1
   { \linespread {#1} \selectfont }
+\__YNU_line_spread:n {1.5}
 \newcommand\reduline{\bgroup 是\markoverwith
 {\textcolor{red}{\rule[-0.5ex]{2pt}{0.4pt}}}\ULon}
 \cs_new_protected:Npn \__YNU_cover_id:
