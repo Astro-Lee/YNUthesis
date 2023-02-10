@@ -1377,16 +1377,32 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %
 % \cs{fancyhead} 的选项中，\opt{E} 和 \opt{O} 分别表示偶数（even）和奇数（odd）， 而 \opt{L}、
 % \opt{R} 和 \opt{C} 则分别表示左（left）、右（right）和中间（center）。按照通常的排版规则，
-% 双面模式下，偶数页的中间页眉文字在左，奇数页则在右；单面模式下，左右页眉都会显示。
+% 双面模式下，偶数页的中间页眉文字在左，奇数页则在右；单面模式下，页眉居中显示，
+% \url{https://tex.stackexchange.com/questions/69100/distinguish-even-odd-pages-in-header-with-oneside-option}。
 %    \begin{macrocode}
 \bool_if:NTF \g_@@_twoside_bool
   {
-    \@@_fancy_head:nn { EL } { \leftmark  }
-    \@@_fancy_head:nn { OR } { \rightmark }
+    \@@_fancy_head:nn { OR } { \leftmark }
+    \int_case:nn { \g_@@_thesis_type_int }
+      {
+        { 1 } { \@@_fancy_head:nn { EL } { 云南大学博士学位论文  } }
+        { 2 } { \@@_fancy_head:nn { EL } { 云南大学（专业）硕士学位论文  } }
+      }
+    
   }
   {
-    \@@_fancy_head:nn { L  } { \leftmark  }
-    \@@_fancy_head:nn { R  } { \rightmark }
+    \@@_fancy_head:nn { C } {
+      \int_if_odd:nTF \c@page
+        { \leftmark }
+        {
+          \int_case:nn { \g_@@_thesis_type_int }
+          {
+            { 1 } { \tl_set:Nn \l_tmpa_tl { 云南大学博士学位论文        } }
+            { 2 } { \tl_set:Nn \l_tmpa_tl { 云南大学（专业）硕士学位论文 } }
+          }
+          \l_tmpa_tl
+        }
+    }
   }
 %    \end{macrocode}
 %
