@@ -1340,7 +1340,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     \char_set_active_eq:NN ^^^^3002 \c_@@_fwid_full_stop_tl
     \char_set_catcode_active:N ^^^^3002
     \clist_map_inline:nn
-      { \c_@@_orig_decl_text_tl, \c_@@_auth_decl_text_tl }
+      { \c_@@_orig_auth_text_a_tl }
       { \tl_set_rescan:Nno ##1 { } {##1} }
   }
 %    \end{macrocode}
@@ -2743,14 +2743,14 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \end{macro}
 %
 % \begin{macro}{\@@_cover_signature:N}
-% 签名行。
+% 签名部分。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_signature:N #1
   {
     \clist_map_inline:Nn #1
       {
         ##1 \c_@@_fwid_colon_tl
-        \@@_blank_underline:n { 6 em }
+        \@@_blank_underline:n { 6.5 em }
         \@@_quad:
       }
   }
@@ -2974,12 +2974,10 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 \DeclareCoverTemplate { cover-ii  } { table }
 \DeclareCoverTemplate { cover-iii }
   {
-    originality-decl-name,
-    originality-decl-text,
-    originality-decl-sig,
-    authorization-decl-name,
-    authorization-decl-text,
-    authorization-decl-sig
+    orig-auth-decl-name,
+    orig-auth-decl-text-a,
+    orig-auth-decl-text-b,
+    orig-auth-decl-sig,
   }
 %    \end{macrocode}
 %
@@ -3043,30 +3041,20 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   }
 \DeclareInstance { YNU / cover } { cover-iii-default } { cover-iii }
   {
-    format                                =\@@_line_spread:n { 1.8 },
-    top-skip                              = 0 pt plus 0.2 fill,
-    bottom-skip                           = 0 pt plus 2.5 fill,
-    originality-decl-name   / content     = \c_@@_name_orig_decl_tl,
-    originality-decl-text   / content     = \c_@@_orig_decl_text_tl,
-    originality-decl-sig    / content     =
-      \@@_cover_signature:N \c_@@_orig_decl_sign_clist,
-    authorization-decl-name / content     = \c_@@_name_auth_decl_tl,
-    authorization-decl-text / content     = \c_@@_auth_decl_text_tl,
-    authorization-decl-sig  / content     =
-      \@@_cover_signature:N \c_@@_auth_decl_sign_clist,
-    originality-decl-name   / format      =
-      \@@_line_spread:n { 1.2 } \zihao { -2 } \bfseries,
-    authorization-decl-name / format      =
-      \@@_line_spread:n { 1.2 } \zihao { -2 } \bfseries,
-    originality-decl-name   / bottom-skip = 0.4 cm,
-    originality-decl-text   / bottom-skip = 0.4 cm,
-    originality-decl-sig    / bottom-skip = 0 pt plus 2.5 fill,
-    authorization-decl-name / bottom-skip = 0.4 cm,
-    authorization-decl-text / bottom-skip = 0.4 cm,
-    originality-decl-name   / align       = center,
-    originality-decl-sig    / align       = right,
-    authorization-decl-name / align       = center,
-    authorization-decl-sig  / align       = right,
+    format                                = \@@_line_spread:n { 1.5 },
+    orig-auth-decl-name   / content     = \c_@@_name_orig_auth_tl,
+    orig-auth-decl-text-a / content     = \c_@@_orig_auth_text_a_tl,
+    orig-auth-decl-text-b / content     = \c_@@_name_orig_auth_text_b_tl,
+    orig-auth-decl-sig    / content     =
+      \@@_cover_signature:N \c_@@_orig_auth_sign_clist,
+    orig-auth-decl-name   / format      = \zihao { 2 } \sffamily,
+    orig-auth-decl-text-b / format      = \sffamily,
+    orig-auth-decl-name   / bottom-skip = 1 cm,
+    orig-auth-decl-text-a / bottom-skip = 0 cm,
+    orig-auth-decl-text-b / bottom-skip = 3 cm,
+    orig-auth-decl-sig    / bottom-skip = 0 cm,
+    orig-auth-decl-name   / align       = center,
+    orig-auth-decl-sig    / align       = left,
   }
 %    \end{macrocode}
 %
@@ -3145,7 +3133,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
       {
         \CTEXnumberline {#1} #2
       },
-      subsubsection / tocline =
+    subsubsection / tocline =
       {
         \CTEXnumberline {#1} #2
       }
@@ -3862,40 +3850,23 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %
 % \subsubsection{声明页}
 %
-% \begin{variable}{\c_@@_orig_decl_text_tl}
-% 论文独创性声明。
+% \begin{variable}{\c_@@_orig_auth_text_a_tl}
+% 论文独创性声明及使用授权内容。
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_orig_decl_text_tl
+\tl_const:Nn \c_@@_orig_auth_text_a_tl
   {
-    本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究
-    工作所取得的成果。论文中除特别标注的内容外，不包含任何其他个人或机
-    构已经发表或撰写过的研究成果。对本研究做出重要贡献的个人和集体，均
-    已在论文中作了明确的声明并表示了谢意。本声明的法律结果由本人承担。
+    本论文是作者在导师指导下取得的研究成果。除了文中特别加以标注和致谢的地方外，论文中不包含其他人已经发表或撰写过的研究成果，不存在剽窃或抄袭行为。与作者一同工作的同志对本研究所做的任何贡献均已在论文中作了明确的说明并表示了谢意。
+    \par
+    现就论文的使用对云南大学授权如下：学校有权保留本论文（含电子版），也可以采用影印、缩印或其他复制手段保存论文；学校有权公布论文的全部或部分内容，可以将论文用于查阅或借阅服务；学校有权向有关机构送交学位论文用于学术规范审查、社会监督或评奖；学校有权将学位论文的全部或部分内容录入有关数据库用于检索服务。
   }
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\c_@@_auth_decl_text_tl}
-% 论文使用授权声明。
-%    \begin{macrocode}
-\tl_const:Nn \c_@@_auth_decl_text_tl
-  {
-    本人完全了解云南大学有关收藏和利用博士、硕士学位论文的规定，即：学
-    校有权收藏、使用并向国家有关部门或机构送交论文的印刷本和电子版本；
-    允许论文被查阅和借阅；学校可以公布论文的全部或部分内容，可以采用影
-    印、缩印或其它复制手段保存论文。涉密学位论文在解密后遵守此规定。
-  }
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\c_@@_orig_decl_sign_clist,
-%   \c_@@_auth_decl_sign_clist}
+% \begin{variable}{\c_@@_orig_auth_sign_clist}
 % 声明页签名项目。
 %    \begin{macrocode}
-\clist_const:Nn \c_@@_orig_decl_sign_clist
-  { 作者签名, 日期 }
-\clist_const:Nn \c_@@_auth_decl_sign_clist
-  { 作者签名, 导师签名, 日期 }
+\clist_const:Nn \c_@@_orig_auth_sign_clist
+  { 研究生签名, 导师签名, 日期 }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -3944,8 +3915,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     { lot                } { 表格目录                        },
     { bib_en             } { Bibliography                    },
     { pdf_creator        } { LaTeX~ with~ YNUthesis~ class   },
-    { orig_decl          } { \c_@@_name_simp_tl \\ 学位论文独创性声明   },
-    { auth_decl          } { \c_@@_name_simp_tl \\ 学位论文使用授权声明 }
+    { orig_auth          } { 论文独创性声明及使用授权          },
+    { orig_auth_text_b   } { （内部或保密的论文在解密后应遵循此规定） }
   }
   { \@@_define_name:nn #1 }
 \clist_map_inline:nn

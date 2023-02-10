@@ -679,7 +679,7 @@
     \char_set_active_eq:NN ^^^^3002 \c__YNU_fwid_full_stop_tl
     \char_set_catcode_active:N ^^^^3002
     \clist_map_inline:nn
-      { \c__YNU_orig_decl_text_tl, \c__YNU_auth_decl_text_tl }
+      { \c__YNU_orig_auth_text_a_tl }
       { \tl_set_rescan:Nno ##1 { } {##1} }
   }
 \DeclareEmphSequence
@@ -1351,7 +1351,7 @@
     \clist_map_inline:Nn #1
       {
         ##1 \c__YNU_fwid_colon_tl
-        \__YNU_blank_underline:n { 6 em }
+        \__YNU_blank_underline:n { 6.5 em }
         \__YNU_quad:
       }
   }
@@ -1498,12 +1498,10 @@
 \DeclareCoverTemplate { cover-ii  } { table }
 \DeclareCoverTemplate { cover-iii }
   {
-    originality-decl-name,
-    originality-decl-text,
-    originality-decl-sig,
-    authorization-decl-name,
-    authorization-decl-text,
-    authorization-decl-sig
+    orig-auth-decl-name,
+    orig-auth-decl-text-a,
+    orig-auth-decl-text-b,
+    orig-auth-decl-sig,
   }
 \newlength\myheight%可以重构为LaTeX3代码
 \newcommand\Mysavedprevdepth{}%
@@ -1560,30 +1558,20 @@
   }
 \DeclareInstance { YNU / cover } { cover-iii-default } { cover-iii }
   {
-    format                                =\__YNU_line_spread:n { 1.8 },
-    top-skip                              = 0 pt plus 0.2 fill,
-    bottom-skip                           = 0 pt plus 2.5 fill,
-    originality-decl-name   / content     = \c__YNU_name_orig_decl_tl,
-    originality-decl-text   / content     = \c__YNU_orig_decl_text_tl,
-    originality-decl-sig    / content     =
-      \__YNU_cover_signature:N \c__YNU_orig_decl_sign_clist,
-    authorization-decl-name / content     = \c__YNU_name_auth_decl_tl,
-    authorization-decl-text / content     = \c__YNU_auth_decl_text_tl,
-    authorization-decl-sig  / content     =
-      \__YNU_cover_signature:N \c__YNU_auth_decl_sign_clist,
-    originality-decl-name   / format      =
-      \__YNU_line_spread:n { 1.2 } \zihao { -2 } \bfseries,
-    authorization-decl-name / format      =
-      \__YNU_line_spread:n { 1.2 } \zihao { -2 } \bfseries,
-    originality-decl-name   / bottom-skip = 0.4 cm,
-    originality-decl-text   / bottom-skip = 0.4 cm,
-    originality-decl-sig    / bottom-skip = 0 pt plus 2.5 fill,
-    authorization-decl-name / bottom-skip = 0.4 cm,
-    authorization-decl-text / bottom-skip = 0.4 cm,
-    originality-decl-name   / align       = center,
-    originality-decl-sig    / align       = right,
-    authorization-decl-name / align       = center,
-    authorization-decl-sig  / align       = right,
+    format                                = \__YNU_line_spread:n { 1.5 },
+    orig-auth-decl-name   / content     = \c__YNU_name_orig_auth_tl,
+    orig-auth-decl-text-a / content     = \c__YNU_orig_auth_text_a_tl,
+    orig-auth-decl-text-b / content     = \c__YNU_name_orig_auth_text_b_tl,
+    orig-auth-decl-sig    / content     =
+      \__YNU_cover_signature:N \c__YNU_orig_auth_sign_clist,
+    orig-auth-decl-name   / format      = \zihao { 2 } \sffamily,
+    orig-auth-decl-text-b / format      = \sffamily,
+    orig-auth-decl-name   / bottom-skip = 1 cm,
+    orig-auth-decl-text-a / bottom-skip = 0 cm,
+    orig-auth-decl-text-b / bottom-skip = 3 cm,
+    orig-auth-decl-sig    / bottom-skip = 0 cm,
+    orig-auth-decl-name   / align       = center,
+    orig-auth-decl-sig    / align       = left,
   }
 \bool_new:N \l__YNU_auto_make_cover_bool
 \tl_new:N   \l__YNU_declaration_page_tl
@@ -1624,7 +1612,7 @@
       {
         \CTEXnumberline {#1} #2
       },
-      subsubsection / tocline =
+    subsubsection / tocline =
       {
         \CTEXnumberline {#1} #2
       }
