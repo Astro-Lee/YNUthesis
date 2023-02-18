@@ -221,17 +221,17 @@
 \begin{document}
 
 % 这个命令用来关闭版心底部强制对齐，可以减少不必要的 underfull \vbox 提示，但会影响排版效果
-% \raggedbottom
+\raggedbottom
 
 % 前置部分包含目录、中英文摘要以及符号表等
 \frontmatter
 
 \begin{abstract}
-  中文摘要
+	中文摘要
 \end{abstract}
 
 \begin{abstract*}
-  English abstract
+	English abstract
 \end{abstract*}
 
 % 目录
@@ -251,8 +251,8 @@
 % 可选参数与 LaTeX 标准表格的列格式说明语法一致
 % 这里的 “ll” 表示两列均为自动宽度，并且左对齐
 \begin{notation}[ll]
-  $x$                  & 坐标        \\
-  $p$                  & 动量        \\
+	$x$                  & 坐标        \\
+	$p$                  & 动量        \\
 \end{notation}
 
 % 主体部分是论文的核心
@@ -269,34 +269,34 @@
 \zhlipsum
 
 \begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.5\linewidth]{example-image-a}%
-  \caption{这是一个示例图片}
-  \label{fig:一个示例图片}
+	\centering
+	\includegraphics[width=0.5\linewidth]{example-image-a}%
+	\caption{这是一个示例图片}
+	\label{fig:一个示例图片}
 \end{figure}
 
 \zhlipsum
 
 \begin{table}[htbp]
-  \centering
-  \caption{An example Table.}
-  \label{tab:example-tab}
-  \begin{tabular}{lcc}
-  \toprule
-  Star & Mass & Luminosity\\
-  & $M_{\odot}$ & $L_{\odot}$\\
-  \midrule
-  Sun & 1.00 & 1.00\\
-  $\alpha$~Cen~A & 1.10 & 1.52\\
-  $\epsilon$~Eri & 0.82 & 0.34\\
-  \bottomrule
-  \end{tabular}
+	\centering
+	\caption{An example Table.}
+	\label{tab:example-tab}
+	\begin{tabular}{lcc}
+		\toprule
+		Star           & Mass        & Luminosity  \\
+		               & $M_{\odot}$ & $L_{\odot}$ \\
+		\midrule
+		Sun            & 1.00        & 1.00        \\
+		$\alpha$~Cen~A & 1.10        & 1.52        \\
+		$\epsilon$~Eri & 0.82        & 0.34        \\
+		\bottomrule
+	\end{tabular}
 \end{table}
 
 \zhlipsum
 
 \[
-    a^2+b^2=c^2
+	a^2+b^2=c^2
 \]
 
 \zhlipsum

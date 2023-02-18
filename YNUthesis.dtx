@@ -1355,6 +1355,26 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   }
 %    \end{macrocode}
 %
+% \subsection{表格字号}
+%
+% 表格字号为五号\url{https://www.zhihu.com/question/366803177}
+%    \begin{macrocode}
+\RequirePackage{xpatch}
+\xpatchcmd\@floatboxreset
+  {\normalsize}
+  {\expandafter\ifstrequal\expandafter{\@captype}{table}
+      % if inside "table" env
+      {\small}
+      % otherwise
+      {\normalsize}}
+  {}{\fail}
+%etoolbox对浮动体无效
+\RequirePackage{etoolbox}
+\AtBeginEnvironment{tabular}{\small}
+\AtBeginEnvironment{longtable}{\small}
+\AtBeginEnvironment{tblr}{\small}
+%    \end{macrocode}
+%
 % \subsection{页眉页脚}
 %
 % 清除默认页眉页脚格式。

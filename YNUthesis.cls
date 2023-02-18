@@ -687,6 +687,19 @@
     \itshape \YNU@kai,
     \upshape \CJKfamily { \CJKfamilydefault },
   }
+\RequirePackage{xpatch}
+\xpatchcmd\@floatboxreset
+  {\normalsize}
+  {\expandafter\ifstrequal\expandafter{\@captype}{table}
+      % if inside "table" env
+      {\small}
+      % otherwise
+      {\normalsize}}
+  {}{\fail}
+\RequirePackage{etoolbox}
+\AtBeginEnvironment{tabular}{\small}
+\AtBeginEnvironment{longtable}{\small}
+\AtBeginEnvironment{tblr}{\small}
 \fancyhf { }
 \cs_new_protected:Npn \__YNU_fancy_head:nn #1#2
   {
