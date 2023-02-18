@@ -223,6 +223,9 @@
 % 这个命令用来关闭版心底部强制对齐，可以减少不必要的 underfull \vbox 提示，但会影响排版效果
 % \raggedbottom
 
+% 前置部分包含目录、中英文摘要以及符号表等
+\frontmatter
+
 \begin{abstract}
   中文摘要
 \end{abstract}
@@ -230,9 +233,6 @@
 \begin{abstract*}
   English abstract
 \end{abstract*}
-
-% 前置部分包含目录、中英文摘要以及符号表等
-\frontmatter
 
 % 目录
 \tableofcontents
