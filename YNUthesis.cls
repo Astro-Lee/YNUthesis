@@ -1806,6 +1806,9 @@
       { - \NAT@penalty }
       { \textendash \NAT@penalty }
     \cs_set:Npn \bibsection { \__YNU_chapter:V \bibname }
+    \RenewDocumentCommand \bibfont { } { \small }
+    \setlength{\bibsep}{0\p@ \@plus.5\p@}
+    \setlength{\bibhang}{2\ccwd}
     \NewDocumentCommand \printbibliography { o }
       {
         \exp_args:NV \bibliography \l__YNU_bib_resource_clist

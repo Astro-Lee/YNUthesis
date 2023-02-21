@@ -3483,6 +3483,12 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
     \cs_set:Npn \bibsection { \@@_chapter:V \bibname }
 %    \end{macrocode}
+% 参考文献的著录条目用五号字。
+%    \begin{macrocode}
+    \RenewDocumentCommand \bibfont { } { \small }
+    \setlength{\bibsep}{0\p@ \@plus.5\p@}
+    \setlength{\bibhang}{2\ccwd}
+%    \end{macrocode}
 % \BibTeX{} 下接口与 \pkg{biblatex} 保持统一。
 %    \begin{macrocode}
     \NewDocumentCommand \printbibliography { o }
@@ -3671,8 +3677,6 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \end{macrocode}
 % \end{macro}
 %
-%
-%
 % \begin{macro}{\YNU_allow_url_break:,\@@_add_url_break_points:}
 % 允许 URL 在字母、数字和一些特殊符号处断行。见
 % \url{https://bit.ly/2hhIjLW}。
@@ -3847,14 +3851,16 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { ideo_comma       } { ^^^^3001 },
-    { ideo_full_stop   } { ^^^^3002 },
-    { fwid_comma       } { ^^^^ff0c },
-    { fwid_full_stop   } { ^^^^ff0e },
-    { fwid_colon       } { ^^^^ff1a },
-    { fwid_semicolon   } { ^^^^ff1b },
-    { fwid_left_paren  } { ^^^^ff08 },
-    { fwid_right_paren } { ^^^^ff09 }
+    { ideo_comma         } { ^^^^3001 },
+    { ideo_full_stop     } { ^^^^3002 },
+    { fwid_comma         } { ^^^^ff0c },
+    { fwid_full_stop     } { ^^^^ff0e },
+    { fwid_colon         } { ^^^^ff1a },
+    { fwid_semicolon     } { ^^^^ff1b },
+    { fwid_left_paren    } { ^^^^ff08 },
+    { fwid_right_paren   } { ^^^^ff09 },
+    { fwid_left_bracket  } { ^^^^ff3b },
+    { fwid_right_bracket } { ^^^^ff3d }
   }
   { \@@_define_punct:nn #1 }
 %    \end{macrocode}

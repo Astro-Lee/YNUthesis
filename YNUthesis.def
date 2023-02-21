@@ -39,14 +39,16 @@
 \tl_const:Nn \c__YNU_name_en_tl   { Yunnan~ University }
 \clist_map_inline:nn
   {
-    { ideo_comma       } { ^^^^3001 },
-    { ideo_full_stop   } { ^^^^3002 },
-    { fwid_comma       } { ^^^^ff0c },
-    { fwid_full_stop   } { ^^^^ff0e },
-    { fwid_colon       } { ^^^^ff1a },
-    { fwid_semicolon   } { ^^^^ff1b },
-    { fwid_left_paren  } { ^^^^ff08 },
-    { fwid_right_paren } { ^^^^ff09 }
+    { ideo_comma         } { ^^^^3001 },
+    { ideo_full_stop     } { ^^^^3002 },
+    { fwid_comma         } { ^^^^ff0c },
+    { fwid_full_stop     } { ^^^^ff0e },
+    { fwid_colon         } { ^^^^ff1a },
+    { fwid_semicolon     } { ^^^^ff1b },
+    { fwid_left_paren    } { ^^^^ff08 },
+    { fwid_right_paren   } { ^^^^ff09 },
+    { fwid_left_bracket  } { ^^^^ff3b },
+    { fwid_right_bracket } { ^^^^ff3d }
   }
   { \__YNU_define_punct:nn #1 }
 \fp_const:Nn \c__YNU_line_spread_fp
