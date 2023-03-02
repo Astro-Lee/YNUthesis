@@ -3,7 +3,7 @@ name: Compiling LaTeX template
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
     path:
       - ['**.dtx','**.tex']
 
