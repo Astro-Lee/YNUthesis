@@ -27,8 +27,8 @@ jobs:
         cp main.tex template/
         cp main.bib template/
         cp YNUlogo.sty template/
-        cp YNUlogo.cls template/
-        cp YNUlogo.def template/
+        cp YNUthesis.cls template/
+        cp YNUthesis.def template/
         cp latexmkrc template/
 
     - name: Upload Artifact
