@@ -34,5 +34,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: YNU thesis template
+        name: YNU-thesis-template
         path: template
