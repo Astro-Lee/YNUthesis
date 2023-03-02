@@ -1,1 +1,36 @@
 name: Compiling LaTeX template
+
+on:
+  push:
+    branches:
+      - 'master'
+    path:
+      - ['**.dtx','**.tex']
+
+jobs:
+  Thesis_Template:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Set up Git repository
+      uses: actions/checkout@v3
+
+    - name: Compile LaTeX document
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: YNUthesis.dtx
+    
+    - name: Make Artifact
+      run: |
+        mkdir template
+        cp main.tex template/
+        cp main.bib template/
+        cp YNUlogo.sty template/
+        cp YNUlogo.cls template/
+        cp YNUlogo.def template/
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: template
+        path: template
