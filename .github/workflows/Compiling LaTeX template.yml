@@ -17,9 +17,9 @@ jobs:
 
     - name: Compile LaTeX document
       uses: xu-cheng/texlive-action/small@v1
-        with:
-          run: |
-            xetex YNUthesis.dtx
+      with:
+        run: |
+          xetex YNUthesis.dtx
     
     - name: Make Artifact
       run: |
