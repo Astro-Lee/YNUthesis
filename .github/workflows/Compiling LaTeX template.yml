@@ -28,6 +28,7 @@ jobs:
         cp YNUlogo.sty template/
         cp YNUlogo.cls template/
         cp YNUlogo.def template/
+        cp latexmkrc template/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
