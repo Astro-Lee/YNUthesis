@@ -20,6 +20,7 @@ jobs:
       with:
         run: |
           xetex YNUthesis.dtx
+          latexmkrc
     
     - name: Make Artifact
       run: |
@@ -34,5 +35,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: template
+        name: YNU thesis template
         path: template
