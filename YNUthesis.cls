@@ -708,11 +708,11 @@
   }
 \bool_if:NTF \g__YNU_twoside_bool
   {
-    \__YNU_fancy_head:nn { OR } { \leftmark }
+    \__YNU_fancy_head:nn { OC } { \leftmark }
     \int_case:nn { \g__YNU_thesis_type_int }
       {
-        { 1 } { \__YNU_fancy_head:nn { EL } { 云南大学博士学位论文  } }
-        { 2 } { \__YNU_fancy_head:nn { EL } { 云南大学（专业）硕士学位论文  } }
+        { 1 } { \__YNU_fancy_head:nn { EC } { 云南大学博士学位论文  } }
+        { 2 } { \__YNU_fancy_head:nn { EC } { 云南大学（专业）硕士学位论文  } }
       }
   }
   {
