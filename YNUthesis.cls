@@ -32,7 +32,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[2022/11/01]
 \RequirePackage{expl3}
-\GetIdInfo $Id: YNUthesis.dtx 0.0.1 2023-02-01 12:00:00Z Rui-Zhi Li <liruizhi0871@gmail.com> $
+\GetIdInfo $Id: YNUthesis.dtx 0.0.1 2022-02-01 12:00:00Z Rui-Zhi Li <liruizhi0871@gmail.com> $
   {Thesis template for Yunnan University}
 \ProvidesExplClass{\ExplFileName}
   {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -44,7 +44,7 @@
     `l3kernel'~ and~` l3packages'\\\\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2023/02/01 } { }
+\@ifpackagelater { expl3 } { 2022/02/01 } { }
   { \msg_error:nnn { YNUthesis } { l3-too-old } { expl3 } }
 \msg_new:nnn { YNUthesis } { unsupported-engine }
   {
