@@ -1044,7 +1044,7 @@
   { \tl_new:c { l__YNU_info_ #1 _tl } }
 \clist_map_inline:nn
   {
-    instructors, supervisor, keywords, pre_approval, pre_defense, submission,defense
+    instructors, supervisor, keywords, pre_review, pre_defense, submission,defense
   }
   { \clist_new:c { l__YNU_info_ #1 _clist } }
 \clist_map_inline:nn
@@ -1063,7 +1063,7 @@
     author      .tl_set:N    = \l__YNU_info_author_tl,
     author*     .tl_set:N    = \l__YNU_info_author_en_tl,
     supervisor  .clist_set:N = \l__YNU_info_supervisor_clist,
-    pre-approval .clist_set:N = \l__YNU_info_pre_approval_clist,
+    pre-review .clist_set:N = \l__YNU_info_pre_review_clist,
     pre-defense  .clist_set:N = \l__YNU_info_pre_defense_clist,
     submission   .clist_set:N = \l__YNU_info_submission_clist,
     defense      .clist_set:N = \l__YNU_info_defense_clist,
@@ -1268,7 +1268,7 @@
   }
 \cs_new_protected:Npn \__YNU_cover_table:
   {
-    \table_content:n {pre_approval}
+    \table_content:n {pre_review}
     \table_content:n {pre_defense}
     \table_content:n {submission}
     \table_content:n {defense}
@@ -1300,13 +1300,13 @@
           cell{3-7,10-14,22-26}{5} = {r=1,c=2}{c},%填写单位
           }
           % 预审
-          & & \l__YNU_info_pre_approval_a_tl \\
+          & & \l__YNU_info_pre_review_a_tl \\
           & & & & \\
-          & & \l__YNU_info_pre_approval_b_tl & \l__YNU_info_pre_approval_c_tl & \l__YNU_info_pre_approval_d_tl \\
-          & & \l__YNU_info_pre_approval_e_tl & \l__YNU_info_pre_approval_f_tl & \l__YNU_info_pre_approval_g_tl \\
-          & & \l__YNU_info_pre_approval_h_tl & \l__YNU_info_pre_approval_i_tl & \l__YNU_info_pre_approval_j_tl \\
-          & & \l__YNU_info_pre_approval_k_tl & \l__YNU_info_pre_approval_l_tl & \l__YNU_info_pre_approval_m_tl \\
-          & & \l__YNU_info_pre_approval_n_tl & \l__YNU_info_pre_approval_o_tl & \l__YNU_info_pre_approval_p_tl \\
+          & & \l__YNU_info_pre_review_b_tl & \l__YNU_info_pre_review_c_tl & \l__YNU_info_pre_review_d_tl \\
+          & & \l__YNU_info_pre_review_e_tl & \l__YNU_info_pre_review_f_tl & \l__YNU_info_pre_review_g_tl \\
+          & & \l__YNU_info_pre_review_h_tl & \l__YNU_info_pre_review_i_tl & \l__YNU_info_pre_review_j_tl \\
+          & & \l__YNU_info_pre_review_k_tl & \l__YNU_info_pre_review_l_tl & \l__YNU_info_pre_review_m_tl \\
+          & & \l__YNU_info_pre_review_n_tl & \l__YNU_info_pre_review_o_tl & \l__YNU_info_pre_review_p_tl \\
           % 预答辩, 仅博士
           & & \l__YNU_info_pre_defense_a_tl \\
           & & & & \\
@@ -1355,13 +1355,13 @@
           rows = {ht=2.5em}
           }
           % 预审
-          & & \l__YNU_info_pre_approval_a_tl \\
+          & & \l__YNU_info_pre_review_a_tl \\
           & & & & \\
-          & & \l__YNU_info_pre_approval_b_tl & \l__YNU_info_pre_approval_c_tl & \l__YNU_info_pre_approval_d_tl \\
-          & & \l__YNU_info_pre_approval_e_tl & \l__YNU_info_pre_approval_f_tl & \l__YNU_info_pre_approval_g_tl \\
-          & & \l__YNU_info_pre_approval_h_tl & \l__YNU_info_pre_approval_i_tl & \l__YNU_info_pre_approval_j_tl \\
-          & & \l__YNU_info_pre_approval_k_tl & \l__YNU_info_pre_approval_l_tl & \l__YNU_info_pre_approval_m_tl \\
-          & & \l__YNU_info_pre_approval_n_tl & \l__YNU_info_pre_approval_o_tl & \l__YNU_info_pre_approval_p_tl \\
+          & & \l__YNU_info_pre_review_b_tl & \l__YNU_info_pre_review_c_tl & \l__YNU_info_pre_review_d_tl \\
+          & & \l__YNU_info_pre_review_e_tl & \l__YNU_info_pre_review_f_tl & \l__YNU_info_pre_review_g_tl \\
+          & & \l__YNU_info_pre_review_h_tl & \l__YNU_info_pre_review_i_tl & \l__YNU_info_pre_review_j_tl \\
+          & & \l__YNU_info_pre_review_k_tl & \l__YNU_info_pre_review_l_tl & \l__YNU_info_pre_review_m_tl \\
+          & & \l__YNU_info_pre_review_n_tl & \l__YNU_info_pre_review_o_tl & \l__YNU_info_pre_review_p_tl \\
           % 送审
           & & & & &\\
           & & \l__YNU_info_submission_a_tl & \l__YNU_info_submission_b_tl & \l__YNU_info_submission_c_tl & \l__YNU_info_submission_d_tl \\
@@ -1514,7 +1514,7 @@
   {
     \cleardoublepage
     \thispagestyle { empty }
-    \clist_if_empty:NF \l__YNU_info_pre_approval_clist
+    \clist_if_empty:NF \l__YNU_info_pre_review_clist
       { \UseInstance { YNU / cover } { cover-ii-default } }
   }
 \NewDocumentCommand \makecoveriii { }

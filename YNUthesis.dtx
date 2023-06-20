@@ -2102,7 +2102,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   { \tl_new:c { l_@@_info_ #1 _tl } }
 \clist_map_inline:nn
   {
-    instructors, supervisor, keywords, pre_approval, pre_defense, submission,defense
+    instructors, supervisor, keywords, pre_review, pre_defense, submission,defense
   }
   { \clist_new:c { l_@@_info_ #1 _clist } }
 %    \end{macrocode}
@@ -2179,10 +2179,10 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{info/pre-approval,info/pre-defense,info/submission,info/defense}
+% \begin{macro}{info/pre-review,info/pre-defense,info/submission,info/defense}
 % 论文预审，论文预答辩，论文送审，论文答辩
 %    \begin{macrocode}
-    pre-approval .clist_set:N = \l_@@_info_pre_approval_clist,
+    pre-review .clist_set:N = \l_@@_info_pre_review_clist,
     pre-defense  .clist_set:N = \l_@@_info_pre_defense_clist,
     submission   .clist_set:N = \l_@@_info_submission_clist,
     defense      .clist_set:N = \l_@@_info_defense_clist,
@@ -2688,7 +2688,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_cover_table:
   { 
-    \table_content:n {pre_approval}
+    \table_content:n {pre_review}
     \table_content:n {pre_defense}
     \table_content:n {submission}
     \table_content:n {defense}
@@ -2720,13 +2720,13 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
           cell{3-7,10-14,22-26}{5} = {r=1,c=2}{c},%填写单位
           }
           % 预审
-          & & \l_@@_info_pre_approval_a_tl \\
+          & & \l_@@_info_pre_review_a_tl \\
           & & & & \\
-          & & \l_@@_info_pre_approval_b_tl & \l_@@_info_pre_approval_c_tl & \l_@@_info_pre_approval_d_tl \\
-          & & \l_@@_info_pre_approval_e_tl & \l_@@_info_pre_approval_f_tl & \l_@@_info_pre_approval_g_tl \\
-          & & \l_@@_info_pre_approval_h_tl & \l_@@_info_pre_approval_i_tl & \l_@@_info_pre_approval_j_tl \\
-          & & \l_@@_info_pre_approval_k_tl & \l_@@_info_pre_approval_l_tl & \l_@@_info_pre_approval_m_tl \\
-          & & \l_@@_info_pre_approval_n_tl & \l_@@_info_pre_approval_o_tl & \l_@@_info_pre_approval_p_tl \\
+          & & \l_@@_info_pre_review_b_tl & \l_@@_info_pre_review_c_tl & \l_@@_info_pre_review_d_tl \\
+          & & \l_@@_info_pre_review_e_tl & \l_@@_info_pre_review_f_tl & \l_@@_info_pre_review_g_tl \\
+          & & \l_@@_info_pre_review_h_tl & \l_@@_info_pre_review_i_tl & \l_@@_info_pre_review_j_tl \\
+          & & \l_@@_info_pre_review_k_tl & \l_@@_info_pre_review_l_tl & \l_@@_info_pre_review_m_tl \\
+          & & \l_@@_info_pre_review_n_tl & \l_@@_info_pre_review_o_tl & \l_@@_info_pre_review_p_tl \\
           % 预答辩, 仅博士
           & & \l_@@_info_pre_defense_a_tl \\
           & & & & \\
@@ -2775,13 +2775,13 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
           rows = {ht=2.5em}
           }
           % 预审
-          & & \l_@@_info_pre_approval_a_tl \\
+          & & \l_@@_info_pre_review_a_tl \\
           & & & & \\
-          & & \l_@@_info_pre_approval_b_tl & \l_@@_info_pre_approval_c_tl & \l_@@_info_pre_approval_d_tl \\
-          & & \l_@@_info_pre_approval_e_tl & \l_@@_info_pre_approval_f_tl & \l_@@_info_pre_approval_g_tl \\
-          & & \l_@@_info_pre_approval_h_tl & \l_@@_info_pre_approval_i_tl & \l_@@_info_pre_approval_j_tl \\
-          & & \l_@@_info_pre_approval_k_tl & \l_@@_info_pre_approval_l_tl & \l_@@_info_pre_approval_m_tl \\
-          & & \l_@@_info_pre_approval_n_tl & \l_@@_info_pre_approval_o_tl & \l_@@_info_pre_approval_p_tl \\
+          & & \l_@@_info_pre_review_b_tl & \l_@@_info_pre_review_c_tl & \l_@@_info_pre_review_d_tl \\
+          & & \l_@@_info_pre_review_e_tl & \l_@@_info_pre_review_f_tl & \l_@@_info_pre_review_g_tl \\
+          & & \l_@@_info_pre_review_h_tl & \l_@@_info_pre_review_i_tl & \l_@@_info_pre_review_j_tl \\
+          & & \l_@@_info_pre_review_k_tl & \l_@@_info_pre_review_l_tl & \l_@@_info_pre_review_m_tl \\
+          & & \l_@@_info_pre_review_n_tl & \l_@@_info_pre_review_o_tl & \l_@@_info_pre_review_p_tl \\
           % 送审
           & & & & &\\
           & & \l_@@_info_submission_a_tl & \l_@@_info_submission_b_tl & \l_@@_info_submission_c_tl & \l_@@_info_submission_d_tl \\
@@ -3006,7 +3006,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   { 
     \cleardoublepage
     \thispagestyle { empty }
-    \clist_if_empty:NF \l_@@_info_pre_approval_clist
+    \clist_if_empty:NF \l_@@_info_pre_review_clist
       { \UseInstance { YNU / cover } { cover-ii-default } }
   }
 %    \end{macrocode}
