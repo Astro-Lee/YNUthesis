@@ -645,9 +645,9 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % \end{macro}
 %
 %    \begin{macrocode}
-\@@_check_class:nnn { ctexbook } { 2022/07/14 } { 2.5.10 }
+\@@_check_class:nnn { ctexbook } { 2021/07/14 } { 2.5.10 }
 \sys_if_engine_xetex:T
-  { \@@_check_package:nnn { xeCJK } { 2022/08/05 } { 3.9.1 } }
+  { \@@_check_package:nnn { xeCJK } { 2021/08/05 } { 3.9.1 } }
 %    \end{macrocode}
 %
 % \subsection{页面布局}
@@ -770,7 +770,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % 将 bold、italic 和 bold italic 统一按照 roman 设置，只需提供字体名即可。
 %    \begin{macrocode}
 \tl_const:Nn \@@_cjk_font_options:
- { UprightFont = *, ItalicFont = *, AutoFakeBold = true }
+ { Path=fonts/, UprightFont = *, ItalicFont = *, AutoFakeBold = true }
 \cs_new_protected:Npx \@@_setCJKmainfont:n   #1
   { \@@_setCJKmainfont:nn   {#1} { \@@_cjk_font_options: } }
 \cs_new_protected:Npx \@@_setCJKsansfont:n   #1
@@ -1227,8 +1227,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   {
     \@@_setCJKmainfont:n       { SimSun     }
     \@@_setCJKsansfont:n       { SimHei     }
-    \@@_setCJKmonofont:n       { FangSong   }
-    \@@_set_cjk_font_kai:n     { KaiTi      }
+    \@@_setCJKmonofont:n       { SimFang    }
+    \@@_set_cjk_font_kai:n     { SimKai     }
     \@@_set_cjk_font_xingkai:n { STXingkai  }
   }
 %    \end{macrocode}

@@ -30,6 +30,7 @@ jobs:
         cp YNUthesis.cls template/
         cp YNUthesis.def template/
         cp latexmkrc template/
+        cp -r fonts template/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3

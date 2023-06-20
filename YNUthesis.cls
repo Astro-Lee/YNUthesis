@@ -232,9 +232,9 @@
     Please~ update~ an~ up-to-date~ version~ of~ it \\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\__YNU_check_class:nnn { ctexbook } { 2022/07/14 } { 2.5.10 }
+\__YNU_check_class:nnn { ctexbook } { 2021/07/14 } { 2.5.10 }
 \sys_if_engine_xetex:T
-  { \__YNU_check_package:nnn { xeCJK } { 2022/08/05 } { 3.9.1 } }
+  { \__YNU_check_package:nnn { xeCJK } { 2021/08/05 } { 3.9.1 } }
 \geometry
   {
     paper         = a4paper,
@@ -284,7 +284,7 @@
 \cs_new_protected:Npn \YNU@xingkai
   { \__YNU_switch_family:n { YNU@xingkai } }
 \tl_const:Nn \__YNU_cjk_font_options:
- { UprightFont = *, ItalicFont = *, AutoFakeBold = true }
+ { Path=fonts/, UprightFont = *, ItalicFont = *, AutoFakeBold = true }
 \cs_new_protected:Npx \__YNU_setCJKmainfont:n   #1
   { \__YNU_setCJKmainfont:nn   {#1} { \__YNU_cjk_font_options: } }
 \cs_new_protected:Npx \__YNU_setCJKsansfont:n   #1
@@ -614,8 +614,8 @@
   {
     \__YNU_setCJKmainfont:n       { SimSun     }
     \__YNU_setCJKsansfont:n       { SimHei     }
-    \__YNU_setCJKmonofont:n       { FangSong   }
-    \__YNU_set_cjk_font_kai:n     { KaiTi      }
+    \__YNU_setCJKmonofont:n       { SimFang    }
+    \__YNU_set_cjk_font_kai:n     { SimKai     }
     \__YNU_set_cjk_font_xingkai:n { STXingkai  }
   }
 \cs_new_protected:Npn \__YNU_load_font:
