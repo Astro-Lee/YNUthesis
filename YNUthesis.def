@@ -30,7 +30,7 @@
 %%                                 and README.md.
 %% ---------------------------------------------------------------------
 %% 
-\GetIdInfo $Id: YNUthesis.dtx 0.0.1 2022-02-01 12:00:00Z Rui-Zhi Li <liruizhi0871@gmail.com> $
+\GetIdInfo $Id: YNUthesis.dtx 0.0.1 2023-02-01 12:00:00Z Rui-Zhi Li <liruizhi0871@gmail.com> $
   {Definition file for fduthesis}
 \ProvidesExplFile{\ExplFileName.def}
   {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}

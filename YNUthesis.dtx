@@ -132,11 +132,11 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %</driver>
 %
 %^^A https://tex.stackexchange.com/questions/201660/latex3s-getidinfo-how-is-its-argument-automatically-populated
-%<class|logo>\NeedsTeXFormat{LaTeX2e}[2022/11/01]
+%<class|logo>\NeedsTeXFormat{LaTeX2e}[2023/06/01]
 %<class|logo>\RequirePackage{expl3}
 %
 %<*!(driver|install)>
-%<!readme>\GetIdInfo $Id: YNUthesis.dtx 0.0.1 2022-02-01 12:00:00Z Rui-Zhi Li <liruizhi0871@gmail.com> $
+%<!readme>\GetIdInfo $Id: YNUthesis.dtx 0.0.1 2023-02-01 12:00:00Z Rui-Zhi Li <liruizhi0871@gmail.com> $
 %<class>  {Thesis template for Yunnan University}
 %<class>\ProvidesExplClass{\ExplFileName}
 %
@@ -268,7 +268,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     `l3kernel'~ and~` l3packages'\\\\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2022/02/01 } { }
+\@ifpackagelater { expl3 } { 2023/02/01 } { }
   { \msg_error:nnn { YNUthesis } { l3-too-old } { expl3 } }
 %    \end{macrocode}
 %
@@ -745,8 +745,8 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_set_cjk_font_kai:nn,\YNU@kai}
-% 楷体需要单独设置。
+% \begin{macro}{\@@_set_cjk_font_kai:nn,\YNU@kai,\YNU@xingkai}
+% 楷体与行楷需要单独设置。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_set_cjk_font_kai:nn #1#2
   { \@@_set_family:nnn { YNU@kai } {#2} {#1} }
@@ -1490,7 +1490,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
         format      = \large \normalfont \sffamily \centering,
         beforeskip  = 19 pt,
         afterskip   = 17 pt,
-        number      = \@@_arabic:n { chapter },
+        number      = \chinese{chapter},
         fixskip     = true
       },
     section =
@@ -3255,7 +3255,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 \cs_new_protected:Npn \@@_abstract_begin:
   { \@@_chapter:V \c_@@_name_abstract_tl    }
   \cs_new_protected:Npn \@@_abstract_en_begin:
-  { \@@_chapter:V \c_@@_name_abstract_en_tl }
+  { \@@_chapter:V \rmfamily \c_@@_name_abstract_en_tl }
 %    \end{macrocode}
 % \end{macro}
 %
