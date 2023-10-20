@@ -1571,7 +1571,7 @@
     id       / bottom-skip = 0 pt plus 1 fill,
     logo     / bottom-skip = -15 pt,%0 pt plus 0.5 fill,
     type     / bottom-skip = -25 pt,
-    title / bottom-skip = 5 pt plus 0.5 fill,
+    title / bottom-skip = 7 ex plus 0.5 fill,
     title-en / bottom-skip = 30 pt plus 2 fill,
     info / bottom-skip = 40 pt plus 10 fill,
     date / bottom-skip = -20 pt plus 0 fill,
