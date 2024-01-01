@@ -279,7 +279,7 @@
   { \__YNU_set_family:nnn { YNU@kai } {#2} {#1} }
 \cs_new_protected:Npn \YNU@kai
   { \__YNU_switch_family:n { YNU@kai } }
-  \cs_new_protected:Npn \__YNU_set_cjk_font_xingkai:nn #1#2
+\cs_new_protected:Npn \__YNU_set_cjk_font_xingkai:nn #1#2
   { \__YNU_set_family:nnn { YNU@xingkai } {#2} {#1} }
 \cs_new_protected:Npn \YNU@xingkai
   { \__YNU_switch_family:n { YNU@xingkai } }
@@ -1675,7 +1675,7 @@
   }
   { \__YNU_chapter:V \listtablename }
 \NewDocumentEnvironment { abstract  } { }
-{ \__YNU_abstract_begin:    } { \__YNU_abstract_end:      }
+  { \__YNU_abstract_begin:    } { \__YNU_abstract_end:      }
 \NewDocumentEnvironment { abstract* } { }
   { \__YNU_abstract_en_begin: } { \__YNU_abstract_en_end:   }
 \cs_new_protected:Npn \__YNU_abstract_begin:
@@ -1827,7 +1827,7 @@
   {
     \cs_undefine:N \addbibresource
     \clist_new:N \l__YNU_biblatex_options_clist
-    \clist_put_right:Nn \l__YNU_biblatex_options_clist { hyperref = manual }
+    \clist_put_right:Nn \l__YNU_biblatex_options_clist { hyperref = manual, gbnamefmt = lowercase }
     \clist_put_right:Nx \l__YNU_biblatex_options_clist
       {
         style =

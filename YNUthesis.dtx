@@ -756,7 +756,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 \cs_new_protected:Npn \YNU@kai
   { \@@_switch_family:n { YNU@kai } }
 % 行楷
-  \cs_new_protected:Npn \@@_set_cjk_font_xingkai:nn #1#2
+\cs_new_protected:Npn \@@_set_cjk_font_xingkai:nn #1#2
   { \@@_set_family:nnn { YNU@xingkai } {#2} {#1} }
 \cs_new_protected:Npn \YNU@xingkai
   { \@@_switch_family:n { YNU@xingkai } }
@@ -3245,7 +3245,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 % 摘要环境。在中文模板定义了中英文双语摘要，但在英文模板中则没有定义中文摘要。
 %    \begin{macrocode}
 \NewDocumentEnvironment { abstract  } { }
-{ \@@_abstract_begin:    } { \@@_abstract_end:      }
+  { \@@_abstract_begin:    } { \@@_abstract_end:      }
 \NewDocumentEnvironment { abstract* } { }
   { \@@_abstract_en_begin: } { \@@_abstract_en_end:   }
 %    \end{macrocode}
@@ -3541,7 +3541,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
   {
     \cs_undefine:N \addbibresource
     \clist_new:N \l_@@_biblatex_options_clist
-    \clist_put_right:Nn \l_@@_biblatex_options_clist { hyperref = manual }
+    \clist_put_right:Nn \l_@@_biblatex_options_clist { hyperref = manual, gbnamefmt = lowercase }
 %    \end{macrocode}
 % 参考文献样式。
 %    \begin{macrocode}
