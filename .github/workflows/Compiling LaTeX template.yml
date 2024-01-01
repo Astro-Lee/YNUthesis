@@ -20,7 +20,6 @@ jobs:
       with:
         run: |
           xetex YNUthesis.dtx
-          xelatex YNUthesis.dtx
           latexmk
     
     - name: Make Artifact
@@ -33,7 +32,6 @@ jobs:
         cp YNUthesis.def template/
         cp latexmkrc template/
         cp -r fonts template/
-        cp YNUthesis.pdf template/
         cp main.pdf template/
 
     - name: Upload Artifact

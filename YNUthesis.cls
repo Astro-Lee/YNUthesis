@@ -1827,7 +1827,7 @@
   {
     \cs_undefine:N \addbibresource
     \clist_new:N \l__YNU_biblatex_options_clist
-    \clist_put_right:Nn \l__YNU_biblatex_options_clist { hyperref = manual, gbnamefmt = lowercase }
+    \clist_put_right:Nn \l__YNU_biblatex_options_clist { hyperref = manual, gbnamefmt = lowercase,  eprint = false, gbtitlelink = true, url = false, doi = false }
     \clist_put_right:Nx \l__YNU_biblatex_options_clist
       {
         style =
