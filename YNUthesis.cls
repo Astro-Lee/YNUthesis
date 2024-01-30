@@ -730,6 +730,8 @@
     }
   }
 \fancyfoot [ C ] { \small \thepage }
+\RenewDocumentCommand{\frontmatter}{O{Roman}}
+  { \pagenumbering{#1} }
 \RenewDocumentCommand \cleardoublepage { }
   {
     \clearpage
