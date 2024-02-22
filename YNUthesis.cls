@@ -44,7 +44,7 @@
     `l3kernel'~ and~` l3packages'\\\\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2023/06/30 } { }
+\@ifpackagelater { expl3 } { 2022/06/30 } { }
   { \msg_error:nnn { YNUthesis } { l3-too-old } { expl3 } }
 \msg_new:nnn { YNUthesis } { unsupported-engine }
   {
@@ -1576,7 +1576,7 @@
     title / bottom-skip = 7 ex plus 0.5 fill,
     title-en / bottom-skip = 30 pt plus 2 fill,
     info / bottom-skip = 40 pt plus 10 fill,
-    date / bottom-skip = -20 pt plus 0 fill,
+    date / bottom-skip = -40 pt plus 0 fill,
     id       / align       = left,
     logo     / align       = center,
     type     / align       = center,
