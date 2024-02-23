@@ -1547,7 +1547,16 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     \@@_sanitize_chapter_title:n {#1}
     \group_begin:
       \ctexset { chapter / numbering = false }
-      \chapter [ \l_@@_tmpa_tl ] {#1}
+      % 使用正则表达式匹配只包含英文字符的标题
+      \regex_match:nnTF {^[A-Za-z]+$} {#1}
+        {
+          % 如果标题只包含英文字符，则将标题设置为罗马字体
+          \chapter [ \l_@@_tmpa_tl ] {\rmfamily #1}
+        }
+        {
+          % 如果标题不只包含英文字符，则保持默认字体
+          \chapter [ \l_@@_tmpa_tl ] {#1}
+        }
     \group_end:
     \@@_chapter_header:n {#1}
   }

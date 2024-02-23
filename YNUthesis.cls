@@ -785,7 +785,16 @@
     \__YNU_sanitize_chapter_title:n {#1}
     \group_begin:
       \ctexset { chapter / numbering = false }
-      \chapter [ \l__YNU_tmpa_tl ] {#1}
+      % 使用正则表达式匹配只包含英文字符的标题
+      \regex_match:nnTF {^[A-Za-z]+$} {#1}
+        {
+          % 如果标题只包含英文字符，则将标题设置为罗马字体
+          \chapter [ \l__YNU_tmpa_tl ] {\rmfamily #1}
+        }
+        {
+          % 如果标题不只包含英文字符，则保持默认字体
+          \chapter [ \l__YNU_tmpa_tl ] {#1}
+        }
     \group_end:
     \__YNU_chapter_header:n {#1}
   }
