@@ -1527,16 +1527,17 @@
     \thispagestyle { empty }
     \clist_if_empty:NF \l__YNU_info_pre_review_clist
       { \UseInstance { YNU / cover } { cover-ii-default } }
+    \cleardoublepage
   }
 \NewDocumentCommand \makecoveriii { }
   {
-    \cleardoublepage
     \tl_if_empty:NTF \l__YNU_declaration_page_tl
       {
         \thispagestyle { empty }
         \UseInstance { YNU / cover } { cover-iii-default }
       }
       { \includepdf { \l__YNU_declaration_page_tl } }
+      \cleardoublepage
   }
 \DeclareCoverTemplate { cover-i   }
   { id, logo, type, degree, title, title-en, info, date }

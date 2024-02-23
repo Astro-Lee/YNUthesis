@@ -3026,6 +3026,7 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
     \thispagestyle { empty }
     \clist_if_empty:NF \l_@@_info_pre_review_clist
       { \UseInstance { YNU / cover } { cover-ii-default } }
+    \cleardoublepage
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3035,13 +3036,13 @@ Copyright (C) 2023 by Rui-Zhi Li <liruizhi0871@gmail.com>
 %    \begin{macrocode}
 \NewDocumentCommand \makecoveriii { }
   {
-    \cleardoublepage
     \tl_if_empty:NTF \l_@@_declaration_page_tl
       {
         \thispagestyle { empty }
         \UseInstance { YNU / cover } { cover-iii-default }
       }
       { \includepdf { \l_@@_declaration_page_tl } }
+      \cleardoublepage
   }
 %    \end{macrocode}
 % \end{macro}
