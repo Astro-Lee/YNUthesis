@@ -44,7 +44,7 @@
     `l3kernel'~ and~` l3packages'\\\\
     using~ your~ TeX~ package~ manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2022/06/30 } { }
+\@ifpackagelater { expl3 } { 2023/06/30 } { }
   { \msg_error:nnn { YNUthesis } { l3-too-old } { expl3 } }
 \msg_new:nnn { YNUthesis } { unsupported-engine }
   {
@@ -1927,7 +1927,8 @@
         { default,   990000, 0000B2, 007F00 },
         { material,  E91E63, 009688, 4CAF50 },
         { graylevel, 616161, 616161, 616161 },
-        { prl,       2D3092, 2D3092, 2D3092 }
+        { prl,       2D3092, 2D3092, 2D3092 },
+        { black,     000000, 000000, 000000 }
       }
       \__YNU_set_hyperlink_color_key:n
   }
